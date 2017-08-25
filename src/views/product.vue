@@ -1,95 +1,66 @@
 <template>
   <div class="product-container" id="iSlider-wrapper">
     <ul class="list-out">
-      <li class="item-out" style="z-index: 203;
-    transform: scale(0.9, 0.9) translateZ(0px) translateX(0px) rotateY(0deg);
-    transition: -webkit-transform 800ms ease;">
+      <li v-for="(item, index) in productListData" class="item-out" 
+      @touchstart="touchStart($event)"
+      @touchmove.prevent="touchMove($event)"
+      @touchend="touchEnd($event)">
         <section class='img-wrap'>
-          <img class="img" src="../assets/product-xingyu.jpg">
+          <img class="img" :src="getImgPath(item.imgName)">
         </section>
         <section class='product-des'>
           <ul class="list">
-            <li class="item">
-              <img class="item-img" src="../assets/item-one.png" alt="">
+            <li class="item" v-for="childItem in item.detail">
+              <img class="item-img" :src="getImgPath(childItem.imgPath)" alt="">
               <p class="item-content">
-                <strong class="big-txt">额度高</strong>
-                <span class="small-txt">最高可贷500万</span>
-              </p>
-            </li>
-            <li class="item">
-              <img class="item-img" src="../assets/item-two.png" alt="">
-              <p class="item-content">
-                <strong class="big-txt">随借随还</strong>
-                <span class="small-txt">循环额度,1年有效</span>
-              </p> 
-            </li>
-            <li class="item">
-              <img class="item-img" src="../assets/item-three.png" alt="">
-              <p class="item-content">
-                <strong class="big-txt">额度高</strong>
-                <span class="small-txt">最高可贷500万</span>
+                <strong class="big-txt">{{childItem.bigText}}</strong>
+                <span class="small-txt">{{childItem.smallText}}</span>
               </p>
             </li>
           </ul>
         </section>
         <section class="foot">
           <p class="des">
-            渔业产品质押类贷款产品，最高可获得500万贷款额度，期限最长90天
+            {{item.productDes}}
           </p>
           <p class="try-people">
-            <span class="text">适用人群:华彩找渔网卖家尊享</span>
+            <span class="text">{{item.proper}}</span>
           </p>
         </section>
-        <button class="primary-button button-bottom">立即申请</button>
-      </li>
-
-      <li class="item-out" style="z-index: 0; transform: scale(0.9, 0.9) translateZ(-1.5rem) translateX(4rem) rotateY(-30deg);">
-        <section class='img-wrap'>
-          <img class="img" src="../assets/product-xingyu.jpg">
-        </section>
-        <section class='product-des'>
-          <ul class="list">
-            <li class="item">
-              <img class="item-img" src="../assets/item-one.png" alt="">
-              <p class="item-content">
-                <strong class="big-txt">额度高</strong>
-                <span class="small-txt">最高可贷500万</span>
-              </p>
-            </li>
-            <li class="item">
-              <img class="item-img" src="../assets/item-two.png" alt="">
-              <p class="item-content">
-                <strong class="big-txt">随借随还</strong>
-                <span class="small-txt">循环额度,1年有效</span>
-              </p> 
-            </li>
-            <li class="item">
-              <img class="item-img" src="../assets/item-three.png" alt="">
-              <p class="item-content">
-                <strong class="big-txt">额度高</strong>
-                <span class="small-txt">最高可贷500万</span>
-              </p>
-            </li>
-          </ul>
-        </section>
-        <section class="foot">
-          <p class="des">
-            渔业产品质押类贷款产品，最高可获得500万贷款额度，期限最长90天
-          </p>
-          <p class="try-people">
-            <span class="text">适用人群:华彩找渔网卖家尊享</span>
-          </p>
-        </section>
-        <button class="primary-button button-bottom">立即申请</button>
+        <button class="primary-button button-bottom" @click.stop="applyLoan(item.title)">立即申请</button>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   export default {
     data () {
       return {}
+    },
+    computed: {
+      ...mapGetters([
+        'productListData'
+      ])
+    },
+    methods: {
+      getImgPath (name) {
+        return require(`../assets/${name}`)
+      },
+      applyLoan ({label, value}) {
+        console.log(`${label}--${value}`)
+        return
+      },
+      touchStart (event) {
+        console.log('touchStart')
+      },
+      touchMove (event) {
+        console.log('touchMove')
+      },
+      touchEnd (event) {
+        console.log('touchEnd')
+      }
     }
   }
 </script>

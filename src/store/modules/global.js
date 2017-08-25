@@ -1,15 +1,21 @@
-import xinyuloan from '../../utils/config/xingyuloan'
-import housefinance from '../../utils/config/housefinance'
-console.log(xinyuloan)
-console.log(housefinance)
+import xinyuLoan from '../../utils/config/xingyuloan'
+import houseFinance from '../../utils/config/housefinance'
+import productList from '../../utils/config/productlist'
+
+console.log(xinyuLoan)
+console.log(houseFinance)
+console.log(productList)
+
 const state = {
-  xinYuLoan: xinyuloan,
-  houseFinance: housefinance
+  xinyuLoan,
+  houseFinance,
+  productList
 }
 
 const getters = {
   xingYuLoanData: state => state.xinYuLoan,
-  houseFinance: state => state.houseFinance
+  houseFinanceData: state => state.houseFinance,
+  productListData: state => state.productList
 }
 
 export default {
