@@ -4,7 +4,7 @@
       <li v-for="(item, index) in productListData" class="item-out" 
       @touchstart="touchStart($event)"
       @touchmove.prevent="touchMove($event)"
-      @touchend="touchEnd($event)">
+      @touchend="touchEnd($event)" :id='index'>
         <section class='img-wrap'>
           <img class="img" :src="getImgPath(item.imgName)">
         </section>
@@ -35,6 +35,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
+  import ISlider from 'islider.js'
   export default {
     data () {
       return {}
@@ -50,6 +51,7 @@
       },
       applyLoan ({label, value}) {
         console.log(`${label}--${value}`)
+        console.log(ISlider)
         return
       },
       touchStart (event) {
@@ -61,6 +63,25 @@
       touchEnd (event) {
         console.log('touchEnd')
       }
+    },
+    created () {
+      /* eslint-disable no-new */
+      setTimeout(() => {
+        new ISlider({
+          dom: document.getElementById('iSlider-wrapper'),
+          data: [
+            {
+              content: document.getElementById('0')
+            },
+            {
+              content: document.getElementById('1')
+            }
+          ],
+          animateTime: 800,
+          animateType: 'flow',
+          isAutoplay: 1
+        })
+      }, 500)
     }
   }
 </script>
