@@ -1,6 +1,6 @@
 <template>
   <div class="product-container" id="iSlider-wrapper" :style="perspectiveValue">
-    <ul class="list-out" style="display: none">
+    <ul class="list-out" >
       <li v-for="(item, index) in productListData" class="item-out" :id='index'>
         <div class="item-out-child">
           <section class='img-wrap'>
@@ -83,9 +83,9 @@ export default {
         data: nodeList,
         isLooping: 1,
         animateTime: 800,
-        animateType: 'flow',
+        animateType: 'rotate',
         isAutoplay: 1,
-        scale: 0.9
+        fillSeam: true
       })
       $('.list-out').remove()
     }, 500)
@@ -99,13 +99,14 @@ export default {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  transform: scale(1.5);
   .item-out-child {
     display: flex;
     flex-direction: column;
+    background-color: #fff;
     .img-wrap {
       height: 3.5rem;
       margin-bottom: 0.2rem;
+      overflow: hidden;
       .img {
         width: 100%;
         height: 3.5rem;

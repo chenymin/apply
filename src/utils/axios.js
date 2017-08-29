@@ -2,7 +2,7 @@ import axios from 'axios'
 import URLSearchParams from 'url-search-params'
 
 const instance = axios.create({
-  baseURL: 'http://192.168.32.105:8000',
+  baseURL: 'http://10.166.2.184:8080/credit-server-web/',
   timeout: 10000,
   xsrfCookieName: '_csrf',
   xsrfHeaderName: '_csrf',

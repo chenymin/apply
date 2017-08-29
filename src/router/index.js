@@ -11,6 +11,7 @@ const ApplyComplete = r => require.ensure([], () => r(require('@/views/applycomm
 const UserCenter = r => require.ensure([], () => r(require('@/views/usercenter')), 'chunk-usercenter')
 const LoanList = r => require.ensure([], () => r(require('@/views/loanlist')), 'chunk-loanlist')
 const LoanDetail = r => require.ensure([], () => r(require('@/views/loandetail')), 'chunk-loandetail')
+const Test = r => require.ensure([], () => r(require('@/views/test')), 'chunk-loandetail')
 
 export default new Router({
   routes: [
@@ -22,6 +23,7 @@ export default new Router({
     { name: 'loanlist', path: '/loanlist', component: LoanList, meta: { auth: true } },
     { name: 'loandetail', path: '/loandetail', component: LoanDetail, meta: { auth: true } },
     { name: 'product', path: '/product', component: Product, meta: { auth: false } },
+    { name: 'test', path: '/test', component: Test, meta: { auth: false } },
     { path: '*', redirect: { name: 'login' } }
   ]
 })
