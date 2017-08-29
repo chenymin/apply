@@ -40,7 +40,8 @@
     methods: {
       validMobile,
       formatMobile (event) {
-        let position = this.$refs.mobileInput.selectionStart
+        const nodeInput = this.$refs.mobileInput
+        let position = nodeInput.selectionStart
         let value = event.target.value.replace(/\D/g, '')
         let len = value.length
 
@@ -51,10 +52,14 @@
 
         if (len === 11) {
           value = value.replace(/\B(?=(?:\d{4})+$)/g, ' ')
+          position = position + 2
           // this.isSendDisable = this.validMobile(value.replace(/\D/g, ''))
         }
 
-        this.$refs.mobileInput.value = value
+        setTimeout(function () {
+          nodeInput.setSelectionRange(position, position)
+        }, 20)
+        nodeInput.value = value
         console.log(this.myForm.mobile)
         console.log(event)
         console.log(position)
