@@ -42,7 +42,7 @@
       formatMobile (event) {
         let position = this.$refs.mobileInput.selectionStart
         let value = event.target.value.replace(/\D/g, '')
-        let len = formattedValue.length
+        let len = value.length
 
         if (len > 11) {
           value = value.substring(0, 11)
