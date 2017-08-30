@@ -1,7 +1,9 @@
 import axios from '../utils/axios'
 
-export const login = (data) => axios.post('/user/login', data)
+export const userLogin = (data) => axios.post('/user/login', data)
 
-export const userInfo = (data) => axios.post('/account/info', data)
+export const userInfo = () => axios.get('/account/info')
 
 export const userVerify = (data) => axios.post('/account/verify', data)
+
+export const sendSMSMsg = (data) => axios.post('/user/sendSMSMsg.do', data)

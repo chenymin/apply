@@ -1,11 +1,13 @@
 import axios from 'axios'
 import URLSearchParams from 'url-search-params'
 
+console.log(window.localStorage.getItem('token'))
 const instance = axios.create({
-  baseURL: 'http://10.166.2.184:8080/credit-server-web/',
+  baseURL: 'http://10.166.2.184:8080/credit-server-web',
   timeout: 10000,
   xsrfCookieName: '_csrf',
   xsrfHeaderName: '_csrf',
+  headers: {'authorization': window.localStorage.getItem('token')},
   transformRequest (data) {
     if (!data) return
     // transform obj to formData
@@ -27,10 +29,17 @@ instance.interceptors.request.use((config) => {
 
 // 返回拦截器
 instance.interceptors.response.use(
-  ({data, status, statusText}) => {
-    return {data, status}
+  ({data: {code, message, data}}) => {
+    if (code === 'suss') {
+      return {data}
+    }
+    return {
+      code: 'fail',
+      data: ''
+    }
   },
   ({response}) => {
+    console.log('------>')
     if ([403, 401].indexOf(response.status) !== -1) {
       // TODO 根据业务需求处理
       console.log('请求')

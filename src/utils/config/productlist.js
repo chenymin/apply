@@ -2,7 +2,8 @@ const productList = [
   {
     title: {
       label: '星渔贷',
-      value: 'xingYuLoan'
+      value: 'xingYuLoan',
+      type: '02'
     },
     imgName: 'product-xingyu.jpg',
     detail: [
@@ -28,7 +29,8 @@ const productList = [
   {
     title: {
       title: '房金融',
-      value: 'houseFinance'
+      value: 'houseFinance',
+      type: '01'
     },
     imgName: 'product-house.jpg',
     detail: [

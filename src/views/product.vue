@@ -25,7 +25,7 @@
               <span class="text">{{item.proper}}</span>
             </p>
           </section>
-          <button class="primary-button button-bottom" @click.stop="applyLoan(item.title)">立即申请</button>
+          <router-link class="primary-button button-bottom" :to="{ name: 'login', params: {sysSite: item.title.type, site: '01'}}">立即申请</router-link>
         </div>
       </li>
     </ul>
@@ -63,11 +63,7 @@ export default {
   methods: {
     getImgPath (name) {
       return require(`../assets/${name}`)
-    },
-    applyLoan ({ label, value }) {
-      console.log(`${label}--${value}`)
     }
-
   },
   created () {
     console.log(ISlider)
@@ -78,16 +74,23 @@ export default {
       list.forEach((item) => {
         nodeList.push(Object.assign({}, {content: item}))
       })
-      new ISlider({
+      const iSlider = new ISlider({
         dom: document.getElementById('iSlider-wrapper'),
         data: nodeList,
         isLooping: 1,
         animateTime: 800,
-        animateType: 'rotate',
+        animateType: 'flow',
         isAutoplay: 1,
         fillSeam: true
       })
+      console.log($('.list-out'))
       $('.list-out').remove()
+      iSlider.on('slideChanged', function () {
+        console.log($('.islider-active'))
+        $('.islider-active').css({
+          transform: 'scale(0.95, 0.95) translateZ(0px) translateX(0px) rotateY(0deg)'
+        })
+      })
     }, 500)
   }
 }
