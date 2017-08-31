@@ -23,7 +23,7 @@
           <label class="label">预留手机号</label>
           <input class="value" type='tel' placeholder="请填写您银行预留手机号"/>
         </div>
-        <button class='primary-button top'>下一步</button>
+        <button type="submit" class='primary-button top'>下一步</button>
       </form>
     </section>
   </div>

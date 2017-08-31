@@ -26,3 +26,11 @@ export const setCaretPosition = (node, pos) => {
     range.select()
   }
 }
+
+/**
+ * 获取图片相对url
+ * @param name 图片名称
+ */
+export const getImgPath = (name) => {
+  return require(`../assets/${name}`)
+}

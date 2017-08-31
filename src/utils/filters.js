@@ -9,6 +9,10 @@ export const formatPhone = (phone) => {
   return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 }
 
+/**
+ * 格式化邮箱中间用****代替
+ * @param email
+ */
 export const formatEmail = (email) => {
   let arr = email.split('@')
   let start = ''
@@ -25,7 +29,7 @@ export const formatEmail = (email) => {
  * 如10000->10,000
  * @param money
  */
-export const toThousands = (money) => {
+export const formatMoney = (money) => {
   let num = (money || 0).toString()
   let result = ''
   while (num.length > 3) {

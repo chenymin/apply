@@ -1,38 +1,88 @@
 <template>
   <div class="usercenter-container">
     <section class="user-info">
-      <img class="header" src="https://wanzao2.b0.upaiyun.com/14460113899202.png-picSmall"></img>
-      <span class="mobile">1301234567</span>
+      <img class="header" src="../assets/header.png"></img>
+      <span class="mobile">{{'13232145678' | formatPhone}}</span>
     </section>
-    <ul class="loan-list">
-      <li class="item">
-        <p class="loan-title">
-          <img class="img" src="../assets/item-fish.png"/>
-          我的房金融
+    <div class='no-result' v-if="isDataResult">
+      <img class="pic" src="../assets/no-data.png" alt="">
+      <span class="text">暂无数据</span>
+    </div>
+    <ul class="loan-list" v-if="!isDataResult">
+      <li class="item" v-for="(item, index) in list">
+        <p class="loan-title" @click="jumpToList(item)">
+          <img class="img" :src="getImgPath(item.imgPath)"/>
+          {{item.name}}
         </p>
-        <list-item></list-item>
-      </li>
-
-      <li class="item">
-        <p class="loan-title">
-          <img class="img" src="../assets/item-house.png"/>
-          我的星渔贷
-        </p>
-        <list-item></list-item>
+        <list-item :item='item.childList'></list-item>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-  import listItem from '../components/listitem.vue'
+  import ListItem from '../components/listitem.vue'
+  import {getImgPath} from '../utils/util'
+  import {mapGetters} from 'vuex'
+  import _ from 'lodash'
   export default {
     data () {
       return {
+        list: [
+          {
+            imgPath: 'item-fish.png',
+            name: '我的房金融',
+            proType: '01',
+            childList: {
+              amount: 500,
+              createBy: '2017-08-10',
+              status: 2
+            }
+          },
+          {
+            imgPath: 'item-house.png',
+            name: '我的星渔贷',
+            proType: '02',
+            childList: {
+              amount: 1000,
+              createBy: '2017-08-09',
+              status: 1
+            }
+          }
+        ]
+      }
+    },
+    computed: {
+      ...mapGetters({
+        lastData: 'loanLatestData'
+      }),
+      isDataResult () {
+        let isResult = true
+        for (let i = 0; i < this.list.length; i++) {
+          const {childList} = this.list[i]
+          if (!_.isEmpty(childList)) {
+            isResult = false
+            break
+          }
+        }
+        return isResult
+      }
+    },
+    methods: {
+      getImgPath,
+      jumpToList ({proType}) {
+        console.log(proType)
+        this.$router.push({name: 'loanlist', params: {proType}})
+      },
+      fetchData () {
+        this.$store.dispatch('fetchLoanLastData')
       }
     },
     components: {
-      listItem
+      ListItem
+    },
+    created () {
+      this.fetchData()
     }
   }
 </script>
@@ -46,6 +96,7 @@
       height: 2.5rem;
       background-image: url('../assets/user-bg.jpg');
       background-position: center;
+      background-size: cover;
       padding-left: $padding-left;
       .header {
         width: 1.32rem;
@@ -57,6 +108,21 @@
         font-size: $primary-font-size;
         padding-left: $padding-left;
       } 
+    }
+    .no-result {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 0;
+      .pic {
+        width: 1.2rem;
+        height: 1.1rem;
+      }
+      .text {
+        color: #333;
+        font-size: .28rem;
+      }
     }
     .loan-list {
       .item {

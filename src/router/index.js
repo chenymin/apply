@@ -21,9 +21,9 @@ const router = new Router({
     { name: 'applyinfo', path: '/applyinfo', component: ApplyInfo, meta: { auth: true } },
     { name: 'applycomplete', path: '/applycomplete', component: ApplyComplete, meta: { auth: true } },
     { name: 'usercenter', path: '/usercenter', component: UserCenter, meta: { auth: true } },
-    { name: 'loanlist', path: '/loanlist', component: LoanList, meta: { auth: true } },
-    { name: 'loandetail', path: '/loandetail', component: LoanDetail, meta: { auth: true } },
-    { name: 'product', path: '/product', component: Product, meta: { auth: false } },
+    { name: 'loanlist', path: '/loanlist/:proType', component: LoanList, meta: { auth: true } },
+    { name: 'loandetail', path: '/loandetail/:id', component: LoanDetail, meta: { auth: true } },
+    { name: 'product', path: '/product/:site', component: Product, meta: { auth: false } },
     { name: 'test', path: '/test', component: Test, meta: { auth: false } },
     { path: '*', redirect: { name: 'login' } }
   ]

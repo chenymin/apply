@@ -30,11 +30,11 @@ instance.interceptors.request.use((config) => {
 // 返回拦截器
 instance.interceptors.response.use(
   ({data: {code, message, data}}) => {
-    if (code === 'suss') {
+    if (data && code === 'suss') {
       return {data}
     }
     return {
-      code: 'fail',
+      code: '-1',
       data: ''
     }
   },

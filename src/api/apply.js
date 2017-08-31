@@ -1,5 +1,9 @@
 import axios from '../utils/axios'
 
-export const loanapplication = (data) => axios.post('/loanapplication/add', data)
+export const loanApplicationAdd = (data) => axios.post('/loanapplication/add', data)
 
-export const getLoanapplication = () => axios.get('/loanapplication/list')
+export const getLoanList = (data) => axios.get('/loanapplication/list', data)
+
+export const getLoanDetil = (data) => axios.get('/loanapplication/info', data)
+
+export const getLoanLastData = () => axios.get('/loanapplication/getLoanLatestRecord')

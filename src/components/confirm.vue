@@ -4,7 +4,7 @@
     </div>  
     <div class="content-container">
       <div class="content">
-        <p class="text">确定申请提前还款</p>
+        <p class="text">{{text}}</p>
         <slot name="btn-group">
           <p class="btn-group">
             <button class="button-common cancle" @click.stop="cancleModal">取消</button>
@@ -23,7 +23,14 @@
       }
     },
     props: {
-      isShow: Boolean
+      isShow: {
+        type: Boolean,
+        default: false
+      },
+      text: {
+        type: String,
+        default: '确定申请提前还款'
+      }
     },
     methods: {
       confirm () {

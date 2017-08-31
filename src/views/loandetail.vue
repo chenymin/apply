@@ -10,13 +10,26 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   import SubmitInfo from '../components/submitinfo.vue'
   export default {
     data () {
       return {
       }
     },
+    computed: {
+      ...mapGetters({
+        item: 'loanInfo'
+      })
+    },
     methods: {
+      fetchData () {
+        const id = this.$route.params.id
+        this.$store.dispatch('fetchLoanLastData', Object.assign({}, {id}))
+      }
+    },
+    created () {
+      this.fetchData()
     },
     components: {
       SubmitInfo

@@ -1,15 +1,15 @@
 <template>
   <div class="loan-detail">
     <p class="loan-detail-p">
-      <span class="detail-des">1500000</span>
+      <span class="detail-des">{{item.amount | formatMoney}}</span>
       <span  class="detail-title">借款金额(元)</span>
     </p>
     <p class="loan-detail-p">
-      <span class="detail-des">2017/07/30</span>
+      <span class="detail-des">{{item.createBy}}</span>
       <span  class="detail-title">申请时间</span>
     </p>
     <p class="loan-detail-p">
-      <span class="detail-status status-approvaling">审批中</span>
+      <span class="detail-status" :class="{'status-approvaling': item.status !== 2, 'status-refused': item.status === 2}">{{statusText[item.status]}}</span>
       <span class="detail-title">借款状态</span>
     </p>
   </div>
@@ -18,7 +18,27 @@
 <script>
   export default {
     data () {
-      return {}
+      return {
+        statusText: [
+          '审批中',
+          '审批通过',
+          '审批拒绝',
+          '还款中',
+          '已结清'
+        ]
+      }
+    },
+    props: {
+      item: {
+        type: Object,
+        default () {
+          return {
+            amount: '',
+            createBy: '',
+            status: ''
+          }
+        }
+      }
     }
   }
 </script>

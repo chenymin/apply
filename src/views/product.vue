@@ -25,7 +25,7 @@
               <span class="text">{{item.proper}}</span>
             </p>
           </section>
-          <router-link class="primary-button button-bottom" :to="{ name: 'login', params: {sysSite: item.title.type, site: '01'}}">立即申请</router-link>
+          <button class="primary-button button-bottom" @click="jumpToApply(item.title)">立即申请</button>
         </div>
       </li>
     </ul>
@@ -33,8 +33,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import ISlider from 'islider.js'
+import {setStore} from '../utils/storage'
 
 export default {
   data () {
@@ -63,6 +64,12 @@ export default {
   methods: {
     getImgPath (name) {
       return require(`../assets/${name}`)
+    },
+    jumpToApply ({type}) {
+      setStore('site', this.$route.params.site)
+      setStore('sysSite', type)
+      this.$store.commit('GET_CURRENT_DATA', {type})
+      this.$router.push({name: 'basicinfo'})
     }
   },
   created () {
