@@ -34,3 +34,11 @@ export const setCaretPosition = (node, pos) => {
 export const getImgPath = (name) => {
   return require(`../assets/${name}`)
 }
+
+/**
+ * 手机格式化13088889999-> 130 8888 9999
+ * @param mobile 手机号
+ */
+export const formatPhone = (mobile) => {
+  return mobile && mobile.replace(/\B(?=(?:\d{4})+$)/g, ' ')
+}

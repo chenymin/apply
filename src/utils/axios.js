@@ -1,13 +1,13 @@
 import axios from 'axios'
 import URLSearchParams from 'url-search-params'
+import {getStore} from './storage'
 
-console.log(window.localStorage.getItem('token'))
 const instance = axios.create({
   baseURL: 'http://10.166.2.184:8080/credit-server-web',
   timeout: 10000,
   xsrfCookieName: '_csrf',
   xsrfHeaderName: '_csrf',
-  headers: {'authorization': window.localStorage.getItem('token')},
+  headers: {'authorization': getStore('token')},
   transformRequest (data) {
     if (!data) return
     // transform obj to formData
@@ -23,6 +23,9 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use((config) => {
   // before request send, set csrf
+  if (!config.headers.authorization) {
+    config.headers.authorization = getStore('token')
+  }
   document.cookie = `_csrf=${new Date().getTime()}; path=/`
   return config
 })
@@ -38,13 +41,13 @@ instance.interceptors.response.use(
       data: ''
     }
   },
-  ({response}) => {
-    console.log('------>')
-    if ([403, 401].indexOf(response.status) !== -1) {
-      // TODO 根据业务需求处理
-      console.log('请求')
-    }
-    return Promise.reject(response)
+  (data) => {
+    console.log('------>' + data)
+    // if ([403, 401].indexOf(response.status) !== -1) {
+    //   // TODO 根据业务需求处理
+    //   console.log('请求')
+    // }
+    return Promise.reject(data)
   })
 
 export default instance

@@ -1,14 +1,14 @@
 <template>
   <div class="applycommplete-container">
     <section class="apply-state">
-      <img class="img" src="../assets/icon-fish.png">
+      <img class="img" :src="imgSrc">
       <div>
-        <p class="success-text">星渔贷申请预约成功！</p>
+        <p class="success-text">{{titleName}}申请预约成功！</p>
         <p class="small-text">请准备好申请材料，专属信贷经理将为您服务</p>
       </div>
     </section>
-    <material-detail></material-detail>
-    <submit-info></submit-info>
+    <material-detail :material="commpleteData.materialnfo"></material-detail>
+    <submit-info :info="commpleteData.info"></submit-info>
     <p class="btn-group">
       <button class='primary-button top'>查看申请记录</button>
       <button class='primary-button btn-bg-white top'>完成</button>
@@ -21,27 +21,49 @@
   import {mapGetters} from 'vuex'
   import MaterialDetail from '../components/materialdetail.vue'
   import SubmitInfo from '../components/submitinfo.vue'
+  import _ from 'lodash'
+  import {getImgPath} from '../utils/util'
   export default {
     data () {
       return {
       }
     },
     computed: {
-      ...mapGetters({
-        obj: 'xingYuLoanData'
-      })
+      ...mapGetters([
+        'currentData'
+      ]),
+      commpleteData () {
+        return this.currentData[this.getPathKey()]
+      },
+      imgSrc () {
+        const {imgPath} = this.commpleteData
+        return this.getImgPath(imgPath)
+      },
+      titleName () {
+        const {label} = this.currentData.title
+        console.log(label)
+        return label
+      }
+    },
+    methods: {
+      getImgPath,
+      getPathKey () {
+        const [, key] = _.split(this.$route.path, '/', 2)
+        return key
+      }
     },
     components: {
       SubmitInfo,
       MaterialDetail
     },
     created () {
-      console.log(this.obj)
+      const id = this.$route.params.id
+      this.$store.dispatch('fetchLoanInfo', {id, commpleteData: this.commpleteData})
     }
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import "../scss/var";
   .applycommplete-container {
     padding-bottom: 0.3rem;

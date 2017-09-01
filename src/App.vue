@@ -5,8 +5,14 @@
 </template>
 
 <script>
+import {getStore} from './utils/storage'
 export default {
-  name: 'app'
+  name: 'app',
+  created () {
+    // 页面刷新重新获得页面元素
+    const type = getStore('sysSite')
+    this.$store.commit('GET_CURRENT_DATA', {type})
+  }
 }
 </script>
 

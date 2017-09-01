@@ -9,11 +9,11 @@
       >
     </select-modal>
     <section class="baseinfo-form">
-      <form class='form-wrap'>
+      <form class='form-wrap' @submit.prevent="applyInfoSubmit()">
         <p class="part">贷款信息</p>
         <div class="form-filed">
           <label class="label">申请金额</label>
-          <input class="value" type='tel' placeholder="最高可申请500万"/>
+          <input class="value" type='tel' placeholder="最高可申请500万" v-model="myForm.amount"/>
           <span class="unit">万元</span>
         </div>
         <div class="form-filed on-border">
@@ -24,21 +24,21 @@
         <p class="part">企业信息</p>
         <div class="form-filed">
           <label class="label">企业名称</label>
-          <input class="value" type='tel' placeholder="请填写您企业的名称"/>
+          <input class="value" type='tel' placeholder="请填写您企业的名称" v-model="myForm.comName"/>
         </div>
         <div class="form-filed on-border">
           <label class="label">营业执照号</label>
-          <input class="value" type='tel' placeholder="营业执照号/社会统一信用代码"/>
+          <input class="value" type='tel' placeholder="营业执照号/社会统一信用代码" v-model="myForm.comLicense"/>
         </div>
 
         <p class="part">经营地址</p>
-        <div class="form-filed">
+        <div class="form-filed" @click="isSelect = !isSelect">
           <label class="label">所在省份</label>
-          <span class="select-com" @click="isSelect = !isSelect">{{selectValue}}</span>
+          <span class="select-com">{{selectValue}}</span>
         </div>
         <div class="form-filed on-border">
           <label class="label">详细地址</label>
-          <input class="value" type='tel' placeholder="请填写详细经营地址"/>
+          <input class="value" type='tel' placeholder="请填写详细经营地址" v-model="myForm.address"/>
         </div>
         <p class="protocol">
           <label class="protocol-label">
@@ -54,9 +54,23 @@
 
 <script>
   import SelectModal from '../components/selection.vue'
+  import _ from 'lodash'
   export default {
     data () {
       return {
+        myForm: {
+          amount: '',
+          loanPerods: '',
+          city: '',
+          address: '',
+          type: '',
+          comName: '',
+          comLicense: '',
+
+          repayType: '',
+          mail: '',
+          houseAddress: ''
+        },
         isSelect: false,
         selectValue: '',
         selectType: 'area',
@@ -74,6 +88,15 @@
       getSelectVal (val) {
         console.log('getSelectVal' + val)
         this.selectValue = val
+      },
+      applyInfoSubmit () {
+        console.log('applyInfoSubmit')
+        const loanPerods = '90'
+        const type = '02'
+        const city = this.selectValue
+        const router = this.$router
+        const param = _.assign(this.myForm, {loanPerods, city, type})
+        this.$store.dispatch('addLoanApply', {param, router})
       }
     },
     components: {

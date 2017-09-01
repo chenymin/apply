@@ -19,7 +19,7 @@ const router = new Router({
     { name: 'login', path: '/login/:sysSite/:site', component: Login, meta: { auth: false } },
     { name: 'basicinfo', path: '/basicinfo', component: BasicInfo, meta: { auth: true } },
     { name: 'applyinfo', path: '/applyinfo', component: ApplyInfo, meta: { auth: true } },
-    { name: 'applycomplete', path: '/applycomplete', component: ApplyComplete, meta: { auth: true } },
+    { name: 'applycomplete', path: '/applycomplete/:id', component: ApplyComplete, meta: { auth: true } },
     { name: 'usercenter', path: '/usercenter', component: UserCenter, meta: { auth: true } },
     { name: 'loanlist', path: '/loanlist/:proType', component: LoanList, meta: { auth: true } },
     { name: 'loandetail', path: '/loandetail/:id', component: LoanDetail, meta: { auth: true } },
@@ -30,14 +30,12 @@ const router = new Router({
 })
 
 router.beforeEach(({ meta, name, path }, from, next) => {
-  console.log(meta)
-  console.log('--->')
   let { auth = true } = meta
   if (auth) {
     const token = getStore('token')
-    console.warn('-------------------------------------------')
-    console.log(name)
-    console.log(path)
+    // console.warn('-------------------------------------------')
+    // console.log(name)
+    // console.log(path)
     if (auth && !token && path !== 'login') {
       return next({
         name: 'login',

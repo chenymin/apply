@@ -2,21 +2,9 @@
   <div class="submitinfo-container">
     <section>
       <ul class="ul-wrap">
-        <li class="item">
-          <span class="left-text">企业名称</span>
-          <span class="right-text">上海水产集团有限公司</span>
-        </li>
-        <li class="item">
-          <span class="left-text">申请金额</span>
-          <span class="right-text">100万</span>
-        </li>
-        <li class="item">
-          <span class="left-text">借款期限</span>
-          <span class="right-text">3个月</span>  
-        </li>
-        <li class="item on-border">
-          <span class="left-text">申请时间</span>
-          <span class="right-text">2017/07/20 12:02</span>
+        <li class="item" v-for="(item, index) in info">
+          <span class="left-text">{{item.label}}</span>
+          <span class="right-text">{{item.value}}{{item.unit}}</span>
         </li>
       </ul>
     </section>
@@ -27,6 +15,14 @@
   export default {
     data () {
       return {}
+    },
+    props: {
+      info: {
+        type: Array,
+        default () {
+          return []
+        }
+      }
     }
   }
 </script>

@@ -87,16 +87,16 @@ export default {
         isLooping: 1,
         animateTime: 800,
         animateType: 'flow',
-        isAutoplay: 1,
+        // isAutoplay: 1,
         fillSeam: true
       })
       console.log($('.list-out'))
       $('.list-out').remove()
       iSlider.on('slideChanged', function () {
-        console.log($('.islider-active'))
-        $('.islider-active').css({
-          transform: 'scale(0.95, 0.95) translateZ(0px) translateX(0px) rotateY(0deg)'
-        })
+        // console.log($('.islider-active'))
+        // $('.islider-active').css({
+        //   transform: 'scale(0.95, 0.95) translateZ(0px) translateX(0px) rotateY(0deg)'
+        // })
       })
     }, 500)
   }
