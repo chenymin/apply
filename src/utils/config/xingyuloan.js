@@ -6,6 +6,67 @@ const xinYuLoanData = {
   basicinfo: {
     imgPath: 'xingyu-pei.jpg'
   },
+  applyinfo: [
+    {
+      type: 'title',
+      props: {
+        label: '贷款信息'
+      }
+    },
+    {
+      type: 'input',
+      props: {
+        label: '申请金额',
+        type: 'tel',
+        placeholder: '最高可申请500万',
+        model: 'amount',
+        unit: '万元',
+        isBorder: true
+      }
+    },
+    {
+      type: 'label',
+      props: {
+        label: '贷款期限',
+        value: '',
+        model: 'loanPerods',
+        isBorder: true
+      }
+    },
+    {
+      type: 'input',
+      props: {
+        label: '申请金额',
+        type: 'tel',
+        placeholder: '最高可申请500万',
+        model: 'amount',
+        unit: '万元',
+        isBorder: true
+      }
+    },
+    {
+      type: 'input',
+      props: {
+        label: '申请金额',
+        type: 'tel',
+        placeholder: '最高可申请500万',
+        model: 'amount',
+        unit: '万元',
+        isBorder: true
+      }
+    },
+    {
+      type: 'input',
+      props: {
+        label: '申请金额',
+        type: 'tel',
+        placeholder: '最高可申请500万',
+        model: 'amount',
+        unit: '万元',
+        isBorder: true
+      }
+    }
+  ],
   applycomplete: {
     imgPath: 'icon-fish.png',
     materialnfo: {
