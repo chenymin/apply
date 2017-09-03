@@ -1,98 +1,103 @@
 <template>
-  <div class="selection-container" >
-    <div class="cover-container" @click="hiddenModal" v-if="isShow">
+  <div class="selection-container">
+    <div class="cover-container" @touchmove.prevent @click.stop="hiddenSelect" v-if="isShow">
+    </div>
+    <div class="form-filed" @click="showSelect">
+      <label class="label">{{props.title}}</label>
+      <span class="select-com">{{selectVal}}</span>
     </div>
     <transition name="list-fade">
-      <div class="select-wrap" v-if="isShow">
+      <div id="mySelect" class="select-wrap" v-if="isShow">
         <p class="title">
-          <span class="remove" @click="hiddenModal"></span>
-          {{title}}
+          <span class="remove" @click="isShow=false"></span>
+          {{props.title}}
         </p>
-        <p class="area" v-if="selectType === 'area'">
+        <p class="area" v-if="props.selectType === 'area'">
           <span class="choice">请选择</span>
           <span class="province">{{selectVal}}</span>
         </p>
         <ul class="list">
-          <li class="item" v-for="(item, index) in list" 
-                          :class="{'selected': index === currentIndex}"
+          <li class="item" v-for="(item, index) in props.list"
+                          :class="{'selected': (index === props.defaultVal - 1 || index === currentIndex) && props.selectType!=='area'}"
                           @click="selectItem(item, index)">
             {{getOptionLabel(item)}}
           </li>
         </ul>
       </div>
-    </transition>  
+    </transition>
   </div>
 </template>
 
 <script>
+  import smartScrolls from '../utils/smartScroll'
   export default {
     data () {
       return {
-        currentIndex: -1
+        currentIndex: -1,
+        isShow: this.props.isShowSelect || false,
+        selectVal: ''
       }
     },
-    props: {
-      selectType: {
-        type: String,
-        default: 'area'
-      },
-      title: {
-        type: String,
-        default: '请选择期限'
-      },
-      isShow: Boolean,
-      list: Array,
-      value: {
-        type: String,
-        default: 'value'
-      },
-      label: {
-        type: String,
-        default: 'label'
-      },
-      getOptionLabel: {
-        type: Function,
-        default (option) {
-          if (typeof option === 'object') {
-            if (this.value && option[this.label]) {
-              return option[this.label]
-            }
-          }
-          return option
-        }
-      },
-      getOptionValue: {
-        type: Function,
-        default (option) {
-          if (typeof option === 'object') {
-            if (this.value && option[this.value]) {
-              return option[this.value]
-            }
-          }
-          return option
-        }
-      }
-    },
-    computed: {
-      selectVal () {
-        return this.currentIndex >= 0 ? this.getOptionLabel(this.list[this.currentIndex]) : ''
-      }
-    },
+    props: ['props', 'model'],
     methods: {
-      hiddenModal () {
-        this.$emit('hiddenSelectModal')
+      getDetaultVal () {
+        const index = this.props.defaultVal - 1
+        const item = this.props.list[index]
+        return this.getOptionLabel(item)
+      },
+      getOptionValue (option) {
+        if (typeof option === 'object') {
+          if (this.props.value && option[this.props.value]) {
+            return option[this.props.value]
+          }
+        }
+        return option
+      },
+      getOptionLabel (option) {
+        if (typeof option === 'object') {
+          if (this.props.value && option[this.props.label]) {
+            return option[this.props.label]
+          }
+        }
+        return option
+      },
+      hiddenSelect () {
+        this.isShow = false
+        $('html').removeClass('noscroll')
+        Array.from($('.selection-container')).forEach((item) => {
+          $(item).off()
+        })
+      },
+      showSelect () {
+        if (!this.props.isTriggerClick) {
+          this.isShow = false
+          return
+        }
+        $('html').addClass('noscroll')
+        console.log($('.selection-container')[0])
+        Array.from($('.selection-container')).forEach((item) => {
+          smartScrolls($(item), '.list')
+        })
+        this.isShow = true
       },
       selectItem (item, index) {
         this.currentIndex = index
-        this.$emit('hiddenSelectModal')
-        this.$emit('noticeChangeVal', item)
+        this.isShow = false
+        this.selectVal = this.getOptionLabel(item)
+        console.log(item)
+        this.$emit('mySelect', {[this.model]: this.getOptionValue(item)})
       }
+    },
+    created () {
+      this.selectVal = this.getDetaultVal()
+      this.$nextTick(() => {
+//        console.log(this.$refs.mySelect)
+      })
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  
   .selection-container {
     .list-fade-enter-active, .list-fade-leave-active {
       transition: all 0.4s ease-out;
@@ -100,8 +105,38 @@
     .list-fade-enter, .list-fade-leave-active {
       transform: translateY(7rem);
     }
+    .form-filed {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      height: 1rem;
+      padding: 0 0.3rem;
+      .select-com {
+        display: flex;
+        flex: 1;
+        justify-content: flex-end;
+        font-size: 0.32rem;
+        color: #444;
+        margin-right: 0.3rem;
+        &::after {
+           content: '';
+           position: absolute;
+           right: 5px;
+           width: 12px;
+           height: 12px;
+           border-bottom: solid 2px #ccc;
+           border-right: solid 2px #ccc;
+           transform: rotate(-45deg);
+           top: 50%;
+           margin-top: -6px;
+           right: 0.3rem;
+         }
+      }
+    }
     .cover-container {
       position: absolute;
+      top:0;
       width: 100%;
       height: 100%;
       background-color: #333;
@@ -166,7 +201,7 @@
           position: relative;
           font-size: 0.36rem;
           color: #444;
-          border-top: 1px solid #eee; 
+          border-top: 1px solid #eee;
         }
         .selected {
           color: #cda76e;

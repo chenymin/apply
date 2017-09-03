@@ -13,7 +13,7 @@
       <button class='primary-button top'>查看申请记录</button>
       <button class='primary-button btn-bg-white top'>完成</button>
     </p>
-    
+
   </div>
 </template>
 
@@ -21,9 +21,10 @@
   import {mapGetters} from 'vuex'
   import MaterialDetail from '../components/materialdetail.vue'
   import SubmitInfo from '../components/submitinfo.vue'
-  import _ from 'lodash'
+  import myMixin from './_mixin/_mixin'
   import {getImgPath} from '../utils/util'
   export default {
+    mixins: [myMixin],
     data () {
       return {
       }
@@ -41,16 +42,11 @@
       },
       titleName () {
         const {label} = this.currentData.title
-        console.log(label)
         return label
       }
     },
     methods: {
-      getImgPath,
-      getPathKey () {
-        const [, key] = _.split(this.$route.path, '/', 2)
-        return key
-      }
+      getImgPath
     },
     components: {
       SubmitInfo,
@@ -77,11 +73,11 @@
       .img {
         width: 1.27rem;
         height: 1.27rem;
-      } 
+      }
       .success-text {
         color: #333;
         text-align: center;
-        font-size: $primary-font-size; 
+        font-size: $primary-font-size;
       }
       .small-text {
         font-size: 0.3rem;

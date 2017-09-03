@@ -10,13 +10,16 @@ const state = {
     loanPerods: '90',
     createTime: '2017-09-01'
   },
+  applyEdit: {
+  },
   loanLatestData: []
 }
 
 const getters = {
   loanList: state => state.loanList,
   loanInfo: state => state.loanInfo,
-  loanLatestData: state => state.loanLatestRecord
+  loanLatestData: state => state.loanLatestRecord,
+  applyEdit: state => state.applyEdit
 }
 
 const actions = {
@@ -70,6 +73,11 @@ const mutations = {
       const {modal} = item
       item.value = state.loanInfo[modal]
     })
+  },
+
+  changeApplyEdit (state, item) {
+    console.log('changeApplyEdit')
+    _.assign(state.applyEdit, item)
   }
 }
 

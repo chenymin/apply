@@ -1,45 +1,8 @@
 <template>
   <div class="applyinfo-container">
-    <select-modal 
-      :is-show="isSelect" 
-      v-on:hiddenSelectModal="hideSelectModal"
-      v-on:noticeChangeVal="getSelectVal"
-      :list="list"
-      :select-type="selectType"
-      >
-    </select-modal>
     <section class="baseinfo-form">
       <form class='form-wrap' @submit.prevent="applyInfoSubmit()">
-        <p class="part">贷款信息</p>
-        <div class="form-filed">
-          <label class="label">申请金额</label>
-          <input class="value" type='tel' placeholder="最高可申请500万" v-model="myForm.amount"/>
-          <span class="unit">万元</span>
-        </div>
-        <div class="form-filed on-border">
-          <label class="label">贷款期限</label>
-          <span class="term">90天</span>
-        </div>
-
-        <p class="part">企业信息</p>
-        <div class="form-filed">
-          <label class="label">企业名称</label>
-          <input class="value" type='tel' placeholder="请填写您企业的名称" v-model="myForm.comName"/>
-        </div>
-        <div class="form-filed on-border">
-          <label class="label">营业执照号</label>
-          <input class="value" type='tel' placeholder="营业执照号/社会统一信用代码" v-model="myForm.comLicense"/>
-        </div>
-
-        <p class="part">经营地址</p>
-        <div class="form-filed" @click="isSelect = !isSelect">
-          <label class="label">所在省份</label>
-          <span class="select-com">{{selectValue}}</span>
-        </div>
-        <div class="form-filed on-border">
-          <label class="label">详细地址</label>
-          <input class="value" type='tel' placeholder="请填写详细经营地址" v-model="myForm.address"/>
-        </div>
+        <factory :factor="applyInfo"></factory>
         <p class="protocol">
           <label class="protocol-label">
             <input type="checkbox" checked="checked" name="protocol" value="">
@@ -53,54 +16,55 @@
 </template>
 
 <script>
-  import SelectModal from '../components/selection.vue'
   import _ from 'lodash'
+  import {mapGetters} from 'vuex'
+  import myMixin from './_mixin/_mixin'
+  import {getStore} from '../utils/storage'
+  import factory from '../components/factory/factory'
   export default {
+    mixins: [myMixin],
     data () {
       return {
+        msg: {
+          amount: '请输入申请金额',
+          comName: '请输入企业名称',
+          comLicense: '请输入用营业执照',
+          address: '请填写详细经营地址',
+          city: '请选择省份'
+        },
         myForm: {
-          amount: '',
-          loanPerods: '',
-          city: '',
-          address: '',
           type: '',
-          comName: '',
-          comLicense: '',
-
           repayType: '',
           mail: '',
           houseAddress: ''
-        },
-        isSelect: false,
-        selectValue: '',
-        selectType: 'area',
-        list: [
-          '北京',
-          '上海',
-          '南京'
-        ]
+        }
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'currentData', 'applyEdit'
+      ]),
+      applyInfo () {
+        return this.currentData[this.getPathKey()]
       }
     },
     methods: {
-      hideSelectModal () {
-        this.isSelect = false
-      },
-      getSelectVal (val) {
-        console.log('getSelectVal' + val)
-        this.selectValue = val
-      },
       applyInfoSubmit () {
-        console.log('applyInfoSubmit')
-        const loanPerods = '90'
-        const type = '02'
-        const city = this.selectValue
         const router = this.$router
-        const param = _.assign(this.myForm, {loanPerods, city, type})
-        this.$store.dispatch('addLoanApply', {param, router})
+        const type = getStore('sysSite')
+        const param = _.assign({}, this.applyEdit, {type})
+        const isValid = this.validForm(this.applyEdit, this.msg)
+        if (isValid) this.$store.dispatch('addLoanApply', {param, router})
+      },
+      load () {
+        this.$store.commit('bindDefaultValue', this.getPathKey())
       }
     },
     components: {
-      SelectModal
+      factory
+    },
+    created () {
+      this.load()
     }
   }
 </script>

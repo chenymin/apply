@@ -40,21 +40,14 @@
     font-size: $middle-font-size;
     color: #444;
     }
-    .select-com {
-      @extend .term;
-      margin-right: 0.3rem; 
-      &::after {
-        @extend .arrow-right;
-        right: 0.3rem;
-      }
-    }
+
     .img-code{
       height: 1rem;
       position: absolute;
       right: 0;
       width: 2rem;
     }
-  
+
   }
   .on-border {
     &::after {
@@ -63,14 +56,5 @@
   }
   .bottom {
     margin-bottom: 0.2rem;
-  }
-  
-  .part {
-    display: flex;
-    align-items: center;
-    height: 0.6rem;
-    font-size: 0.26rem;
-    color: #999;
-    padding-left: 0.3rem;
   }
 }

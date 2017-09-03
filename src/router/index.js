@@ -25,7 +25,7 @@ const router = new Router({
     { name: 'loandetail', path: '/loandetail/:id', component: LoanDetail, meta: { auth: true } },
     { name: 'product', path: '/product/:site', component: Product, meta: { auth: false } },
     { name: 'test', path: '/test', component: Test, meta: { auth: false } },
-    { path: '*', redirect: { name: 'login' } }
+    { path: '*', redirect: {name: 'product', params: {site: '02'}} }
   ]
 })
 

@@ -32,8 +32,10 @@
 <script>
   import {mapGetters} from 'vuex'
   import {getImgPath, formatPhone} from '../utils/util'
+  import myMixin from './_mixin/_mixin'
   import _ from 'lodash'
   export default {
+    mixins: [myMixin],
     data () {
       return {
         formatMobile: '',
@@ -51,7 +53,7 @@
         'currentData'
       ]),
       imgPath () {
-        const {imgPath} = this.currentData[_.replace(this.$route.path, '/', '')]
+        const {imgPath} = this.currentData[this.getPathKey()]
         return this.getImgPath(imgPath)
       }
     },
@@ -93,5 +95,5 @@
       }
     }
   }
-  
+
 </style>
