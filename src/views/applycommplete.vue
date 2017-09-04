@@ -10,7 +10,7 @@
     <material-detail :material="commpleteData.materialnfo"></material-detail>
     <submit-info :info="commpleteData.info"></submit-info>
     <p class="btn-group">
-      <button class='primary-button top'>查看申请记录</button>
+      <button class='primary-button top' @click="jumpToUserCenter">查看申请记录</button>
       <button class='primary-button btn-bg-white top'>完成</button>
     </p>
 
@@ -46,7 +46,10 @@
       }
     },
     methods: {
-      getImgPath
+      getImgPath,
+      jumpToUserCenter () {
+        this.$router.push({name: 'usercenter'})
+      }
     },
     components: {
       SubmitInfo,
@@ -54,7 +57,7 @@
     },
     created () {
       const id = this.$route.params.id
-      this.$store.dispatch('fetchLoanInfo', {id, commpleteData: this.commpleteData})
+      this.$store.dispatch('fetchLoanInfo', {id, pageData: this.commpleteData})
     }
   }
 </script>

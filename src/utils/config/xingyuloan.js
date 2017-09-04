@@ -176,6 +176,31 @@ const xinYuLoanData = {
         modal: 'createTime'
       }
     ]
+  },
+  loandetail: {
+    info: [
+      {
+        label: '企业名称',
+        value: '',
+        modal: 'comName'
+      },
+      {
+        label: '申请金额',
+        value: '',
+        modal: 'amount',
+        unit: '万元'
+      },
+      {
+        label: '借款期限',
+        value: '',
+        modal: 'loanPerods'
+      },
+      {
+        label: '申请时间',
+        value: '',
+        modal: 'createTime'
+      }
+    ]
   }
 }
 export default xinYuLoanData

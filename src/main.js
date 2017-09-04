@@ -5,8 +5,12 @@ import App from './App'
 import router from './router'
 import store from './store'
 import * as filters from './utils/filters'
+import eventBus from './utils/eventBus'
 
 Vue.config.productionTip = false
+if (!Vue.prototype.eventBus) {
+  Vue.prototype.eventBus = eventBus
+}
 
 // 添加全局过滤器
 Object.keys(filters).forEach(function (key, index, arr) {

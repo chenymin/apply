@@ -1,7 +1,7 @@
 <template>
   <div class="loanlist-container">
     <ul class="list">
-      <li class="item" v-for="(item, index) in list" @click="jumpToDetail(item)">
+      <li class="item" v-for="(item, index) in myList" @click="jumpToDetail(item)">
         <list-item :item="item"></list-item>
       </li>
     </ul>
@@ -14,20 +14,6 @@
   export default {
     data () {
       return {
-        list: [
-          {
-            amount: 500,
-            createBy: '2017-08-10',
-            status: 2,
-            id: 1
-          },
-          {
-            amount: 1000,
-            createBy: '2017-08-11',
-            status: 2,
-            id: 2
-          }
-        ]
       }
     },
     computed: {
@@ -41,7 +27,7 @@
       },
       fetchData () {
         const proType = this.$route.params.proType
-        this.$store.dispatch('fetchLoanList', Object.assign({}, {proType}))
+        this.$store.dispatch('fetchLoanList', {proType})
       }
     },
     components: {

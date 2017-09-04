@@ -4,15 +4,15 @@
       <img class="header" src="../assets/header.png"></img>
       <span class="mobile">{{'13232145678' | formatPhone}}</span>
     </section>
-    <div class='no-result' v-if="isDataResult">
+    <div class='no-result' v-if="!isDataResult">
       <img class="pic" src="../assets/no-data.png" alt="">
       <span class="text">暂无数据</span>
     </div>
-    <ul class="loan-list" v-if="!isDataResult">
-      <li class="item" v-for="(item, index) in list">
+    <ul class="loan-list" v-if="isDataResult">
+      <li class="item" v-for="(item, index) in myList">
         <p class="loan-title" @click="jumpToList(item)">
-          <img class="img" :src="getImgPath(item.imgPath)"/>
-          {{item.name}}
+          <img class="img" :src="getImgPath(getTitleObj(item.proType).imgPath)"/>
+          {{getTitleObj(item.proType).name}}
         </p>
         <list-item :item='item.childList'></list-item>
       </li>
@@ -28,48 +28,39 @@
   export default {
     data () {
       return {
-        list: [
-          {
-            imgPath: 'item-fish.png',
-            name: '我的房金融',
-            proType: '01',
-            childList: {
-              amount: 500,
-              createBy: '2017-08-10',
-              status: 2
-            }
-          },
-          {
+        titleContent: {
+          '01': {
             imgPath: 'item-house.png',
-            name: '我的星渔贷',
-            proType: '02',
-            childList: {
-              amount: 1000,
-              createBy: '2017-08-09',
-              status: 1
-            }
+            name: '我的房金融'
+          },
+          '02': {
+            imgPath: 'item-fish.png',
+            name: '我的星渔贷'
           }
-        ]
+        }
       }
     },
     computed: {
       ...mapGetters({
-        lastData: 'loanLatestData'
+        list: 'loanLatestData'
       }),
       isDataResult () {
-        let isResult = true
-        for (let i = 0; i < this.list.length; i++) {
-          const {childList} = this.list[i]
-          if (!_.isEmpty(childList)) {
-            isResult = false
-            break
-          }
-        }
-        return isResult
+        return this.list.length >= 1 ? 1 : 0
+      },
+      myList () {
+        this.list.map((item) => {
+          const {amount, status, createTime} = item
+          const childList = _.assign({}, {amount, status, createTime})
+          item.childList = childList
+        })
+        return this.list
       }
     },
     methods: {
       getImgPath,
+      getTitleObj (key) {
+        return this.titleContent[key]
+      },
       jumpToList ({proType}) {
         console.log(proType)
         this.$router.push({name: 'loanlist', params: {proType}})

@@ -2,8 +2,10 @@ import axios from 'axios'
 import URLSearchParams from 'url-search-params'
 import {getStore} from './storage'
 
+const url = process.env.NODE_ENV === 'development' ? 'http://10.166.2.190:8080/credit-server-web' : ''
+
 const instance = axios.create({
-  baseURL: 'http://10.166.2.184:8080/credit-server-web',
+  baseURL: url,
   timeout: 10000,
   xsrfCookieName: '_csrf',
   xsrfHeaderName: '_csrf',

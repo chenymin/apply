@@ -1,5 +1,5 @@
 <template>
-  <div class="confirm-container" v-if="isShow">
+  <div class="confirm-container" v-if="isShowConfirm">
     <div class="cover-container" @click.stop="cancleModal">
     </div>  
     <div class="content-container">
@@ -20,6 +20,7 @@
   export default {
     data () {
       return {
+        isShowConfirm: this.isShow
       }
     },
     props: {
@@ -37,7 +38,7 @@
         this.$emit('confirm')
       },
       cancleModal () {
-        this.$emit('cancle')
+        this.isShowConfirm = false
       }
     },
     created () {

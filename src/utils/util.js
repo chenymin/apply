@@ -1,3 +1,5 @@
+const IDValidator = require('id-validator')
+
 /**
  * 验证手机号格式是否正确
  * @param mobile
@@ -41,4 +43,13 @@ export const getImgPath = (name) => {
  */
 export const formatPhone = (mobile) => {
   return mobile && mobile.replace(/\B(?=(?:\d{4})+$)/g, ' ')
+}
+
+/**
+ * 校验身份证是否合法
+ * @param idNo 身份证号
+ */
+export const validIdCard = (idNo) => {
+  const idValidator = new IDValidator()
+  return idValidator.isValid(idNo)
 }

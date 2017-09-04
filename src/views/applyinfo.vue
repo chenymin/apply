@@ -53,8 +53,12 @@
         const router = this.$router
         const type = getStore('sysSite')
         const param = _.assign({}, this.applyEdit, {type})
-        const isValid = this.validForm(this.applyEdit, this.msg)
-        if (isValid) this.$store.dispatch('addLoanApply', {param, router})
+        const {validSuccse, message} = this.validForm(this.applyEdit, this.msg)
+        if (!validSuccse) {
+          this.showToast(message)
+          return
+        }
+        this.$store.dispatch('addLoanApply', {param, router})
       },
       load () {
         this.$store.commit('bindDefaultValue', this.getPathKey())

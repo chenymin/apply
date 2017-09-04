@@ -1,38 +1,71 @@
 <template>
   <div class="loandetail-container">
-    <section class="prompt-wrap">
-      <img class="img" src="../assets/approving.png"/>
-      <p class="prompt-text">星渔贷审批中</p>
-    </section>
-    <submit-info></submit-info>
-    <button class='primary-button top'>返回</button>
+    <confirm
+      :title='title'
+      :isShow='isShow'
+    ></confirm>
+    <!-- <section class="prompt-wrap">
+      <img class="img" :src="getImgPath(imgPath[loanInfo.status])"/>
+      <p class="prompt-text">{{currentData.title.label}}{{statusText[loanInfo.status]}}</p>
+    </section> -->
+    <submit-info :info="loanDetailData.info"></submit-info>
+    <button class='primary-button top' @click="goLoanListPage">返回</button>
+    <!-- v-if='loanInfo.status === "02"' -->
+    <button class='primary-button top btn-bg-white' @click="applyPrepayment" >提前申请还款</button>
+    <button class='primary-button top'>完成</button>
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
+  import myMixin from './_mixin/_mixin'
   import SubmitInfo from '../components/submitinfo.vue'
+  import Confirm from '../components/confirm'
+  import {getImgPath} from '../utils/util'
   export default {
+    mixins: [myMixin],
     data () {
       return {
+        imgPath: [
+          'approving.png',
+          'approved.png',
+          'approved-refused.png',
+          '',
+          'approved.png'
+        ],
+        title: '确定申请提前还款?',
+        isShow: false
       }
     },
     computed: {
-      ...mapGetters({
-        item: 'loanInfo'
-      })
+      ...mapGetters([
+        'currentData', 'loanInfo', 'statusText'
+      ]),
+      loanDetailData () {
+        return this.currentData[this.getPathKey()]
+      }
     },
     methods: {
+      getImgPath,
       fetchData () {
         const id = this.$route.params.id
-        this.$store.dispatch('fetchLoanLastData', Object.assign({}, {id}))
+        this.$store.dispatch('fetchLoanInfo', {id, pageData: this.loanDetailData})
+      },
+      goLoanListPage () {
+        console.log('-->')
+        this.$router.go(-1)
+      },
+      applyPrepayment () {
+        console.log('applyPrepayment')
+        this.isShow = true
       }
     },
     created () {
       this.fetchData()
     },
     components: {
-      SubmitInfo
+      SubmitInfo,
+      Confirm
     }
   }
 </script>

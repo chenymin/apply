@@ -5,7 +5,7 @@
       <span  class="detail-title">借款金额(元)</span>
     </p>
     <p class="loan-detail-p">
-      <span class="detail-des">{{item.createBy}}</span>
+      <span class="detail-des">{{item.createTime}}</span>
       <span  class="detail-title">申请时间</span>
     </p>
     <p class="loan-detail-p">

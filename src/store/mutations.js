@@ -1,4 +1,5 @@
 import _ from 'lodash'
+//
 const defaultKey = {myInput: 'value', mySelect: 'defaultVal'}
 export const bindDefaultValue = (state, key) => {
   const info = state.global.currentData[key]
@@ -17,4 +18,8 @@ export const bindValue = (state, key) => {
       _.assign(props, {[defaultKey[type]]: state.apply.applyEdit[model]})
     }
   })
+}
+
+export const changeToast = (state, obj) => {
+  _.assign(state.global.toast, obj)
 }
