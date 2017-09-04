@@ -1,7 +1,7 @@
 <template>
   <div class="confirm-container" v-if="isShowConfirm">
     <div class="cover-container" @click.stop="cancleModal">
-    </div>  
+    </div>
     <div class="content-container">
       <div class="content">
         <p class="text">{{text}}</p>
@@ -35,14 +35,18 @@
     },
     methods: {
       confirm () {
-        this.$emit('confirm')
+        this.eventBus.$emit('confirm/ok')
       },
       cancleModal () {
         this.isShowConfirm = false
+      },
+      showCofirm () {
+        this.isShowConfirm = true
       }
     },
     created () {
       this.$on('showModal', this.showConfirmModal)
+      this.eventBus.$on('confirm/show', this.showCofirm)
     }
   }
 </script>
@@ -64,7 +68,7 @@
     padding: 0 1rem;
     width: 100%;
     .content {
-      background-color: #fff; 
+      background-color: #fff;
       border-radius: 8px;
        margin-top: -1.25rem;
       .text {
@@ -75,7 +79,7 @@
         color: #333;
         text-align: center;
         height: 1.6rem;
-       
+
       }
       .btn-group {
         display: flex;

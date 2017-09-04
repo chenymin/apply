@@ -11,7 +11,7 @@
     <submit-info :info="loanDetailData.info"></submit-info>
     <button class='primary-button top' @click="goLoanListPage">返回</button>
     <!-- v-if='loanInfo.status === "02"' -->
-    <button class='primary-button top btn-bg-white' @click="applyPrepayment" >提前申请还款</button>
+    <button class='primary-button top btn-bg-white' @click="showConfirm" >提前申请还款</button>
     <button class='primary-button top'>完成</button>
   </div>
 </template>
@@ -55,12 +55,15 @@
         console.log('-->')
         this.$router.go(-1)
       },
-      applyPrepayment () {
-        console.log('applyPrepayment')
-        this.isShow = true
+      showConfirm () {
+        this.eventBus.$emit('confirm/show')
+      },
+      prepaymentApply () {
+        console.log('2')
       }
     },
     created () {
+      this.eventBus.$on('confirm/ok', this.prepaymentApply)
       this.fetchData()
     },
     components: {
@@ -90,8 +93,8 @@
         font-size: 0.36rem;
       }
     }
-    
+
   }
-  
+
 </style>
 
