@@ -12,7 +12,7 @@ const state = {
   productList,
   toast: {
     title: '错误提示',
-    content: '请核对后重新输入',
+    content: '',
     isShowToast: false
   },
   statusText: [

@@ -7,9 +7,11 @@ export default {
         const arr = _.keys(form)
         for (let i = 0, len = arr.length; i < len; i++) {
           const temp = form[arr[i]]
+          console.log(!temp)
+          console.log((temp && temp.toString().trim() === ''))
           if (!temp || (temp && temp.toString().trim() === '')) {
+            validSuccse = false
             message = msg[arr[i]]
-            console.log(msg[arr[i]])
             break
           } else {
             validSuccse = true
