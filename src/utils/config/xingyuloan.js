@@ -21,7 +21,9 @@ const xinYuLoanData = {
         placeholder: '最高可申请500万',
         unit: '万元',
         value: '',
-        isBorder: true
+        isBorder: true,
+        maxValue: 500,
+        rule: 'required|max'
       },
       model: 'amount'
     },

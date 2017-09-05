@@ -58,6 +58,10 @@
           this.showToast(message)
           return
         }
+        if (this.applyEdit['amount'] > 500) {
+          this.showToast('您输入的金额超过最大值')
+          return
+        }
         this.$store.dispatch('addLoanApply', {param, router})
       },
       load () {

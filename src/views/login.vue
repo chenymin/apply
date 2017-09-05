@@ -79,7 +79,9 @@
       // 发送验证码
       sendCode () {
         console.log('sendCode')
-        this.countdown()
+        setTimeout(() => {
+          this.countdown()
+        }, 1000)
         this.sendSms()
       },
       // 60秒倒计时
@@ -100,9 +102,10 @@
       sendSms () {
         const mobile = this.myForm.mobile.replace(/\D/g, '')
         const appChanel = this.getStore('site')
+        const proType = this.getStore('sysSite')
         const captchaId = this.smsCode.verifyCodeCount >= 3 ? 'captchaId' : ''
         const captcha = this.smsCode.verifyCodeCount >= 3 ? this.myForm.captchaCode : ''
-        const param = _.assign({}, {mobile, appChanel, captcha, captchaId})
+        const param = _.assign({}, {mobile, appChanel, captcha, captchaId, proType})
         this.$store.dispatch('sendSmsCode', {param})
       },
       refreshCode (event) {

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import URLSearchParams from 'url-search-params'
 import {getStore} from './storage'
+import store from '../store/index'
+import eventBus from '../utils/eventBus'
 
 export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.2.190:8080/credit-server-web' : ''
 
@@ -35,6 +37,11 @@ instance.interceptors.request.use((config) => {
 // 返回拦截器
 instance.interceptors.response.use(
   ({data: {code, message, data}}) => {
+    console.log(code)
+    if (code === 'fail') {
+      store.commit('changeToast', {content: message, isShowToast: true})
+      eventBus.$emit('toast/show')
+    }
     if (data) {
       return {data}
     }
@@ -44,11 +51,11 @@ instance.interceptors.response.use(
     }
   },
   (data) => {
-    console.log('------>' + data)
-    // if ([403, 401].indexOf(response.status) !== -1) {
-    //   // TODO 根据业务需求处理
-    //   console.log('请求')
-    // }
+    console.log(data)
+    store.commit('changeToast', {content: 'session失效，请重新登录', isShowToast: true})
+    eventBus.$emit('toast/show')
+    store.dispatch('removeToken')
+    window.location.reload()
     return Promise.reject(data)
   })
 

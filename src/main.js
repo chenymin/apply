@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import * as filters from './utils/filters'
 import eventBus from './utils/eventBus'
+import './utils/_polyfill'
 
 Vue.config.productionTip = false
 if (!Vue.prototype.eventBus) {

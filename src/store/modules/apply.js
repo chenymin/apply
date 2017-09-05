@@ -52,7 +52,8 @@ const actions = {
   },
 
   prepayment ({commit}, {id}) {
-    applyPrepayment({params: {id: id}}).then((data) => {
+    console.log(id)
+    applyPrepayment({id}).then((data) => {
       console.log(data)
     })
   }

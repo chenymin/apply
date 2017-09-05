@@ -3,9 +3,11 @@
     <label class="label">{{props.label}}</label>
     <input class="value"
            @input="changeVal($event)"
+           :max-value="props.maxValue"
            :type="props.type"
            :value="form[model]"
            :placeholder="props.placeholder"
+           :rule="props.rule"
     />
     <span class="unit">{{props.unit}}</span>
   </div>

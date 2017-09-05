@@ -3,6 +3,7 @@ export const USER_LOGIN = 'USER_LOGIN'
 export const GET_CURRENT_DATA = 'GET_CURRENT_DATA'
 export const GET_USER_INFO = 'GET_USER_INFO'
 export const SEND_SMS_CODE = 'SEND_SMS_CODE'
+export const REMOVE_TOKEN = 'REMOVE_TOKEN'
 
 // 申请模块
 export const GET_LOAN_LIST = 'GET_LOAN_LIST'

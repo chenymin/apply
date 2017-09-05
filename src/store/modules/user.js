@@ -1,5 +1,5 @@
 import * as types from '../mutation-types'
-import {setStore} from '../../utils/storage'
+import {setStore, removeStore} from '../../utils/storage'
 import {userLogin, userInfo, userVerify, sendSMSMsg} from '../../api/user'
 import _ from 'lodash'
 
@@ -42,6 +42,10 @@ const actions = {
     sendSMSMsg(param).then(({data}) => {
       commit(types.SEND_SMS_CODE, {data})
     })
+  },
+
+  removeToken () {
+    removeStore('token')
   }
 }
 
