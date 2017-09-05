@@ -27,6 +27,9 @@ export default {
     // 页面刷新重新获得页面元素
     const type = getStore('sysSite')
     this.$store.commit('GET_CURRENT_DATA', {type})
+
+    const data = {verifyCodeCount: getStore('verifyCodeCount')}
+    this.$store.commit('SEND_SMS_CODE', {data})
     console.log(this.toast)
   }
 }

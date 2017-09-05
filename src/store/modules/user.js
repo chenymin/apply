@@ -1,13 +1,17 @@
 import * as types from '../mutation-types'
 import {setStore} from '../../utils/storage'
-import {userLogin, userInfo, userVerify} from '../../api/user'
+import {userLogin, userInfo, userVerify, sendSMSMsg} from '../../api/user'
 import _ from 'lodash'
 
 const state = {
-  userInfo: {}
+  userInfo: {},
+  smsCode: {}
 }
 
-const getters = {}
+const getters = {
+  userInfo: state => state.userInfo,
+  smsCode: state => state.smsCode
+}
 
 const actions = {
   login ({commit}, {param, router, redirect}) {
@@ -32,6 +36,12 @@ const actions = {
       })
       console.log('userVerify')
     })
+  },
+
+  sendSmsCode ({commit}, {param}) {
+    sendSMSMsg(param).then(({data}) => {
+      commit(types.SEND_SMS_CODE, {data})
+    })
   }
 }
 
@@ -42,11 +52,16 @@ const mutations = {
     state.userInfo = data
     console.log(token + ' ' + userId)
   },
+
   [types.GET_USER_INFO] (state, {data}) {
-    console.log('--->1')
     let {name, idNo, bankCard, bankMobile} = data
     bankMobile = bankMobile || ''
     _.assign(state.userInfo, {name, idNo, bankCard, bankMobile})
+  },
+  [types.SEND_SMS_CODE] (state, {data}) {
+    const {verifyCodeCount} = data
+    setStore('verifyCodeCount', verifyCodeCount)
+    _.assign(state.smsCode, {verifyCodeCount})
   }
 }
 

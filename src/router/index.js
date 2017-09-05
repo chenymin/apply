@@ -16,7 +16,7 @@ const Test = r => require.ensure([], () => r(require('@/views/test')), 'chunk-lo
 
 const router = new Router({
   routes: [
-    { name: 'login', path: '/login/:sysSite/:site', component: Login, meta: { auth: false } },
+    { name: 'login', path: '/login', component: Login, meta: { auth: false } },
     { name: 'basicinfo', path: '/basicinfo', component: BasicInfo, meta: { auth: true } },
     { name: 'applyinfo', path: '/applyinfo', component: ApplyInfo, meta: { auth: true } },
     { name: 'applycomplete', path: '/applycomplete/:id', component: ApplyComplete, meta: { auth: true } },

@@ -2,7 +2,7 @@ import axios from 'axios'
 import URLSearchParams from 'url-search-params'
 import {getStore} from './storage'
 
-const url = process.env.NODE_ENV === 'development' ? 'http://10.166.2.190:8080/credit-server-web' : ''
+export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.2.190:8080/credit-server-web' : ''
 
 const instance = axios.create({
   baseURL: url,
@@ -35,7 +35,7 @@ instance.interceptors.request.use((config) => {
 // 返回拦截器
 instance.interceptors.response.use(
   ({data: {code, message, data}}) => {
-    if (data && code === 'suss') {
+    if (data) {
       return {data}
     }
     return {

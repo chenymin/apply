@@ -1,4 +1,4 @@
-import {loanApplicationAdd, getLoanList, getLoanDetil, getLoanLastData} from '../../api/apply'
+import {loanApplicationAdd, getLoanList, getLoanDetil, getLoanLastData, applyPrepayment} from '../../api/apply'
 import * as types from '../mutation-types'
 import _ from 'lodash'
 
@@ -48,6 +48,12 @@ const actions = {
   fetchLoanLastData ({commit}) {
     getLoanLastData().then(({data}) => {
       commit(types.GET_LOAN_LAST_DATA, {data})
+    })
+  },
+
+  prepayment ({commit}, {id}) {
+    applyPrepayment({params: {id: id}}).then((data) => {
+      console.log(data)
     })
   }
 }

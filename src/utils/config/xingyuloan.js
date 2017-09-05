@@ -36,6 +36,7 @@ const xinYuLoanData = {
         isBorder: false,
         label: 'label',
         value: 'value',
+        isNoArrow: true,
         list: [
           {
             label: '90天',

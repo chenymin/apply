@@ -4,7 +4,7 @@
     </div>
     <div class="form-filed" @click="showSelect">
       <label class="label">{{props.title}}</label>
-      <span class="select-com">{{selectVal}}</span>
+      <span class="select-com" :class="{'select-no-arrow': props.isNoArrow}">{{selectVal}}</span>
     </div>
     <transition name="list-fade">
       <div id="mySelect" class="select-wrap" v-if="isShow">
@@ -90,9 +90,6 @@
     },
     created () {
       this.selectVal = this.getDetaultVal()
-      this.$nextTick(() => {
-//        console.log(this.$refs.mySelect)
-      })
     }
   }
 </script>
@@ -132,6 +129,12 @@
            margin-top: -6px;
            right: 0.3rem;
          }
+      }
+      .select-no-arrow {
+        margin-right: 0; 
+        &::after {
+          display: none;
+        }
       }
     }
     .cover-container {
