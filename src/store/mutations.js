@@ -1,5 +1,5 @@
 import _ from 'lodash'
-//
+
 const defaultKey = {myInput: 'value', mySelect: 'defaultVal'}
 export const bindDefaultValue = (state, key) => {
   const info = state.global.currentData[key]

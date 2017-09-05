@@ -7,8 +7,14 @@ import store from './store'
 import * as filters from './utils/filters'
 import eventBus from './utils/eventBus'
 import './utils/_polyfill'
+// swiper 插件
+require('swiper/dist/css/swiper.css')
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+Vue.use(VueAwesomeSwiper)
 
 Vue.config.productionTip = false
+
 if (!Vue.prototype.eventBus) {
   Vue.prototype.eventBus = eventBus
 }

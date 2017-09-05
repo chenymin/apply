@@ -1,7 +1,7 @@
 <template>
-  <div class="product-container" id="iSlider-wrapper" :style="perspectiveValue">
-    <ul class="list-out" >
-      <li v-for="(item, index) in productListData" class="item-out" :id='index'>
+  <div class="product-container home-container">
+    <swiper :options="swiperOption">
+      <swiper-slide v-for="(item, index) in productListData">
         <div class="item-out-child">
           <section class='img-wrap'>
             <img class="img" :src="getImgPath(item.imgName)">
@@ -27,8 +27,8 @@
           </section>
           <button class="primary-button button-bottom" @click="jumpToApply(item.title)">立即申请</button>
         </div>
-      </li>
-    </ul>
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
 
@@ -40,18 +40,33 @@ import {setStore} from '../utils/storage'
 export default {
   data () {
     return {
-      perspectiveValue: `perspective: ${4 * document.body.clientWidth}px;`,
-      timer: 0,
-      currentIndex: 0,
-      nextIndex: 0,
-      preIndex: 0,
-      startX: 0,
-      startTime: 0,
-      movePercent: 0,
-      isStart: false,
-      isMove: false,
-      isMoveEnd: false,
-      timerOut: false
+      swiperOption: {
+        // autoplay: 3000,
+        speed: 1000,
+        autoplayDisableOnInteraction: false,
+        loop: true,
+        centeredSlides: true, // 自动居中
+//        slidesPerView: 2,
+        direction: 'horizontal',
+        slidesPerView: 'auto',
+        watchSlidesProgress: true,
+        onProgress: function (a) {
+          let b, c, d, es
+          for (b = 0; b < a.slides.length; b++) {
+            c = a.slides[b]
+            d = c.progress
+            es = c.style
+            es.opacity = 1 - Math.min(Math.abs(d / 2), 1)
+          }
+        },
+        onSetTransition: function (a, b) {
+          let es
+          for (let c = 0; c < a.slides.length; c++) {
+            es = a.slides[c].style
+            es.webkitTransitionDuration = es.MsTransitionDuration = es.msTransitionDuration = es.MozTransitionDuration = es.OTransitionDuration = es.transitionDuration = b + 'ms'
+          }
+        }
+      }
     }
   },
   computed: {
@@ -75,39 +90,33 @@ export default {
   created () {
     console.log(ISlider)
     /* eslint-disable no-new */
-    setTimeout(() => {
-      const nodeList = []
-      const list = [...Array.from($('.item-out-child'))]
-      list.forEach((item) => {
-        nodeList.push(Object.assign({}, {content: item}))
-      })
-      const iSlider = new ISlider({
-        dom: document.getElementById('iSlider-wrapper'),
-        data: nodeList,
-        isLooping: 1,
-        animateTime: 800,
-        animateType: 'flow',
-        // isAutoplay: 1,
-        fillSeam: true
-      })
-      console.log($('.list-out'))
-      $('.list-out').remove()
-      iSlider.on('slideChanged', function () {
-        // console.log($('.islider-active'))
-        // $('.islider-active').css({
-        //   transform: 'scale(0.95, 0.95) translateZ(0px) translateX(0px) rotateY(0deg)'
-        // })
-      })
-    }, 500)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.product-container {
-  position: absolute;
-  height: 100%;
+.home-container {
   width: 100%;
+  float: left;
+  .swiper-container {
+    width: 100%;
+    margin: 0.9rem 0;
+  .swiper-slide {
+    width: 80%;
+    transition: transform 1.0s;
+    transform: scale(0.9);
+    &.swiper-slide-active,
+    &.swiper-slide-duplicate-active {
+       -webkit-transform: scale(1);
+       transform: scale(1);
+     }
+  }
+  }
+}
+.product-container {
+  /*position: absolute;*/
+  /*height: 100%;*/
+  /*width: 100%;*/
   overflow: hidden;
   .item-out-child {
     display: flex;

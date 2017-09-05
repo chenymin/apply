@@ -6,6 +6,11 @@ import eventBus from '../utils/eventBus'
 
 export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.2.190:8080/credit-server-web' : ''
 
+const showToast = (msg) => {
+  store.commit('changeToast', {content: msg, isShowToast: true})
+  eventBus.$emit('toast/show')
+}
+
 const instance = axios.create({
   baseURL: url,
   timeout: 10000,
@@ -39,8 +44,7 @@ instance.interceptors.response.use(
   ({data: {code, message, data}}) => {
     console.log(code)
     if (code === 'fail') {
-      store.commit('changeToast', {content: message, isShowToast: true})
-      eventBus.$emit('toast/show')
+      showToast(message)
     }
     if (data) {
       return {data}
@@ -52,10 +56,11 @@ instance.interceptors.response.use(
   },
   (data) => {
     console.log(data)
-    store.commit('changeToast', {content: 'session失效，请重新登录', isShowToast: true})
-    eventBus.$emit('toast/show')
-    store.dispatch('removeToken')
-    window.location.reload()
+    if (data.indexOf('401') > 0) {
+      showToast('token失效，请重新登录')
+      store.dispatch('removeToken')
+      window.location.reload()
+    }
     return Promise.reject(data)
   })
 
