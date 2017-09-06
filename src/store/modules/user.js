@@ -31,6 +31,10 @@ const actions = {
     console.log(param)
     userVerify(param).then(({data}) => {
       // TODO 验证未通过弹框
+      const {code} = data
+      if (code === 'error') {
+        return
+      }
       router.push({
         name: 'applyinfo'
       })

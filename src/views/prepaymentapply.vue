@@ -3,15 +3,13 @@
     <section class="apply-state">
       <img class="img" :src="imgSrc">
       <div>
-        <p class="success-text">{{titleName}}申请预约成功！</p>
-        <p class="small-text">请准备好申请材料，专属信贷经理将为您服务</p>
+        <p class="success-text">{{titleName}}提前还款申请已提交！</p>
+        <p class="small-text">专属客户经理会尽快联系您，协助提前还款事宜</p>
       </div>
     </section>
-    <material-detail :material="commpleteData.materialnfo"></material-detail>
-    <submit-info :info="commpleteData.info"></submit-info>
+    <submit-info :info="prepaymentData.info"></submit-info>
     <p class="btn-group">
-      <button class='primary-button top' @click="jumpToUserCenter">查看申请记录</button>
-      <button class='primary-button btn-bg-white top' @click="jumpToProductPage">完成</button>
+      <button class='primary-button top' @click="jumpToLoanListPage">完成</button>
     </p>
 
   </div>
@@ -19,7 +17,6 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import MaterialDetail from '../components/materialdetail.vue'
   import SubmitInfo from '../components/submitinfo.vue'
   import myMixin from './_mixin/_mixin'
   import {getImgPath} from '../utils/util'
@@ -34,11 +31,11 @@
       ...mapGetters([
         'currentData'
       ]),
-      commpleteData () {
+      prepaymentData () {
         return this.currentData[this.getPathKey()]
       },
       imgSrc () {
-        const {imgPath} = this.commpleteData
+        const {imgPath} = this.prepaymentData
         return this.getImgPath(imgPath)
       },
       titleName () {
@@ -48,21 +45,16 @@
     },
     methods: {
       getImgPath,
-      jumpToUserCenter () {
-        this.$router.push({name: 'usercenter'})
-      },
-      jumpToProductPage () {
-        const site = getStore('site')
-        this.$router.push({name: 'product', params: {site: site}})
+      jumpToLoanListPage () {
+        this.$router.push({name: 'loanlist', params: {proType: getStore('sysSite')}})
       }
     },
     components: {
-      SubmitInfo,
-      MaterialDetail
+      SubmitInfo
     },
     created () {
       const id = this.$route.params.id
-      this.$store.dispatch('fetchLoanInfo', {id, pageData: this.commpleteData})
+      this.$store.dispatch('fetchLoanInfo', {id, pageData: this.prepaymentData})
     }
   }
 </script>
@@ -98,3 +90,5 @@
     }
   }
 </style>
+
+

@@ -34,7 +34,6 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import ISlider from 'islider.js'
 import {setStore} from '../utils/storage'
 
 export default {
@@ -81,15 +80,12 @@ export default {
       return require(`../assets/${name}`)
     },
     jumpToApply ({type}) {
+      console.log('-----product')
       setStore('site', this.$route.params.site)
       setStore('sysSite', type)
       this.$store.commit('GET_CURRENT_DATA', {type})
       this.$router.push({name: 'basicinfo'})
     }
-  },
-  created () {
-    console.log(ISlider)
-    /* eslint-disable no-new */
   }
 }
 </script>

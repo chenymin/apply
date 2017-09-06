@@ -1,3 +1,26 @@
+const info = [
+  {
+    label: '企业名称',
+    value: '',
+    modal: 'comName'
+  },
+  {
+    label: '申请金额',
+    value: '',
+    modal: 'amount',
+    unit: '万元'
+  },
+  {
+    label: '借款期限',
+    value: '',
+    modal: 'loanPerods'
+  },
+  {
+    label: '申请时间',
+    value: '',
+    modal: 'createTime'
+  }
+]
 const xinYuLoanData = {
   title: {
     label: '星渔贷',
@@ -156,54 +179,14 @@ const xinYuLoanData = {
         '5.其他相关资料'
       ]
     },
-    info: [
-      {
-        label: '企业名称',
-        value: '',
-        modal: 'comName'
-      },
-      {
-        label: '申请金额',
-        value: '',
-        modal: 'amount',
-        unit: '万元'
-      },
-      {
-        label: '借款期限',
-        value: '',
-        modal: 'loanPerods'
-      },
-      {
-        label: '申请时间',
-        value: '',
-        modal: 'createTime'
-      }
-    ]
+    info: info
   },
   loandetail: {
-    info: [
-      {
-        label: '企业名称',
-        value: '',
-        modal: 'comName'
-      },
-      {
-        label: '申请金额',
-        value: '',
-        modal: 'amount',
-        unit: '万元'
-      },
-      {
-        label: '借款期限',
-        value: '',
-        modal: 'loanPerods'
-      },
-      {
-        label: '申请时间',
-        value: '',
-        modal: 'createTime'
-      }
-    ]
+    info: info
+  },
+  prepaymentapply: {
+    imgPath: 'icon-fish.png',
+    info: info
   }
 }
 export default xinYuLoanData

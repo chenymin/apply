@@ -4,15 +4,14 @@
       :title='title'
       :isShow='isShow'
     ></confirm>
-    <!-- <section class="prompt-wrap">
+    <section class="prompt-wrap">
       <img class="img" :src="getImgPath(imgPath[loanInfo.status])"/>
       <p class="prompt-text">{{currentData.title.label}}{{statusText[loanInfo.status]}}</p>
-    </section> -->
+    </section>
     <submit-info :info="loanDetailData.info"></submit-info>
+    <a class="contract-apply" :href="loanInfo.contracUrl" target="_blank" v-if='loanInfo.status === "02"'>合同</a>
     <button class='primary-button top' @click="goLoanListPage">返回</button>
-    <!-- v-if='loanInfo.status === "02"' -->
-    <button class='primary-button top btn-bg-white' @click="showConfirm" >提前申请还款</button>
-    <button class='primary-button top'>完成</button>
+    <button class='primary-button top btn-bg-white' v-if='loanInfo.status === "02" && loanInfo.proType === "02"' @click="showConfirm">提前申请还款</button>
   </div>
 </template>
 
@@ -30,7 +29,7 @@
           'approving.png',
           'approved.png',
           'approved-refused.png',
-          '',
+          'prepayment.png',
           'approved.png'
         ],
         title: '确定申请提前还款?',
@@ -75,6 +74,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../scss/var";
   .loandetail-container {
     display: flex;
     flex-direction: column;
@@ -95,6 +95,34 @@
       }
     }
 
+    .contract-apply {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 0 0.3rem;
+      margin-top: 0.3rem;
+      height: 1rem;
+      font-size: 0.32rem;
+      color: #444;
+      &::before {
+        position: absolute;
+        right: 0.6rem;
+        content: '查看合同'
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0.3rem;
+        width: 12px;
+        height: 12px;
+        border-bottom: solid 2px #ccc;
+        border-right: solid 2px #ccc;
+        transform: rotate(-45deg);
+        top: 50%;
+        margin-top: -6px;
+      }
+    }
   }
 
 </style>

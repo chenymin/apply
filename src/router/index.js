@@ -12,7 +12,7 @@ const ApplyComplete = r => require.ensure([], () => r(require('@/views/applycomm
 const UserCenter = r => require.ensure([], () => r(require('@/views/usercenter')), 'chunk-usercenter')
 const LoanList = r => require.ensure([], () => r(require('@/views/loanlist')), 'chunk-loanlist')
 const LoanDetail = r => require.ensure([], () => r(require('@/views/loandetail')), 'chunk-loandetail')
-const Test = r => require.ensure([], () => r(require('@/views/test')), 'chunk-loandetail')
+const Prepaymentapply = r => require.ensure([], () => r(require('@/views/prepaymentapply')), 'chunk-prepaymentapply')
 
 const router = new Router({
   routes: [
@@ -24,7 +24,7 @@ const router = new Router({
     { name: 'loanlist', path: '/loanlist/:proType', component: LoanList, meta: { auth: true } },
     { name: 'loandetail', path: '/loandetail/:id', component: LoanDetail, meta: { auth: true } },
     { name: 'product', path: '/product/:site', component: Product, meta: { auth: false } },
-    { name: 'test', path: '/test', component: Test, meta: { auth: false } },
+    { name: 'prepaymentapply', path: '/prepaymentapply/:id', component: Prepaymentapply, meta: { auth: true } },
     { path: '*', redirect: {name: 'login'} }
   ]
 })

@@ -1,11 +1,11 @@
 <template>
   <div class="loan-detail">
     <p class="loan-detail-p">
-      <span class="detail-des">{{item.amount | formatMoney}}</span>
+      <span class="detail-des">{{item.amount * 10000 | formatMoney}}</span>
       <span  class="detail-title">借款金额(元)</span>
     </p>
     <p class="loan-detail-p">
-      <span class="detail-des">{{item.createTime}}</span>
+      <span class="detail-des">{{new Date(item.createTime).format('yyyy-MM-dd')}}</span>
       <span  class="detail-title">申请时间</span>
     </p>
     <p class="loan-detail-p">
