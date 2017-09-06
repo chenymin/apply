@@ -3,11 +3,12 @@ import URLSearchParams from 'url-search-params'
 import {getStore} from './storage'
 import store from '../store/index'
 import eventBus from '../utils/eventBus'
+import _ from 'lodash'
 
 export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.2.190:8080/credit-server-web' : ''
 
 const showToast = (msg) => {
-  store.commit('changeToast', {content: msg, isShowToast: true})
+  store.commit('changeToast', {content: msg})
   eventBus.$emit('toast/show')
 }
 
@@ -54,15 +55,22 @@ instance.interceptors.response.use(
       data: ''
     }
   },
-  ({response}) => {
-    const {status} = response
-    console.log(status)
-    if (status === 401) {
-      showToast('token失效，请重新登录')
-      store.dispatch('removeToken')
-      window.location.reload()
+  ({data}) => {
+    if (!data) {
+      showToast('网络请求错误')
+    } else {
+      const {response} = _.isObject(data) && data
+      const {status} = response
+      console.log('status')
+      if (status === 401) {
+        showToast('token失效，请重新登录')
+        store.dispatch('removeToken')
+        window.location.reload()
+      } else {
+        showToast('系统出错')
+      }
     }
-    return Promise.reject(response)
+    return Promise.reject(data)
   })
 
 export default instance

@@ -7,8 +7,6 @@ export default {
         const arr = _.keys(form)
         for (let i = 0, len = arr.length; i < len; i++) {
           const temp = form[arr[i]]
-          console.log(!temp)
-          console.log((temp && temp.toString().trim() === ''))
           if (!temp || (temp && temp.toString().trim() === '')) {
             validSuccse = false
             message = msg[arr[i]]
@@ -26,7 +24,7 @@ export default {
       return key
     },
     showToast (msg) {
-      this.$store.commit('changeToast', {content: msg, isShowToast: true})
+      this.$store.commit('changeToast', {content: msg})
       this.eventBus.$emit('toast/show')
     }
   }

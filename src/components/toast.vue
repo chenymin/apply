@@ -18,13 +18,11 @@
     props: [
       'title',
       'content',
-      'isShowToast',
       'duration'
     ],
     methods: {
       showToast () {
-        console.log('showToast:' + this.isShowToast)
-        this.isShow = this.isShowToast
+        this.isShow = true
       },
       countdown () {
         if (this.autoClose) {

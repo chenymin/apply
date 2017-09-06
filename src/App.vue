@@ -3,8 +3,7 @@
     <router-view></router-view>
     <my-toast 
            :title="toast.title" 
-           :content="toast.content"
-           :is-show-toast="toast.isShowToast">
+           :content="toast.content">
     </my-toast>
   </div>
 </template>

@@ -12,8 +12,7 @@ const state = {
   productList,
   toast: {
     title: '错误提示',
-    content: '',
-    isShowToast: false
+    content: ''
   },
   statusText: [
     '审批中',
