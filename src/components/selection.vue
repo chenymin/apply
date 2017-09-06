@@ -18,7 +18,7 @@
         </p>
         <ul class="list">
           <li class="item" v-for="(item, index) in props.list"
-                          :class="{'selected': (index === props.defaultVal - 1 || index === currentIndex) && props.selectType!=='area'}"
+                          :class="{'selected': (index === currentIndex) && props.selectType!=='area'}"
                           @click="selectItem(item, index)">
             {{getOptionLabel(item)}}
           </li>
@@ -33,16 +33,16 @@
   export default {
     data () {
       return {
-        currentIndex: -1,
+        currentIndex: this.props.defaultVal - 1,
         isShow: this.props.isShowSelect || false,
-        selectVal: ''
+        selectVal: '',
+        myDefault: this.props.defaultVal
       }
     },
     props: ['props', 'model'],
     methods: {
       getDetaultVal () {
-        const index = this.props.defaultVal - 1
-        const item = this.props.list[index]
+        const item = this.props.list[this.currentIndex]
         return this.getOptionLabel(item)
       },
       getOptionValue (option) {
@@ -84,7 +84,6 @@
         this.currentIndex = index
         this.isShow = false
         this.selectVal = this.getOptionLabel(item)
-        console.log(item)
         this.$emit('mySelect', {[this.model]: this.getOptionValue(item)})
       }
     },

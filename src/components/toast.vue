@@ -23,6 +23,7 @@
     ],
     methods: {
       showToast () {
+        console.log('showToast:' + this.isShowToast)
         this.isShow = this.isShowToast
       },
       countdown () {

@@ -47,21 +47,22 @@ instance.interceptors.response.use(
       showToast(message)
     }
     if (data) {
-      return {data}
+      return {data, code}
     }
     return {
       code: '-1',
       data: ''
     }
   },
-  (data) => {
-    console.log(data)
-    if (data.indexOf('401') > 0) {
+  ({response}) => {
+    const {status} = response
+    console.log(status)
+    if (status === 401) {
       showToast('token失效，请重新登录')
       store.dispatch('removeToken')
       window.location.reload()
     }
-    return Promise.reject(data)
+    return Promise.reject(response)
   })
 
 export default instance

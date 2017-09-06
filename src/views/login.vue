@@ -41,7 +41,8 @@
           captchaCode: '',
           sysSite: '',
           site: ''
-        }
+        },
+        countInterval: ''
       }
     },
     computed: {
@@ -78,35 +79,31 @@
       },
       // 发送验证码
       sendCode () {
-        console.log('sendCode')
-        setTimeout(() => {
-          this.countdown()
-        }, 1000)
-        this.sendSms()
-      },
-      // 60秒倒计时
-      countdown () {
-        let count = 60
-        const countInterval = setInterval(() => {
-          if (count > 0) {
-            this.smsText = `${count--}s`
-            this.isSendDisable = false
-          } else {
-            clearInterval(countInterval)
-            this.smsText = '发送验证码'
-            this.isSendDisable = true
-          }
-        }, 1000)
-      },
-      // 发送验证码调后台
-      sendSms () {
         const mobile = this.myForm.mobile.replace(/\D/g, '')
         const appChanel = this.getStore('site')
         const proType = this.getStore('sysSite')
         const captchaId = this.smsCode.verifyCodeCount >= 3 ? 'captchaId' : ''
         const captcha = this.smsCode.verifyCodeCount >= 3 ? this.myForm.captchaCode : ''
         const param = _.assign({}, {mobile, appChanel, captcha, captchaId, proType})
-        this.$store.dispatch('sendSmsCode', {param})
+        this.$store.dispatch('sendSmsCode', {param}).then((data) => {
+          if (this.smsCode.verifyCodeCount < 3) {
+            this.countdown()
+          }
+        })
+      },
+      // 60秒倒计时
+      countdown () {
+        let count = 60
+        this.countInterval = setInterval(() => {
+          if (count > 0) {
+            this.smsText = `${count--}s`
+            this.isSendDisable = false
+          } else {
+            clearInterval(this.countInterval)
+            this.smsText = '发送验证码'
+            this.isSendDisable = true
+          }
+        }, 1000)
       },
       refreshCode (event) {
         this.picCodePath = `${url}/captcha/captcha?captchaId=captchaId&date=${new Date()}`
@@ -118,9 +115,13 @@
         const site = this.getStore('site')
         const mobile = this.myForm.mobile.replace(/\D/g, '')
         const param = Object.assign(this.myForm, {sysSite, site, mobile})
-        const router = this.$router
         let redirect = decodeURIComponent(this.$route.query.redirect || '/')
-        this.$store.dispatch('login', {param, router, redirect})
+        this.$store.dispatch('login', {param}).then(() => {
+          window.clearInterval(this.countInterval)
+          this.$router.push({
+            path: redirect
+          })
+        })
       }
     },
     watch: {

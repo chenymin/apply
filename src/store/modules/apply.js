@@ -21,13 +21,15 @@ const getters = {
 
 const actions = {
   addLoanApply ({commit}, {param, router}) {
-    loanApplicationAdd(param).then(({data}) => {
-      const {id} = data
-      console.log('loanApplicationAdd')
-      router.push({
-        name: 'applycomplete',
-        params: {id}
-      })
+    loanApplicationAdd(param).then(({data, code}) => {
+      if (code === 'suss') {
+        const {id} = data
+        console.log('loanApplicationAdd')
+        router.push({
+          name: 'applycomplete',
+          params: {id}
+        })
+      }
     })
   },
 

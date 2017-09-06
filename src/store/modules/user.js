@@ -14,13 +14,11 @@ const getters = {
 }
 
 const actions = {
-  login ({commit}, {param, router, redirect}) {
-    userLogin(param).then(({data}) => {
-      commit(types.USER_LOGIN, {data})
-      router.push({
-        path: redirect
-      })
-    })
+  async login ({commit}, {param, router, redirect}) {
+    const {data} = await userLogin(param)
+    const {mobile} = param
+    commit(types.USER_LOGIN, {data, mobile})
+    return await data
   },
   async getUserInfo ({commit}) {
     const {data} = await userInfo()
@@ -42,10 +40,10 @@ const actions = {
     })
   },
 
-  sendSmsCode ({commit}, {param}) {
-    sendSMSMsg(param).then(({data}) => {
-      commit(types.SEND_SMS_CODE, {data})
-    })
+  async sendSmsCode ({commit}, {param}) {
+    const {data} = await sendSMSMsg(param)
+    commit(types.SEND_SMS_CODE, {data})
+    return await data
   },
 
   removeToken () {
@@ -54,9 +52,10 @@ const actions = {
 }
 
 const mutations = {
-  [types.USER_LOGIN] (state, {data}) {
+  [types.USER_LOGIN] (state, {data, mobile}) {
     const {userId, token} = data
     setStore('token', token)
+    setStore('mobile', mobile)
     state.userInfo = data
     console.log(token + ' ' + userId)
   },

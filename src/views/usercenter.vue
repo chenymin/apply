@@ -2,7 +2,7 @@
   <div class="usercenter-container">
     <section class="user-info">
       <img class="header" src="../assets/header.png"></img>
-      <span class="mobile">{{'13232145678' | formatPhone}}</span>
+      <span class="mobile">{{getStore('mobile') | formatPhone}}</span>
     </section>
     <div class='no-result' v-if="!isDataResult">
       <img class="pic" src="../assets/no-data.png" alt="">
@@ -25,6 +25,7 @@
   import {getImgPath} from '../utils/util'
   import {mapGetters} from 'vuex'
   import _ from 'lodash'
+  import {getStore} from '../utils/storage'
   export default {
     data () {
       return {
@@ -58,6 +59,7 @@
     },
     methods: {
       getImgPath,
+      getStore,
       getTitleObj (key) {
         return this.titleContent[key]
       },

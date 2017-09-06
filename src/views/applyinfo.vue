@@ -4,12 +4,12 @@
       <form class='form-wrap' @submit.prevent="applyInfoSubmit()">
         <factory :factor="applyInfo"></factory>
         <p class="protocol">
-          <label class="protocol-label">
-            <input type="checkbox" checked="checked" name="protocol" value="">
+          <input type="checkbox" id="checkbox" checked="checked" name="protocol" value="0" v-model="protocolChecked" class="check-box">
+          <label class="protocol-label" for="checkbox">
             我已阅读并同意，《个人线上借款协议》
           </label>
         </p>
-        <button class='primary-button'>提交申请</button>
+        <button type="submit" class='primary-button'>提交申请</button>
       </form>
     </section>
   </div>
@@ -37,7 +37,8 @@
           repayType: '',
           mail: '',
           houseAddress: ''
-        }
+        },
+        protocolChecked: 1
       }
     },
     computed: {
@@ -58,8 +59,12 @@
           this.showToast(message)
           return
         }
-        if (this.applyEdit['amount'] > 500) {
+        if (type === '02' && this.applyEdit['amount'] > 500 || type === '01' && this.applyEdit['amount'] > 1000) {
           this.showToast('您输入的金额超过最大值')
+          return
+        }
+        if (!this.protocolChecked) {
+          this.showToast('请勾选个人线上借款协议')
           return
         }
         this.$store.dispatch('addLoanApply', {param, router})
@@ -80,11 +85,46 @@
 <style lang="scss">
   .applyinfo-container {
     .protocol{
+      position: relative;
       height: 40px;
       line-height: 40px;
       padding-left: 20px;
     }
-    .protocol-label{
+    .check-box {
+      display: none;
+    }
+    .check-box + .protocol-label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      border:1px solid #e0ac60;
+      width:0.4rem;
+      height:0.4rem;
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 0.4rem;
+    }
+    .check-box:checked + .protocol-label::before {
+      background-color: #e0ac60;
+    }
+    .check-box:checked + .protocol-label::after {
+      content: '';
+      position: absolute;
+      width: 0.28rem;
+      height: 0.15rem;
+      background: transparent;
+      top: 0.25rem;
+      left: 0.05rem;
+      border:0.03rem solid #fff;
+      border-top: none;
+      border-right: none;
+      transform: rotate(-45deg);
+    }
+    .protocol-label {
+      position: absolute;
+      top: 0;
+      padding-left: 0.5rem;
       display: flex;
       align-items: center;
       color: #999;

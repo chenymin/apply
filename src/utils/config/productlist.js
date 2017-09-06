@@ -42,7 +42,7 @@ const productList = [
       {
         bigText: '分期灵活',
         smallText: '支持等额本息，按月付息等多种还款方式',
-        imgPath: 'item-three.png'
+        imgPath: 'item-four.png'
       },
       {
         bigText: '专属服务',
