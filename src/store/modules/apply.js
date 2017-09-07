@@ -34,30 +34,35 @@ const actions = {
   },
 
   fetchLoanList ({commit}, {proType}) {
-    getLoanList({params: {proType: proType}}).then(({data}) => {
-      console.log('getLoanList' + proType)
-      commit(types.GET_LOAN_LIST, {data})
+    getLoanList({params: {proType: proType}}).then(({data, code}) => {
+      if (code === 'suss') {
+        console.log('getLoanList' + proType)
+        commit(types.GET_LOAN_LIST, {data})
+      }
     })
   },
 
   fetchLoanInfo ({commit}, {id, pageData}) {
-    getLoanDetil({params: {id: id}}).then(({data}) => {
-      commit(types.GET_LOAN_INFO, {data})
-      commit(types.CHANGE_APP_COMPLETE_INFO, {pageData})
+    getLoanDetil({params: {id: id}}).then(({data, code}) => {
+      if (code === 'suss') {
+        commit(types.GET_LOAN_INFO, {data})
+        commit(types.CHANGE_APP_COMPLETE_INFO, {pageData})
+      }
     })
   },
 
   fetchLoanLastData ({commit}) {
-    getLoanLastData().then(({data}) => {
-      commit(types.GET_LOAN_LAST_DATA, {data})
+    getLoanLastData().then(({data, code}) => {
+      if (code === 'suss') {
+        commit(types.GET_LOAN_LAST_DATA, {data})
+      }
     })
   },
 
-  prepayment ({commit}, {id}) {
-    console.log(id)
-    applyPrepayment({id}).then((data) => {
-      console.log(data)
-    })
+  async prepayment ({commit}, {param}) {
+    console.log(param)
+    const {data, code} = await applyPrepayment(param)
+    return await {data, code}
   }
 }
 

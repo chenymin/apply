@@ -40,12 +40,11 @@
       cancleModal () {
         this.isShowConfirm = false
       },
-      showCofirm () {
-        this.isShowConfirm = true
+      showCofirm (isShow) {
+        this.isShowConfirm = isShow
       }
     },
     created () {
-      this.$on('showModal', this.showConfirmModal)
       this.eventBus.$on('confirm/show', this.showCofirm)
     }
   }

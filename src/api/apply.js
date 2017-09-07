@@ -8,4 +8,4 @@ export const getLoanDetil = (data) => axios.get('/loanapplication/info', data)
 
 export const getLoanLastData = () => axios.get('/loanapplication/getLoanLatestRecord')
 
-export const applyPrepayment = (data) => axios.post('/prepayment/infoById', data)
+export const applyPrepayment = (data) => axios.post('/prepayment/add', data)

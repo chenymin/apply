@@ -81,6 +81,7 @@
         this.isShow = true
       },
       selectItem (item, index) {
+        $('html').removeClass('noscroll')
         this.currentIndex = index
         this.isShow = false
         this.selectVal = this.getOptionLabel(item)

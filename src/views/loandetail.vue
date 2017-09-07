@@ -9,9 +9,9 @@
       <p class="prompt-text">{{currentData.title.label}}{{statusText[loanInfo.status]}}</p>
     </section>
     <submit-info :info="loanDetailData.info"></submit-info>
-    <a class="contract-apply" :href="loanInfo.contracUrl" target="_blank" v-if='loanInfo.status === "02"'>合同</a>
+    <a class="contract-apply" :href="loanInfo.contracUrl" target="_blank" v-if='loanInfo.status === "1"'>合同</a>
     <button class='primary-button top' @click="goLoanListPage">返回</button>
-    <button class='primary-button top btn-bg-white' v-if='loanInfo.status === "02" && loanInfo.proType === "02"' @click="showConfirm">提前申请还款</button>
+    <button class='primary-button top btn-bg-white' v-if='loanInfo.status === "1" && loanInfo.proType === "02"' @click="showConfirm">提前申请还款</button>
   </div>
 </template>
 
@@ -21,6 +21,7 @@
   import SubmitInfo from '../components/submitinfo.vue'
   import Confirm from '../components/confirm'
   import {getImgPath} from '../utils/util'
+  import _ from 'lodash'
   export default {
     mixins: [myMixin],
     data () {
@@ -51,15 +52,25 @@
         this.$store.dispatch('fetchLoanInfo', {id, pageData: this.loanDetailData})
       },
       goLoanListPage () {
-        console.log('-->')
         this.$router.go(-1)
       },
       showConfirm () {
-        this.eventBus.$emit('confirm/show')
+        this.eventBus.$emit('confirm/show', true)
       },
       prepaymentApply () {
-        const id = this.$route.params.id
-        this.$store.dispatch('prepayment', {id})
+        const loanId = this.$route.params.id
+        const amount = this.loanInfo.amount
+        const loanPerods = this.loanInfo.loanPerods
+        const param = _.assign({}, {loanId, amount, loanPerods})
+        this.$store.dispatch('prepayment', {param}).then(({data, code}) => {
+          if (code === 'suss') {
+            this.eventBus.$emit('confirm/show', false)
+            this.$router.push({
+              name: 'prepaymentapply',
+              params: {id: loanId}
+            })
+          }
+        })
       }
     },
     created () {

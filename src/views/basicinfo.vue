@@ -88,7 +88,7 @@
         }
         setTimeout(() => {
           this.setCaretPosition(nodeInput, position)
-        }, 10)
+        }, 1)
         nodeInput.value = value
         this.myForm.bankCard = value
       },
@@ -111,7 +111,7 @@
         }
         setTimeout(() => {
           this.setCaretPosition(nodeInput, position)
-        }, 20)
+        }, 1)
         nodeInput.value = value
         this.myForm.bankMobile = value
       },
@@ -127,7 +127,6 @@
       },
       baseInfoSubmit () {
         const {validSuccse, message} = this.validForm(this.myForm, this.msg)
-        console.log('----' + validIdCard(this.myForm.idNo))
         if (!validSuccse) {
           this.showToast(message)
           return
@@ -152,7 +151,9 @@
       this.$watch('myForm.bankMobile', this.watchMobile)
       this.$watch('myForm.idNo', this.watchIdNo)
       this.$store.dispatch('getUserInfo').then(({name, idNo, bankCard, bankMobile}) => {
-        bankMobile = bankMobile.replace(/\B(?=(?:\d{4})+$)/g, ' ')
+        if (!bankMobile) bankMobile = ''
+        if (!bankCard) bankCard = ''
+        bankMobile = bankMobile && bankMobile.replace(/\B(?=(?:\d{4})+$)/g, ' ')
         bankCard = bankCard && bankCard.replace(/(\d{4})(?=\d)/g, '$1 ')
         _.assign(this.myForm, {name, idNo, bankCard, bankMobile})
       })

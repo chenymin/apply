@@ -11,6 +11,7 @@
 <script>
   import ListItem from '../components/listitem.vue'
   import {mapGetters} from 'vuex'
+  import {setTitle, getTitle} from '../utils/util'
   export default {
     data () {
       return {
@@ -34,6 +35,8 @@
       ListItem
     },
     created () {
+      const proType = this.$route.params.proType
+      setTitle(`我的${getTitle(proType)}`)
       this.fetchData()
     }
   }

@@ -5,7 +5,7 @@ import store from '../store/index'
 import eventBus from '../utils/eventBus'
 import _ from 'lodash'
 
-export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.2.190:8080/credit-server-web' : ''
+export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.2.190:8080/credit-server-web' : '/credit-server-web'
 
 const showToast = (msg) => {
   store.commit('changeToast', {content: msg})
@@ -55,14 +55,14 @@ instance.interceptors.response.use(
       data: ''
     }
   },
-  ({data}) => {
+  (data) => {
     if (!data) {
       showToast('网络请求错误')
     } else {
       const {response} = _.isObject(data) && data
       const {status} = response
       console.log('status')
-      if (status === 401) {
+      if (status && status === 401) {
         showToast('token失效，请重新登录')
         store.dispatch('removeToken')
         window.location.reload()

@@ -1,15 +1,11 @@
 <template>
   <div class="login-container">
+    <pic-alert :url='url'></pic-alert>
     <p class="prompt-text">请先用您的手机号登录</p>
     <form class='form-wrap' @submit.prevent="userLoginSubmit()">
       <div class="form-filed">
         <label class="label">手机号</label>
         <input ref="mobileInput" class="value" type='tel' placeholder="请输入手机号" v-model.lazy="myForm.mobile" @keyup.prevent="formatMobile($event)"/>
-      </div>
-      <div class="form-filed" v-show="smsCode.verifyCodeCount >= 3">
-        <label class="label">图形验证</label>
-        <input class="value" type='text' placeholder="请输入图形验证码" v-model="myForm.captchaCode"/>
-        <img ref="imgCode" class="img-code" :src="picCodePath" @click.prevent="refreshCode($event)" alt="">
       </div>
       <div class="form-filed on-border">
         <label class="label">验证码</label>
@@ -21,10 +17,11 @@
   </div>
 </template>
 <script>
+  import PicAlert from '../components/picalert'
   import {validMobile, setCaretPosition} from '../utils/util'
   import {getStore} from '../utils/storage'
-  import {mapGetters} from 'vuex'
   import {url} from '../utils/axios'
+  import {mapGetters} from 'vuex'
   import _ from 'lodash'
   export default {
     data () {
@@ -32,9 +29,7 @@
         smsCount: 0,
         isLoginDisable: false,
         isSendDisable: false,
-        isSending: false,
         smsText: '发送验证码',
-        picCodePath: `${url}/captcha/captcha?captchaId=captchaId&date=${new Date()}`,
         myForm: {
           mobile: '',
           verificationCode: '',
@@ -42,12 +37,13 @@
           sysSite: '',
           site: ''
         },
-        countInterval: ''
+        countInterval: '',
+        url: url
       }
     },
     computed: {
       ...mapGetters([
-        'smsCode', 'picCode'
+        'smsCode'
       ])
     },
     methods: {
@@ -73,24 +69,41 @@
         }
         setTimeout(() => {
           this.setCaretPosition(nodeInput, position)
-        }, 20)
+        }, 1)
         nodeInput.value = value
         this.myForm.mobile = value
       },
+
       // 发送验证码
       sendCode () {
+        this.sendSmsCode()
+      },
+
+      sendSmsCode (captchaCode) {
         const mobile = this.myForm.mobile.replace(/\D/g, '')
         const appChanel = this.getStore('site')
         const proType = this.getStore('sysSite')
         const captchaId = this.smsCode.verifyCodeCount >= 3 ? 'captchaId' : ''
-        const captcha = this.smsCode.verifyCodeCount >= 3 ? this.myForm.captchaCode : ''
+        const captcha = this.smsCode.verifyCodeCount >= 3 ? captchaCode : ''
         const param = _.assign({}, {mobile, appChanel, captcha, captchaId, proType})
-        this.$store.dispatch('sendSmsCode', {param}).then((data) => {
-          if (this.smsCode.verifyCodeCount < 3) {
+        // const self = this
+        this.$store.dispatch('sendSmsCode', {param}).then(({data, code}) => {
+          if (code === 'fail' && this.smsCode.verifyCodeCount >= 3) {
+            console.log('===')
+            this.eventBus.$emit('picAlert/show', true)
+            return
+          }
+
+          if (code === 'suss' && this.smsCode.verifyCodeCount >= 3) {
+            this.eventBus.$emit('picAlert/show', false)
+          }
+
+          if (code === 'suss') {
             this.countdown()
           }
         })
       },
+
       // 60秒倒计时
       countdown () {
         let count = 60
@@ -105,9 +118,7 @@
           }
         }, 1000)
       },
-      refreshCode (event) {
-        this.picCodePath = `${url}/captcha/captcha?captchaId=captchaId&date=${new Date()}`
-      },
+
       // 用户登录
       userLoginSubmit () {
         console.log('login')
@@ -116,23 +127,23 @@
         const mobile = this.myForm.mobile.replace(/\D/g, '')
         const param = Object.assign(this.myForm, {sysSite, site, mobile})
         let redirect = decodeURIComponent(this.$route.query.redirect || '/')
-        this.$store.dispatch('login', {param}).then(() => {
-          window.clearInterval(this.countInterval)
-          this.$router.push({
-            path: redirect
-          })
+        this.$store.dispatch('login', {param}).then(({data, code}) => {
+          if (code === 'suss') {
+            window.clearInterval(this.countInterval)
+            this.$router.push({
+              path: redirect
+            })
+          }
         })
       }
     },
     watch: {
       'myForm': {
         deep: true,
-        handler: function ({mobile, verificationCode, captchaCode}) {
+        handler: function ({mobile, verificationCode}) {
           this.isSendDisable = this.validMobile(mobile)
           if (this.validMobile(this.myForm.mobile)) {
-            if (this.smsCode.verifyCodeCount <= 3 && verificationCode.length > 0) {
-              this.isLoginDisable = true
-            } else if (verificationCode.length > 0 && captchaCode.length > 0) {
+            if (verificationCode.length > 0) {
               this.isLoginDisable = true
             } else {
               this.isLoginDisable = false
@@ -142,6 +153,12 @@
           }
         }
       }
+    },
+    components: {
+      PicAlert
+    },
+    created () {
+      this.eventBus.$on('picAlert/confirm', this.sendSmsCode)
     }
   }
 </script>

@@ -34,6 +34,7 @@ export const setCaretPosition = (node, pos) => {
  * @param name 图片名称
  */
 export const getImgPath = (name) => {
+  if (!name) return
   return require(`../assets/${name}`)
 }
 
@@ -53,3 +54,20 @@ export const validIdCard = (idNo) => {
   const idValidator = new IDValidator()
   return idValidator.isValid(idNo)
 }
+
+/**
+ * 设置title
+ */
+export const setTitle = (title) => {
+  if (!title) return
+  document.title = title
+}
+
+/**
+ * 获取产品类型title
+ */
+export const getTitle = (key) => {
+  const myTitle = {'02': '星渔贷', '01': '房金融'}
+  return myTitle[key]
+}
+

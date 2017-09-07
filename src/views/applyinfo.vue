@@ -114,8 +114,8 @@
       width: 0.28rem;
       height: 0.15rem;
       background: transparent;
-      top: 0.25rem;
-      left: 0.05rem;
+      top: 0.35rem;
+      left: 0.06rem;
       border:0.03rem solid #fff;
       border-top: none;
       border-right: none;

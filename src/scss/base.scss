@@ -23,13 +23,16 @@ ul, li {
 }
 
 button {
-  border: none;
   background-color: transparent;
 }
 
 button, input, select,textarea{
   border: none;
   outline: none;
+}
+
+input[type="submit"],input[type="reset"],input[type="button"] {
+  -webkit-appearance: none;
 }
 
 .top {

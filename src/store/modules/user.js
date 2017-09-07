@@ -15,10 +15,10 @@ const getters = {
 
 const actions = {
   async login ({commit}, {param, router, redirect}) {
-    const {data} = await userLogin(param)
+    const {data, code} = await userLogin(param)
     const {mobile} = param
     commit(types.USER_LOGIN, {data, mobile})
-    return await data
+    return await {data, code}
   },
   async getUserInfo ({commit}) {
     const {data} = await userInfo()
@@ -41,9 +41,9 @@ const actions = {
   },
 
   async sendSmsCode ({commit}, {param}) {
-    const {data} = await sendSMSMsg(param)
+    const {data, code} = await sendSMSMsg(param)
     commit(types.SEND_SMS_CODE, {data})
-    return await data
+    return await {data, code}
   },
 
   removeToken () {

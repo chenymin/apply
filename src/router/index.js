@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import {getStore} from '../utils/storage'
+import {setTitle, getTitle} from '../utils/util'
 
 Vue.use(Router)
 
@@ -17,22 +18,23 @@ const Protocol = r => require.ensure([], () => r(require('@/views/protocol')), '
 
 const router = new Router({
   routes: [
-    { name: 'login', path: '/login', component: Login, meta: { auth: false } },
-    { name: 'basicinfo', path: '/basicinfo', component: BasicInfo, meta: { auth: true } },
-    { name: 'applyinfo', path: '/applyinfo', component: ApplyInfo, meta: { auth: true } },
-    { name: 'applycomplete', path: '/applycomplete/:id', component: ApplyComplete, meta: { auth: true } },
-    { name: 'usercenter', path: '/usercenter', component: UserCenter, meta: { auth: true } },
+    { name: 'login', path: '/login', component: Login, meta: { auth: false, title: '登入' } },
+    { name: 'basicinfo', path: '/basicinfo', component: BasicInfo, meta: { auth: true, title: `${getTitle(getStore('sysSite'))}申请` } },
+    { name: 'applyinfo', path: '/applyinfo', component: ApplyInfo, meta: { auth: true, title: `${getTitle(getStore('sysSite'))}申请` } },
+    { name: 'applycomplete', path: '/applycomplete/:id', component: ApplyComplete, meta: { auth: true, title: `${getTitle(getStore('sysSite'))}申请` } },
+    { name: 'usercenter', path: '/usercenter', component: UserCenter, meta: { auth: true, title: '用户中心' } },
     { name: 'loanlist', path: '/loanlist/:proType', component: LoanList, meta: { auth: true } },
-    { name: 'loandetail', path: '/loandetail/:id', component: LoanDetail, meta: { auth: true } },
-    { name: 'product', path: '/product/:site', component: Product, meta: { auth: false } },
-    { name: 'prepaymentapply', path: '/prepaymentapply/:id', component: Prepaymentapply, meta: { auth: true } },
-    { name: 'protocol', path: '/protocol', component: Protocol, meta: { auth: true } },
+    { name: 'loandetail', path: '/loandetail/:id', component: LoanDetail, meta: { auth: true, title: '借款详情' } },
+    { name: 'product', path: '/product/:site', component: Product, meta: { auth: false, title: '个人借款' } },
+    { name: 'prepaymentapply', path: '/prepaymentapply/:id', component: Prepaymentapply, meta: { auth: true, title: '提前还款申请' } },
+    { name: 'protocol', path: '/protocol', component: Protocol, meta: { auth: true, title: '协议' } },
     { path: '*', redirect: {name: 'login'} }
   ]
 })
 
 router.beforeEach(({ meta, name, path }, from, next) => {
-  let { auth = true } = meta
+  let { auth = true, title } = meta
+  setTitle(title)
   if (auth) {
     const token = getStore('token')
     // console.warn('-------------------------------------------')
