@@ -60,6 +60,8 @@
         if (value.length > 11) {
           value = value.substring(0, 11)
         }
+        console.log(position)
+        console.log(nodeInput.selectionEnd)
         if (value.length === 11) {
           value = value.replace(/\B(?=(?:\d{4})+$)/g, ' ')
         }
@@ -86,11 +88,11 @@
         const proType = this.getStore('sysSite')
         const captchaId = this.smsCode.verifyCodeCount >= 3 ? 'captchaId' : ''
         const captcha = this.smsCode.verifyCodeCount >= 3 ? captchaCode : ''
-        const param = _.assign({}, {mobile, appChanel, captcha, captchaId, proType})
+        const action = this.smsCode.verifyCodeCount >= 3 && !captchaCode ? 'to_sms' : ''
+        const param = _.assign({}, {mobile, appChanel, captcha, captchaId, proType, action})
         if (mobile === '') return
         this.$store.dispatch('sendSmsCode', {param}).then(({data, code}) => {
-          if (code === 'fail' && this.smsCode.verifyCodeCount >= 3) {
-            console.log('===')
+          if (action === 'to_sms' && this.smsCode.verifyCodeCount >= 3) {
             this.eventBus.$emit('picAlert/show', true)
             return
           }

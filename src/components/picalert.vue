@@ -50,8 +50,12 @@
         this.picCodePath = `${this.url}/captcha/captcha?captchaId=captchaId&date=${new Date()}`
       },
       showPicAlert (isShow) {
-        console.log('showPicAlert')
+        this.initData()
         this.isShow = isShow
+      },
+      initData () {
+        this.captchaCode = ''
+        this.refreshCode()
       }
     },
     created () {
