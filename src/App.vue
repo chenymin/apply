@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <my-toast 
-           :title="toast.title" 
+    <my-toast
+           :title="toast.title"
            :content="toast.content">
     </my-toast>
   </div>
@@ -29,7 +29,6 @@ export default {
 
     const data = {verifyCodeCount: getStore('verifyCodeCount')}
     this.$store.commit('SEND_SMS_CODE', {data})
-    console.log(this.toast)
   }
 }
 </script>

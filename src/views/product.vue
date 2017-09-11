@@ -25,7 +25,7 @@
               <span class="text">{{item.proper}}</span>
             </p>
           </section>
-          <button class="apply-button primary-button button-bottom">立即申请</button>
+          <button class="apply-button primary-button button-bottom" :type="item.title.type">立即申请</button>
         </div>
       </swiper-slide>
     </swiper>
@@ -78,7 +78,7 @@ export default {
     getImgPath (name) {
       return require(`../assets/${name}`)
     },
-    jumpToApply ({type}) {
+    jumpToApply (type) {
       setStore('site', this.$route.params.site)
       setStore('sysSite', type)
       this.$store.commit('GET_CURRENT_DATA', {type})
@@ -86,9 +86,9 @@ export default {
     }
   },
   created () {
-    setTimeout(function () {
-      $('.apply-button').on('click', function (e) {
-        console.log('--->')
+    setTimeout(() => {
+      $('.apply-button').on('click', (e) => {
+        this.jumpToApply($(e.currentTarget).attr('type'))
       })
     }, 200)
   }
