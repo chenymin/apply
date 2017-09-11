@@ -55,6 +55,7 @@
         const nodeInput = this.$refs.mobileInput
         let position = nodeInput.selectionStart
         let startLen = event.target.value.length
+        // let indexPosition = event.target.value.indexOf(' ')
         let value = event.target.value.replace(/\D/g, '')
         if (value.length > 11) {
           value = value.substring(0, 11)
@@ -86,7 +87,7 @@
         const captchaId = this.smsCode.verifyCodeCount >= 3 ? 'captchaId' : ''
         const captcha = this.smsCode.verifyCodeCount >= 3 ? captchaCode : ''
         const param = _.assign({}, {mobile, appChanel, captcha, captchaId, proType})
-        // const self = this
+        if (mobile === '') return
         this.$store.dispatch('sendSmsCode', {param}).then(({data, code}) => {
           if (code === 'fail' && this.smsCode.verifyCodeCount >= 3) {
             console.log('===')
@@ -121,11 +122,11 @@
 
       // 用户登录
       userLoginSubmit () {
-        console.log('login')
         const sysSite = this.getStore('sysSite')
         const site = this.getStore('site')
         const mobile = this.myForm.mobile.replace(/\D/g, '')
-        const param = Object.assign(this.myForm, {sysSite, site, mobile})
+        const form = Object.assign({}, this.myForm)
+        const param = Object.assign(form, {sysSite, site, mobile})
         let redirect = decodeURIComponent(this.$route.query.redirect || '/')
         this.$store.dispatch('login', {param}).then(({data, code}) => {
           if (code === 'suss') {
@@ -143,7 +144,7 @@
         handler: function ({mobile, verificationCode}) {
           this.isSendDisable = this.validMobile(mobile)
           if (this.validMobile(this.myForm.mobile)) {
-            if (verificationCode.length > 0) {
+            if (verificationCode.length > 0 && verificationCode.length <= 4) {
               this.isLoginDisable = true
             } else {
               this.isLoginDisable = false
@@ -177,12 +178,12 @@
     }
     .sms-code {
         height: 1rem;
+        width: 2rem;
         position: absolute;
         top: 0;
         right: 0px;
         background-color: $bg-color;
         font-size: $small-font-size;
-        padding: 0 0.3rem;
         color: #999;
     }
     .able-activity {
