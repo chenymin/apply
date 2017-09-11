@@ -26,7 +26,6 @@ const actions = {
     return await data
   },
   baseInfoVerify ({commit}, {param, router}) {
-    console.log(param)
     userVerify(param).then(({data}) => {
       // TODO 验证未通过弹框
       const {code} = data
@@ -36,7 +35,6 @@ const actions = {
       router.push({
         name: 'applyinfo'
       })
-      console.log('userVerify')
     })
   },
 
@@ -53,11 +51,10 @@ const actions = {
 
 const mutations = {
   [types.USER_LOGIN] (state, {data, mobile}) {
-    const {userId, token} = data
+    const {token} = data
     setStore('token', token)
     setStore('mobile', mobile)
     state.userInfo = data
-    console.log(token + ' ' + userId)
   },
 
   [types.GET_USER_INFO] (state, {data}) {
