@@ -32,7 +32,8 @@
 <script>
   import _ from 'lodash'
   import {mapGetters} from 'vuex'
-  import {getImgPath, formatPhone, setCaretPosition, validIdCard, validMobile} from '../utils/util'
+  import {getStore} from '../utils/storage'
+  import {getImgPath, formatPhone, setCaretPosition, validIdCard, validMobile, setTitle, getTitle} from '../utils/util'
   import myMixin from './_mixin/_mixin'
 
   export default {
@@ -148,6 +149,8 @@
       }
     },
     created () {
+      const title = `${getTitle(getStore('sysSite'))}申请`
+      setTitle(title)
       this.$watch('myForm.bankMobile', this.watchMobile)
       this.$watch('myForm.idNo', this.watchIdNo)
       this.$store.dispatch('getUserInfo').then(({name, idNo, bankCard, bankMobile}) => {

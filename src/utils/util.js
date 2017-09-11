@@ -67,6 +67,7 @@ export const setTitle = (title) => {
  * 获取产品类型title
  */
 export const getTitle = (key) => {
+  if (!key) return
   const myTitle = {'02': '星渔贷', '01': '房金融'}
   return myTitle[key]
 }

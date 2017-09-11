@@ -24,7 +24,6 @@ const actions = {
     loanApplicationAdd(param).then(({data, code}) => {
       if (code === 'suss') {
         const {id} = data
-        console.log('loanApplicationAdd')
         router.push({
           name: 'applycomplete',
           params: {id}
@@ -36,7 +35,6 @@ const actions = {
   fetchLoanList ({commit}, {proType}) {
     getLoanList({params: {proType: proType}}).then(({data, code}) => {
       if (code === 'suss') {
-        console.log('getLoanList' + proType)
         commit(types.GET_LOAN_LIST, {data})
       }
     })
@@ -60,7 +58,6 @@ const actions = {
   },
 
   async prepayment ({commit}, {param}) {
-    console.log(param)
     const {data, code} = await applyPrepayment(param)
     return await {data, code}
   }
@@ -80,7 +77,6 @@ const mutations = {
   },
 
   [types.CHANGE_APP_COMPLETE_INFO] (state, {pageData}) {
-    console.log(state.loanInfo)
     const {info} = pageData
     _.map(info, (item) => {
       const {modal} = item
@@ -89,7 +85,6 @@ const mutations = {
   },
 
   changeApplyEdit (state, item) {
-    console.log('changeApplyEdit')
     _.assign(state.applyEdit, item)
   }
 }

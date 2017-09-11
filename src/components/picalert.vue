@@ -1,6 +1,6 @@
 <template>
   <div class="pic-alert" v-if="isShow">
-    <div class='alert-cover' @click="cancel"></div>
+    <div class='alert-cover' @click.prevent="cancel"></div>
     <div class="common-bounced sendnum alert">
     <div class="title text-center">图形验证码</div>
 		<div class="text-center send-input">
@@ -11,8 +11,8 @@
 		</div>
     <slot name="btu-group">
       <div class="btn text-center btn-group">
-			  <button class="cancel" @click="cancel">取消</button>
-			  <button class="confirm" @click="confirm">确定</button>
+			  <button class="cancel" @click.prevent="cancel">取消</button>
+			  <button class="confirm" @click.prevent.stop="confirm">确定</button>
 		  </div>
     </slot>
 	</div>
@@ -80,10 +80,8 @@
         border-right: 1px solid #ebebeb;
       }
       .confirm {
-        display: flex;
         flex: 1;
         color: #e0ac60!important;
-        justify-content: center;
       }
     }
   }
@@ -91,9 +89,6 @@
   .btn{
     display: inline-block;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     text-align: center;
     vertical-align: middle;

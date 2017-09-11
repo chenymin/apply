@@ -1,14 +1,14 @@
 <template>
   <div class="product-container home-container">
     <swiper :options="swiperOption">
-      <swiper-slide v-for="(item, index) in productListData">
+      <swiper-slide v-for="(item, index) in productListData" :key="index">
         <div class="item-out-child">
           <section class='img-wrap'>
             <img class="img" :src="getImgPath(item.imgName)">
           </section>
           <section class='product-des'>
             <ul class="list">
-              <li class="item" v-for="childItem in item.detail">
+              <li class="item" v-for="(childItem, index) in item.detail" :key="index">
                 <img class="item-img" :src="getImgPath(childItem.imgPath)" alt="">
                 <p class="item-content">
                   <strong class="big-txt">{{childItem.bigText}}</strong>
@@ -25,7 +25,7 @@
               <span class="text">{{item.proper}}</span>
             </p>
           </section>
-          <button class="primary-button button-bottom" @click="jumpToApply(item.title)">立即申请</button>
+          <button class="primary-button button-bottom" @click.prevent="jumpToApply(item.title)">立即申请</button>
         </div>
       </swiper-slide>
     </swiper>
@@ -80,7 +80,6 @@ export default {
       return require(`../assets/${name}`)
     },
     jumpToApply ({type}) {
-      console.log('-----product')
       setStore('site', this.$route.params.site)
       setStore('sysSite', type)
       this.$store.commit('GET_CURRENT_DATA', {type})
@@ -93,10 +92,9 @@ export default {
 <style lang="scss" scoped>
 .home-container {
   width: 100%;
-  float: left;
   .swiper-container {
     width: 100%;
-    margin: 0.9rem 0;
+    margin: 0.85rem 0;
   .swiper-slide {
     width: 80%;
     transition: transform 1.0s;
@@ -110,9 +108,7 @@ export default {
   }
 }
 .product-container {
-  /*position: absolute;*/
-  /*height: 100%;*/
-  /*width: 100%;*/
+  background-color: #333;
   overflow: hidden;
   .item-out-child {
     display: flex;

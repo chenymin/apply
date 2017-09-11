@@ -20,6 +20,7 @@
   import {mapGetters} from 'vuex'
   import myMixin from './_mixin/_mixin'
   import {getStore} from '../utils/storage'
+  import {setTitle, getTitle} from '../utils/util'
   import factory from '../components/factory/factory'
   export default {
     mixins: [myMixin],
@@ -77,6 +78,8 @@
       factory
     },
     created () {
+      const title = `${getTitle(getStore('sysSite'))}申请`
+      setTitle(title)
       this.load()
     }
   }
@@ -100,10 +103,8 @@
       border:1px solid #e0ac60;
       width:0.4rem;
       height:0.4rem;
-      display: inline-block;
-      text-align: center;
-      vertical-align: middle;
-      line-height: 0.4rem;
+      top: 50%;
+      margin-top: -0.2rem; 
     }
     .check-box:checked + .protocol-label::before {
       background-color: #e0ac60;
@@ -114,7 +115,8 @@
       width: 0.28rem;
       height: 0.15rem;
       background: transparent;
-      top: 0.35rem;
+      top: 50%;
+      margin-top: -0.12rem;
       left: 0.06rem;
       border:0.03rem solid #fff;
       border-top: none;
@@ -122,8 +124,7 @@
       transform: rotate(-45deg);
     }
     .protocol-label {
-      position: absolute;
-      top: 0;
+      position: relative;
       padding-left: 0.5rem;
       display: flex;
       align-items: center;
