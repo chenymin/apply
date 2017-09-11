@@ -35,7 +35,6 @@ const actions = {
 
 const mutations = {
   [types.GET_CURRENT_DATA] ({pageSource}, {type}) {
-    console.log('--->types.GET_CURRENT_DATA')
     state.currentData = pageSource[type]
   }
 }

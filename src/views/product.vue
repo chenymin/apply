@@ -25,7 +25,7 @@
               <span class="text">{{item.proper}}</span>
             </p>
           </section>
-          <button class="primary-button button-bottom" @click.prevent="jumpToApply(item.title)">立即申请</button>
+          <button class="apply-button primary-button button-bottom">立即申请</button>
         </div>
       </swiper-slide>
     </swiper>
@@ -40,15 +40,14 @@ export default {
   data () {
     return {
       swiperOption: {
-        // autoplay: 3000,
         speed: 1000,
         autoplayDisableOnInteraction: false,
         loop: true,
         centeredSlides: true, // 自动居中
-//        slidesPerView: 2,
         direction: 'horizontal',
         slidesPerView: 'auto',
         watchSlidesProgress: true,
+        preventClicksPropagation: false,
         onProgress: function (a) {
           let b, c, d, es
           for (b = 0; b < a.slides.length; b++) {
@@ -85,6 +84,13 @@ export default {
       this.$store.commit('GET_CURRENT_DATA', {type})
       this.$router.push({name: 'basicinfo'})
     }
+  },
+  created () {
+    setTimeout(function () {
+      $('.apply-button').on('click', function (e) {
+        console.log('--->')
+      })
+    }, 200)
   }
 }
 </script>
