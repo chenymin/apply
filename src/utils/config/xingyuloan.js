@@ -105,55 +105,17 @@ const xinYuLoanData = {
       }
     },
     {
-      type: 'mySelect',
+      type: 'myDistPicker',
       props: {
-        title: '所在省份',
-        defaultVal: 1,
-        isTriggerClick: true,
-        isBorder: false,
-        selectType: 'area',
-        isShowSelect: false,
-        label: 'label',
-        value: 'value',
-        list: [
-          {
-            label: '北京',
-            value: 1
-          },
-          {
-            label: '上海',
-            value: 2
-          },
-          {
-            label: '天津',
-            value: 3
-          },
-          {
-            label: '重庆',
-            value: 4
-          },
-          {
-            label: '河北',
-            value: 5
-          },
-          {
-            label: '重庆',
-            value: 4
-          },
-          {
-            label: '河北',
-            value: 5
-          },
-          {
-            label: '重庆',
-            value: 4
-          },
-          {
-            label: '河北',
-            value: 5
-          }
-        ]
+        isAll: true,
+        needDist: {
+          110000: '北京市',
+          310000: '上海市'
+        }
       },
+      province: '北京市',
+      city: '市辖区',
+      area: '朝阳区',
       model: 'city'
     },
     {

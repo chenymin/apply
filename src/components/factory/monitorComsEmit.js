@@ -6,3 +6,9 @@ export const myInputNoticeVal = (item) => {
 export const mySelectNoticeVal = (item) => {
   store.commit('changeApplyEdit', item)
 }
+
+export const myDistChangeVal = (item) => {
+  console.log('---->')
+  store.commit('changeApplyEdit', item)
+}
+

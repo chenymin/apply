@@ -17,7 +17,7 @@
           <span class="province">{{selectVal}}</span>
         </p>
         <ul class="list">
-          <li class="item" v-for="(item, index) in props.list"
+          <li class="item" v-for="(item, index) in props.list" :key='index'
                           :class="{'selected': (index === currentIndex) && props.selectType!=='area'}"
                           @click="selectItem(item, index)">
             {{getOptionLabel(item)}}
