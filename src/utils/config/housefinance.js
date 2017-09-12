@@ -59,7 +59,7 @@ const houseFinanceData = {
       type: 'mySelect',
       props: {
         title: '贷款期数',
-        defaultVal: 1,
+        defaultVal: '3期',
         selectType: 'term',
         isShowSelect: false,
         isTriggerClick: true,
@@ -99,7 +99,7 @@ const houseFinanceData = {
       type: 'mySelect',
       props: {
         title: '还款方式',
-        defaultVal: 1,
+        defaultVal: '等额本息',
         selectType: 'term',
         isShowSelect: false,
         isTriggerClick: true,

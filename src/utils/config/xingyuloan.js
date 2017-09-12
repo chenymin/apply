@@ -54,7 +54,7 @@ const xinYuLoanData = {
       type: 'mySelect',
       props: {
         title: '贷款期限',
-        defaultVal: 1,
+        defaultVal: '90天',
         selectType: 'term',
         isShowSelect: false,
         isTriggerClick: false,

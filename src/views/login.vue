@@ -60,8 +60,6 @@
         if (value.length > 11) {
           value = value.substring(0, 11)
         }
-        console.log(position)
-        console.log(nodeInput.selectionEnd)
         if (value.length === 11) {
           value = value.replace(/\B(?=(?:\d{4})+$)/g, ' ')
         }

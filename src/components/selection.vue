@@ -33,7 +33,7 @@
   export default {
     data () {
       return {
-        currentIndex: this.props.defaultVal - 1,
+        currentIndex: this.getDefaultIndex(),
         isShow: this.props.isShowSelect || false,
         selectVal: '',
         myDefault: this.props.defaultVal
@@ -74,7 +74,6 @@
           return
         }
         $('html').addClass('noscroll')
-        console.log($('.selection-container')[0])
         Array.from($('.selection-container')).forEach((item) => {
           smartScrolls($(item), '.list')
         })
@@ -85,7 +84,20 @@
         this.currentIndex = index
         this.isShow = false
         this.selectVal = this.getOptionLabel(item)
-        this.$emit('mySelect', {[this.model]: this.getOptionValue(item)})
+        this.$emit('mySelect', {[this.model]: this.getOptionLabel(item)})
+      },
+      getDefaultIndex () {
+        let defaultIndex = 0
+        if (typeof this.props.defaultVal === 'number') {
+          defaultIndex = this.props.defaultVal - 1
+        } else {
+          this.props.list.find((item, index) => {
+            if (item.label === 'this.props.defaultVal') {
+              defaultIndex = index
+            }
+          })
+        }
+        return defaultIndex
       }
     },
     created () {

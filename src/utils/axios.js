@@ -5,7 +5,7 @@ import store from '../store/index'
 import eventBus from '../utils/eventBus'
 import _ from 'lodash'
 
-export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.2.190:8080/credit-server-web' : '/credit-server-web'
+export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.10.109:8080/credit-server-web' : '/credit-server-web'
 
 const showToast = (msg) => {
   store.commit('changeToast', {content: msg})
@@ -43,7 +43,7 @@ instance.interceptors.request.use((config) => {
 // 返回拦截器
 instance.interceptors.response.use(
   ({data: {code, message, data}}) => {
-    console.log(code)
+    // console.log(code)
     if (code === 'fail') {
       showToast(message)
     }
