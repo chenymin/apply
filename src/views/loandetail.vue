@@ -62,6 +62,7 @@
         this.eventBus.$emit('confirm/show', true)
       },
       prepaymentApply () {
+        const type = this.$route.params.type
         const loanId = this.$route.params.id
         const amount = this.loanInfo.amount
         const loanPerods = this.loanInfo.loanPerods
@@ -71,7 +72,7 @@
             this.eventBus.$emit('confirm/show', false)
             this.$router.push({
               name: 'prepaymentapply',
-              params: {id: loanId}
+              params: {id: loanId, type}
             })
           }
         })

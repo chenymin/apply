@@ -20,7 +20,6 @@
   import SubmitInfo from '../components/submitinfo.vue'
   import myMixin from './_mixin/_mixin'
   import {getImgPath} from '../utils/util'
-  import {getStore} from '../utils/storage'
   export default {
     mixins: [myMixin],
     data () {
@@ -29,7 +28,7 @@
     },
     computed: {
       ...mapGetters([
-        'currentData'
+        'pageSource'
       ]),
       prepaymentData () {
         return this.currentData[this.getPathKey()]
@@ -41,12 +40,17 @@
       titleName () {
         const {label} = this.currentData.title
         return label
+      },
+      currentData () {
+        const type = this.$route.params.type
+        return this.pageSource[type]
       }
     },
     methods: {
       getImgPath,
       jumpToLoanListPage () {
-        this.$router.push({name: 'loanlist', params: {proType: getStore('sysSite')}})
+        const type = this.$route.params.type
+        this.$router.push({name: 'loanlist', params: {proType: type}})
       }
     },
     components: {

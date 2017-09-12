@@ -26,7 +26,7 @@ const router = new Router({
     { name: 'loanlist', path: '/loanlist/:proType', component: LoanList, meta: { auth: true } },
     { name: 'loandetail', path: '/loandetail/:id/:type', component: LoanDetail, meta: { auth: true, title: '借款详情' } },
     { name: 'product', path: '/product/:site', component: Product, meta: { auth: false, title: '个人借款' } },
-    { name: 'prepaymentapply', path: '/prepaymentapply/:id', component: Prepaymentapply, meta: { auth: true, title: '提前还款申请' } },
+    { name: 'prepaymentapply', path: '/prepaymentapply/:id/:type', component: Prepaymentapply, meta: { auth: true, title: '提前还款申请' } },
     { name: 'protocol', path: '/protocol', component: Protocol, meta: { auth: true, title: '协议' } },
     { path: '*', redirect: {name: 'login'} }
   ]
