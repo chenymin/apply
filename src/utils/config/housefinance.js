@@ -172,22 +172,6 @@ const houseFinanceData = {
           {
             label: '上海',
             value: 2
-          },
-          {
-            label: '天津',
-            value: 3
-          },
-          {
-            label: '重庆',
-            value: 4
-          },
-          {
-            label: '河北',
-            value: 5
-          },
-          {
-            label: '江苏',
-            value: 6
           }
         ]
       },
