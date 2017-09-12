@@ -39,10 +39,14 @@
     },
     computed: {
       ...mapGetters([
-        'currentData', 'loanInfo', 'statusText'
+        'pageSource', 'loanInfo', 'statusText'
       ]),
       loanDetailData () {
         return this.currentData[this.getPathKey()]
+      },
+      currentData () {
+        const type = this.$route.params.type
+        return this.pageSource[type]
       }
     },
     methods: {

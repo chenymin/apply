@@ -28,7 +28,7 @@ const info = [
 ]
 const houseFinanceData = {
   title: {
-    title: '房金融',
+    label: '房金融',
     value: 'houseFinance'
   },
   basicinfo: {

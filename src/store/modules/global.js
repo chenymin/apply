@@ -27,7 +27,8 @@ const getters = {
   currentData: state => state.currentData,
   productListData: state => state.productList,
   toast: state => state.toast,
-  statusText: state => state.statusText
+  statusText: state => state.statusText,
+  pageSource: state => state.pageSource
 }
 
 const actions = {

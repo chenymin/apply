@@ -24,7 +24,8 @@
     },
     methods: {
       jumpToDetail ({id}) {
-        this.$router.push({name: 'loandetail', params: {id}})
+        const proType = this.$route.params.proType
+        this.$router.push({name: 'loandetail', params: {id, type: proType}})
       },
       fetchData () {
         const proType = this.$route.params.proType
