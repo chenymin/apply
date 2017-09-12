@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-const defaultKey = {myInput: 'value', mySelect: 'defaultVal'}
+const defaultKey = {myInput: 'value', mySelect: 'defaultVal', myDistPicker: 'defaultVal'}
 export const bindDefaultValue = (state, key) => {
   const info = state.global.currentData[key]
   _.assign(state.apply.applyEdit, {})

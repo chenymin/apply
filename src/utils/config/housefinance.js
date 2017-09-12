@@ -160,7 +160,8 @@ const houseFinanceData = {
         needDist: {
           110000: '北京市',
           310000: '上海市'
-        }
+        },
+        defaultVal: '北京市-市辖区-朝阳区'
       },
       province: '北京市',
       city: '市辖区',
