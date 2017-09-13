@@ -34,14 +34,14 @@
           </ul>
         </div>
         <div :class="addressContainer">
-          <ul v-if="tab == 1">
+          <ul class="list" v-if="tab == 1">
             <li v-for="(item, index) in provinces" :class="{'active': item == currentProvince}" @click="chooseProvince(item)">{{ item }}</li>
           </ul>
           <template v-if="!onlyProvince">
-            <ul v-if="tab == 2">
+            <ul class="list" v-if="tab == 2">
               <li v-for="(item, index) in cities" :class="{'active': item == currentCity}" @click="chooseCity(item)">{{ item }}</li>
             </ul>
-            <ul v-if="tab == 3 && !hideArea">
+            <ul class="list" v-if="tab == 3 && !hideArea">
               <li v-for="(item, index) in areas" :class="{'active': item == currentArea}" @click="chooseArea(item)">{{ item }}</li>
             </ul>
           </template>
@@ -53,6 +53,7 @@
 
 <script>
 import DISTRICTS from './districts'
+import smartScrolls from '../../utils/smartScroll'
 
 const DEFAULT_CODE = 100000
 
@@ -269,6 +270,10 @@ export default {
       this[name] = []
     },
     showSelect () {
+      $('html').addClass('noscroll')
+      Array.from($('.area-container')).forEach((item) => {
+        smartScrolls($(item), '.list')
+      })
       this.isShow = true
     },
     hiddenArea () {
