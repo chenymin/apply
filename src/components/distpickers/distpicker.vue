@@ -34,14 +34,14 @@
           </ul>
         </div>
         <div :class="addressContainer">
-          <ul v-if="tab == 1">
+          <ul class="list" v-if="tab == 1">
             <li v-for="(item, index) in provinces" :class="{'active': item == currentProvince}" @click="chooseProvince(item)">{{ item }}</li>
           </ul>
           <template v-if="!onlyProvince">
-            <ul v-if="tab == 2">
+            <ul class="list" v-if="tab == 2">
               <li v-for="(item, index) in cities" :class="{'active': item == currentCity}" @click="chooseCity(item)">{{ item }}</li>
             </ul>
-            <ul v-if="tab == 3 && !hideArea">
+            <ul class="list" v-if="tab == 3 && !hideArea">
               <li v-for="(item, index) in areas" :class="{'active': item == currentArea}" @click="chooseArea(item)">{{ item }}</li>
             </ul>
           </template>
@@ -53,6 +53,7 @@
 
 <script>
 import DISTRICTS from './districts'
+import smartScrolls from '../../utils/smartScroll'
 
 const DEFAULT_CODE = 100000
 
@@ -221,6 +222,7 @@ export default {
     chooseArea (name) {
       this.currentArea = name
       this.$emit('myDistPicker', {[this.model]: this.detailAddress})
+      this.hiddenArea()
     },
     getAreaCode (name, check = '') {
       for (var x in DISTRICTS) {
@@ -268,6 +270,10 @@ export default {
       this[name] = []
     },
     showSelect () {
+      $('html').addClass('noscroll')
+      Array.from($('.area-container')).forEach((item) => {
+        smartScrolls($(item), '.list')
+      })
       this.isShow = true
     },
     hiddenArea () {
@@ -292,6 +298,10 @@ export default {
         font-size: 0.32rem;
         color: #444;
         margin-right: 0.3rem;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         &::after {
            content: '';
            position: absolute;
@@ -344,7 +354,7 @@ export default {
   .remove {
     position: absolute;
     left: 0.3rem;
-    width: 1rem;
+    width: 0.5rem;
     height: 1rem;
      &::after {
       @extend .remove-common;
@@ -404,7 +414,7 @@ export default {
           color: #cda76e;
         }
         &:first-child {
-          padding-left: 0.3rem
+          padding-left: 0.65rem
         }
       }
       
@@ -412,7 +422,7 @@ export default {
   }
   .address-container {
     background-color: #fff;
-    max-height: 7rem;
+    height: 7rem;
     overflow: scroll;
     ul {
       height: 100%;

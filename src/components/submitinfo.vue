@@ -38,6 +38,7 @@
       height: 1rem;
       padding: 0 0.3rem;
       background-color: #fff;
+      overflow: hidden;
       &::after {
         position: absolute;
         content: '';
