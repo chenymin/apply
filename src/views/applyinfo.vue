@@ -8,7 +8,7 @@
           <label class="protocol-label" for="checkbox">
             我已阅读并同意
           </label>
-          <a class="protocol-link" :href="url" target="_blank">《个人线上借款协议》</a>
+          <a class="protocol-link" :href="protocolUrl" target="_blank">《个人线上借款协议》</a>
         </p>
         <button type="submit" class='primary-button'>提交申请</button>
       </form>
@@ -29,6 +29,7 @@
       return {
         msg_xingyudai: {
           amount: '请输入申请金额',
+          loanPerods: '请选择贷款期限',
           comName: '请输入企业名称',
           comLicense: '请输入用营业执照',
           address: '请填写详细经营地址',
@@ -56,27 +57,13 @@
     },
     computed: {
       ...mapGetters([
-        'currentData', 'applyEdit'
+        'currentData', 'applyEdit', 'protocolUrl'
       ]),
       applyInfo () {
         return this.currentData[this.getPathKey()]
       }
     },
     methods: {
-      getProtocolSrc () {
-        let url = ''
-        const type = getStore('sysSite')
-        if (type === '02') {
-          url = `/static/protocol/${'loan_contract'}.htm`
-        } else if (type === '01') {
-          if (this.applyEdit && this.applyEdit.city.indexOf('上海') >= 0) {
-            url = `/static/protocol/${'shanghai'}.htm`
-          } else if (this.applyEdit && this.applyEdit.city.indexOf('北京') >= 0) {
-            url = `/static/protocol/${'beijing'}.htm`
-          }
-        }
-        return url
-      },
       applyInfoSubmit () {
         const router = this.$router
         const type = getStore('sysSite')
@@ -116,11 +103,11 @@
         return reg.test(val)
       },
       load () {
+        const data = getStore('applyEdit')
+        data && this.$store.commit('bindValue', {key: this.getPathKey(), data})
         this.$store.commit('bindDefaultValue', this.getPathKey())
-      },
-      watchCityChange () {
-        console.log('--->')
-        this.url = this.getProtocolSrc()
+        this.$store.commit('getProtocolSrc')
+        setTitle(`${getTitle(getStore('sysSite'))}申请`)
       }
     },
     components: {
@@ -128,9 +115,6 @@
     },
     created () {
       this.load()
-      setTitle(`${getTitle(getStore('sysSite'))}申请`)
-      this.$watch('applyEdit.city', this.watchCityChange)
-      this.url = this.getProtocolSrc()
     }
   }
 </script>

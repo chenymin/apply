@@ -8,7 +8,7 @@ export const mySelectNoticeVal = (item) => {
 }
 
 export const myDistChangeVal = (item) => {
-  console.log('---->')
   store.commit('changeApplyEdit', item)
+  store.commit('getProtocolSrc')
 }
 

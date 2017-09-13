@@ -1,4 +1,5 @@
 import {loanApplicationAdd, getLoanList, getLoanDetil, getLoanLastData, applyPrepayment} from '../../api/apply'
+import {setStore, getStore} from '../../utils/storage'
 import * as types from '../mutation-types'
 import _ from 'lodash'
 
@@ -9,14 +10,16 @@ const state = {
   applyEdit: {
   },
   loanLatestData: [
-  ]
+  ],
+  protocolUrl: ''
 }
 
 const getters = {
   loanList: state => state.loanList,
   loanInfo: state => state.loanInfo,
   loanLatestData: state => state.loanLatestData,
-  applyEdit: state => state.applyEdit
+  applyEdit: state => state.applyEdit,
+  protocolUrl: state => state.protocolUrl
 }
 
 const actions = {
@@ -86,6 +89,24 @@ const mutations = {
 
   changeApplyEdit (state, item) {
     _.assign(state.applyEdit, item)
+    setStore('applyEdit', state.applyEdit)
+  },
+
+  getProtocolSrc (state) {
+    const type = getStore('sysSite')
+    if (type === '02') {
+      state.protocolUrl = `/static/protocol/${'loan_contract'}.htm`
+    } else if (type === '01') {
+      if (state.applyEdit && state.applyEdit.city.indexOf('上海') >= 0) {
+        state.protocolUrl = `/static/protocol/${'shanghai'}.htm`
+      } else if (state.applyEdit && state.applyEdit.city.indexOf('北京') >= 0) {
+        state.protocolUrl = `/static/protocol/${'beijing'}.htm`
+      }
+    }
+  },
+
+  [types.CHANGE_APP_INFO] (state, {appInfoData}) {
+    state.applyEdit = appInfoData
   }
 }
 

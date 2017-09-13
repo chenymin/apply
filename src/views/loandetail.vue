@@ -124,10 +124,13 @@
       height: 1rem;
       font-size: 0.32rem;
       color: #444;
+      text-decoration: none;
       &::before {
         position: absolute;
         right: 0.6rem;
-        content: '查看合同'
+        content: '查看合同';
+        top: 50%;
+        margin-top: -0.2rem;
       }
       &::after {
         content: '';

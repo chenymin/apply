@@ -11,11 +11,22 @@ export const bindDefaultValue = (state, key) => {
   })
 }
 
-export const bindValue = (state, key) => {
+export const bindValue = (state, {key, data}) => {
   const info = state.global.currentData[key]
-  _.forEach(info, ({type, props, model}) => {
-    if (model && !_.isEmpty(state.apply.applyEdit)) {
-      _.assign(props, {[defaultKey[type]]: state.apply.applyEdit[model]})
+  if (typeof data === 'string') {
+    data = JSON.parse(data)
+  }
+  _.forEach(info, (item) => {
+    let {type, props, model} = item
+    if (model && !_.isEmpty(data)) {
+      _.assign(props, {[defaultKey[type]]: data[model]})
+    }
+
+    if (model && type === 'myDistPicker') {
+      const citys = _.split(data.city, '-')
+      item.province = citys[0]
+      item.city = citys[1]
+      item.area = citys[2]
     }
   })
 }

@@ -99,7 +99,7 @@ export default {
   },
   created () {
     if (this.type !== 'mobile') {
-      this.provinces = this.getDistricts()
+      this.provinces = this.props.isAll ? this.getDistricts() : this.props.needDist
       this.cities = this.province ? this.getDistricts(this.getAreaCode(this.determineType(this.province))) : []
       this.areas = this.city ? this.getDistricts(this.getAreaCode(this.determineType(this.city))) : []
     } else {
@@ -113,7 +113,7 @@ export default {
         this.showCityTab = true
         this.cities = this.getDistricts(this.getAreaCode(this.determineType(this.province)))
       } else {
-        this.provinces = this.getDistricts()
+        this.provinces = this.props.isAll ? this.getDistricts() : this.props.needDist
       }
     }
   },

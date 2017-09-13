@@ -8,7 +8,7 @@
         <slot name="btn-group">
           <p class="btn-group">
             <button class="button-common cancle" @click.stop="cancleModal">取消</button>
-            <button class="button-common confirm" @click.stop="confirm">确定</button>
+            <button class="button-common confirm" :disabled='isDisable' @click.stop="confirm">确定</button>
           </p>
         </slot>
       </div>
@@ -20,7 +20,8 @@
   export default {
     data () {
       return {
-        isShowConfirm: this.isShow
+        isShowConfirm: this.isShow,
+        isDisable: false
       }
     },
     props: {
@@ -35,12 +36,14 @@
     },
     methods: {
       confirm () {
+        this.isDisable = true
         this.eventBus.$emit('confirm/ok')
       },
       cancleModal () {
         this.isShowConfirm = false
       },
       showCofirm (isShow) {
+        this.isDisable = false
         this.isShowConfirm = isShow
       }
     },

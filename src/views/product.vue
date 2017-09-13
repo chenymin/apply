@@ -34,7 +34,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import {setStore} from '../utils/storage'
+import {setStore, removeStore} from '../utils/storage'
 
 export default {
   data () {
@@ -83,6 +83,7 @@ export default {
       setStore('sysSite', type)
       this.$store.commit('GET_CURRENT_DATA', {type})
       this.$router.push({name: 'basicinfo'})
+      removeStore('applyEdit')
     }
   },
   created () {
