@@ -108,6 +108,7 @@
       // 60秒倒计时
       countdown () {
         let count = 60
+        window.clearInterval(this.countInterval)
         this.countInterval = setInterval(() => {
           if (count > 0) {
             this.smsText = `${count--}s`
@@ -136,22 +137,19 @@
             })
           }
         })
-      }
-    },
-    watch: {
-      'myForm': {
-        deep: true,
-        handler: function ({mobile, verificationCode}) {
-          this.isSendDisable = this.validMobile(mobile)
-          if (this.validMobile(this.myForm.mobile)) {
-            if (verificationCode.length > 0 && verificationCode.length <= 4) {
-              this.isLoginDisable = true
-            } else {
-              this.isLoginDisable = false
-            }
+      },
+      watchMobile (val) {
+        this.isSendDisable = this.validMobile(val)
+      },
+      watchVerificationCode (verificationCode) {
+        if (this.validMobile(this.myForm.mobile)) {
+          if (verificationCode.length > 0 && verificationCode.length <= 4) {
+            this.isLoginDisable = true
           } else {
             this.isLoginDisable = false
           }
+        } else {
+          this.isLoginDisable = false
         }
       }
     },
@@ -159,6 +157,8 @@
       PicAlert
     },
     created () {
+      this.$watch('myForm.mobile', this.watchMobile)
+      this.$watch('myForm.verificationCode', this.watchVerificationCode)
       this.eventBus.$on('picAlert/confirm', this.sendSmsCode)
     }
   }

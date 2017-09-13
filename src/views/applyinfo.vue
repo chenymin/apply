@@ -8,7 +8,7 @@
           <label class="protocol-label" for="checkbox">
             我已阅读并同意
           </label>
-          <a class="protocol-link" :href="getProtocolSrc" target="_blank">《个人线上借款协议》</a>
+          <a class="protocol-link" :href="url" target="_blank">《个人线上借款协议》</a>
         </p>
         <button type="submit" class='primary-button'>提交申请</button>
       </form>
@@ -50,7 +50,8 @@
           mail: '',
           houseAddress: ''
         },
-        protocolChecked: 0
+        protocolChecked: 0,
+        url: ''
       }
     },
     computed: {
@@ -59,23 +60,23 @@
       ]),
       applyInfo () {
         return this.currentData[this.getPathKey()]
-      },
+      }
+    },
+    methods: {
       getProtocolSrc () {
         let url = ''
         const type = getStore('sysSite')
         if (type === '02') {
-          url = `/static/protocol/${'xingyudai'}.htm`
+          url = `/static/protocol/${'loan_contract'}.htm`
         } else if (type === '01') {
-          if (this.applyEdit.city.indexOf('上海')) {
+          if (this.applyEdit && this.applyEdit.city.indexOf('上海') >= 0) {
             url = `/static/protocol/${'shanghai'}.htm`
-          } else if (this.applyEdit.city.indexOf('北京')) {
+          } else if (this.applyEdit && this.applyEdit.city.indexOf('北京') >= 0) {
             url = `/static/protocol/${'beijing'}.htm`
           }
         }
         return url
-      }
-    },
-    methods: {
+      },
       applyInfoSubmit () {
         const router = this.$router
         const type = getStore('sysSite')
@@ -85,7 +86,7 @@
           this.showToast(message)
           return
         }
-        if (type === '02' && this.applyEdit['amount'] > 500 || type === '01' && this.applyEdit['amount'] > 1000) {
+        if (this.applyEdit['amount'] > 500) {
           this.showToast('您输入的金额超过最大值')
           return
         }
@@ -116,15 +117,20 @@
       },
       load () {
         this.$store.commit('bindDefaultValue', this.getPathKey())
+      },
+      watchCityChange () {
+        console.log('--->')
+        this.url = this.getProtocolSrc()
       }
     },
     components: {
       factory
     },
     created () {
-      const title = `${getTitle(getStore('sysSite'))}申请`
-      setTitle(title)
       this.load()
+      setTitle(`${getTitle(getStore('sysSite'))}申请`)
+      this.$watch('applyEdit.city', this.watchCityChange)
+      this.url = this.getProtocolSrc()
     }
   }
 </script>

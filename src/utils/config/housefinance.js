@@ -46,7 +46,7 @@ const houseFinanceData = {
       props: {
         label: '申请金额',
         type: 'tel',
-        placeholder: '最高可申请1000万',
+        placeholder: '最高可申请500万',
         unit: '万元',
         value: '',
         isBorder: true,

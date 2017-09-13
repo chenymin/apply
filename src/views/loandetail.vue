@@ -9,7 +9,7 @@
       <p class="prompt-text">{{currentData.title.label}}{{statusText[loanInfo.status]}}</p>
     </section>
     <submit-info :info="loanDetailData.info"></submit-info>
-    <a class="contract-apply" :href="loanInfo.contracUrl" target="_blank" v-if='loanInfo.status === "1"'>合同</a>
+    <a class="contract-apply" :href="loanInfo.contracUrl" target="_blank" v-if='isShowContact(loanInfo.status, loanInfo.contracUrl)'>合同</a>
     <button class='primary-button top' @click="goLoanListPage">返回</button>
     <button class='primary-button top btn-bg-white' v-if='loanInfo.status === "1" && loanInfo.proType === "02"' @click="showConfirm">提前申请还款</button>
   </div>
@@ -51,6 +51,10 @@
     },
     methods: {
       getImgPath,
+      isShowContact (val, contracUrl) {
+        console.log(contracUrl)
+        return [1, 3, 4].indexOf(parseInt(val)) > -1 && contracUrl
+      },
       fetchData () {
         const id = this.$route.params.id
         this.$store.dispatch('fetchLoanInfo', {id, pageData: this.loanDetailData})
