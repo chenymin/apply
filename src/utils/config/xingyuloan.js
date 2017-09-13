@@ -46,7 +46,18 @@ const xinYuLoanData = {
         value: '',
         isBorder: true,
         maxValue: 500,
-        rule: 'required|max'
+        rules: {
+          required: {
+            message: '申请金额是必填项'
+          },
+          number: {
+            message: '申请金额是必填项'
+          },
+          max: {
+            message: '申请金额大于最大值',
+            value: 500
+          }
+        }
       },
       model: 'amount'
     },

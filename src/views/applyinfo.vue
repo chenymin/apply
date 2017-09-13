@@ -4,10 +4,11 @@
       <form class='form-wrap' @submit.prevent="applyInfoSubmit()">
         <factory :factor="applyInfo"></factory>
         <p class="protocol">
-          <input type="checkbox" id="checkbox" checked="checked" name="protocol" value="0" v-model="protocolChecked" class="check-box">
+          <input type="checkbox" id="checkbox" checked="checked" name="protocol" value="1" v-model="protocolChecked" class="check-box">
           <label class="protocol-label" for="checkbox">
-            我已阅读并同意，《个人线上借款协议》
+            我已阅读并同意
           </label>
+          <a class="protocol-link" :href="getProtocolSrc" target="_blank">《个人线上借款协议》</a>
         </p>
         <button type="submit" class='primary-button'>提交申请</button>
       </form>
@@ -26,12 +27,22 @@
     mixins: [myMixin],
     data () {
       return {
-        msg: {
+        msg_xingyudai: {
           amount: '请输入申请金额',
           comName: '请输入企业名称',
           comLicense: '请输入用营业执照',
           address: '请填写详细经营地址',
           city: '请选择省份'
+        },
+        msg_fangjinrong: {
+          amount: '请输入申请金额',
+          loanPerods: '请选择贷款期数',
+          repayType: '请选择还款方式',
+          address: '请填写您居住的详细地址',
+          mail: '请填写您的电子邮箱',
+          city: '请选择省份',
+          houseAddress: '请填写您的房产详细地址',
+          propertyRights: '请输入产权人姓名'
         },
         myForm: {
           type: '',
@@ -39,7 +50,7 @@
           mail: '',
           houseAddress: ''
         },
-        protocolChecked: 1
+        protocolChecked: 0
       }
     },
     computed: {
@@ -48,6 +59,20 @@
       ]),
       applyInfo () {
         return this.currentData[this.getPathKey()]
+      },
+      getProtocolSrc () {
+        let url = ''
+        const type = getStore('sysSite')
+        if (type === '02') {
+          url = `/static/protocol/${'xinyudai'}.htm`
+        } else if (type === '01') {
+          if (this.applyEdit.city.indexOf('上海')) {
+            url = `/static/protocol/${'shanghai'}.htm`
+          } else if (this.applyEdit.city.indexOf('北京')) {
+            url = `/static/protocol/${'beijing'}.htm`
+          }
+        }
+        return url
       }
     },
     methods: {
@@ -55,7 +80,7 @@
         const router = this.$router
         const type = getStore('sysSite')
         const param = _.assign({}, this.applyEdit, {type})
-        const {validSuccse, message} = this.validForm(this.applyEdit, this.msg)
+        const {validSuccse, message} = this.validForm(this.applyEdit, type === '02' ? this.msg_xingyudai : this.msg_fangjinrong)
         if (!validSuccse) {
           this.showToast(message)
           return
@@ -64,11 +89,30 @@
           this.showToast('您输入的金额超过最大值')
           return
         }
+
+        if (!this.isNumber(this.applyEdit['amount'])) {
+          this.showToast('您输入的金额不全为数字')
+          return
+        }
+
+        if (type === '01' && !this.isEmail(this.applyEdit['mail'])) {
+          this.showToast('您输入的邮箱格式不对')
+          return
+        }
+
         if (!this.protocolChecked) {
           this.showToast('请勾选个人线上借款协议')
           return
         }
         this.$store.dispatch('addLoanApply', {param, router})
+      },
+      isNumber (val) {
+        const reg = new RegExp('^[0-9]*$')
+        return reg.test(val)
+      },
+      isEmail (val) {
+        const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+        return reg.test(val)
       },
       load () {
         this.$store.commit('bindDefaultValue', this.getPathKey())
@@ -92,6 +136,7 @@
       height: 40px;
       line-height: 40px;
       padding-left: 20px;
+      display: flex;
     }
     .check-box {
       display: none;
@@ -128,6 +173,10 @@
       padding-left: 0.5rem;
       display: flex;
       align-items: center;
+      color: #999;
+      font-size: 0.26rem;
+    }
+    .protocol-link {
       color: #999;
       font-size: 0.26rem;
     }

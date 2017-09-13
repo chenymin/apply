@@ -7,7 +7,6 @@
            :type="props.type"
            :value="form[model]"
            :placeholder="props.placeholder"
-           :rule="props.rule"
     />
     <span class="unit">{{props.unit}}</span>
   </div>
@@ -29,9 +28,45 @@
         // 输入时就修改 editor 设置 300ms 间隔防止卡顿
         clearTimeout(this.timer)
         this.timer = setTimeout(() => {
-          this.form[this.model] = event.target.value
+          let value = event.target.value
+          this.form[this.model] = value
+          // this.validInput(event.target.value)
           this.$emit('myInput', {[this.model]: event.target.value})
         }, 300)
+      },
+      validInput (val) {
+        for (let item in this.props.rules) {
+          switch (item) {
+            case 'required':
+              this.isRequired(val, this.props.rules[item])
+              break
+            case 'number':
+              this.isNumber(val, this.props.rules[item])
+              break
+            case 'max':
+              this.isMax(val, this.props.rules[item])
+              break
+          }
+        }
+      },
+      isRequired (val, obj) {
+        if (!val || (val && val.toString().trim() === '')) {
+          console.log(obj.message)
+          return {isValid: false, message: obj.message}
+        }
+      },
+      isNumber (val, obj) {
+        const reg = new RegExp('^[0-9]*$')
+        if (!reg.test(val)) {
+          console.log('num' + obj.message)
+          return {isValid: false, message: obj.message}
+        }
+      },
+      isMax (val, obj) {
+        if (obj && obj.value && val > obj.value) {
+          console.log(obj.message)
+          return {isValid: false, message: obj.message}
+        }
       }
     }
   }

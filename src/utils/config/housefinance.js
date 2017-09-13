@@ -134,7 +134,7 @@ const houseFinanceData = {
         value: '',
         isBorder: true
       },
-      model: 'houseAddress'
+      model: 'address'
     },
     {
       type: 'myInput',
@@ -173,11 +173,11 @@ const houseFinanceData = {
       props: {
         label: '详细地址',
         type: 'text',
-        placeholder: '请填写您的详细地址',
+        placeholder: '请填写您的房产详细地址',
         value: '',
         isBorder: true
       },
-      model: 'address'
+      model: 'houseAddress'
     },
     {
       type: 'myInput',
