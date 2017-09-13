@@ -42,7 +42,7 @@
         position: absolute;
         content: '';
         border-bottom: 1px solid #eee;
-        width: 100%;
+        width: 7.2rem;
         height: 1px;
         margin-top: -1px;
         top:100%;
