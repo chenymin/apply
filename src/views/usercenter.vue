@@ -64,7 +64,6 @@
         return this.titleContent[key]
       },
       jumpToList ({proType}) {
-        console.log(proType)
         this.$router.push({name: 'loanlist', params: {proType}})
       },
       fetchData () {
