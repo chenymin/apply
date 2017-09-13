@@ -60,6 +60,10 @@ instance.interceptors.response.use(
       showToast('网络请求错误')
     } else {
       const {response} = _.isObject(data) && data
+      if (!response) {
+        showToast('请求超时')
+        return
+      }
       const {status} = response
       console.log('status')
       if (status && status === 401) {
