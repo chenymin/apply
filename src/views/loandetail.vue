@@ -52,7 +52,6 @@
     methods: {
       getImgPath,
       isShowContact (val, contracUrl) {
-        console.log(contracUrl)
         return [1, 3, 4].indexOf(parseInt(val)) > -1 && contracUrl
       },
       fetchData () {

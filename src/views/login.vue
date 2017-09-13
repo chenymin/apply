@@ -95,6 +95,11 @@
             return
           }
 
+          if (code === 'fail' && this.smsCode.verifyCodeCount >= 3) {
+            this.eventBus.$emit('picAlert/init')
+            return
+          }
+
           if (code === 'suss' && this.smsCode.verifyCodeCount >= 3) {
             this.eventBus.$emit('picAlert/show', false)
           }

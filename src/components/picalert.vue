@@ -61,6 +61,7 @@
     created () {
       this.refreshCode()
       this.eventBus.$on('picAlert/show', this.showPicAlert)
+      this.eventBus.$on('picAlert/init', this.initData)
     }
   }
 </script>
