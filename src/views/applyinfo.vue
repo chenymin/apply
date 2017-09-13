@@ -64,7 +64,7 @@
         let url = ''
         const type = getStore('sysSite')
         if (type === '02') {
-          url = `/static/protocol/${'xinyudai'}.htm`
+          url = `/static/protocol/${'xingyudai'}.htm`
         } else if (type === '01') {
           if (this.applyEdit.city.indexOf('上海')) {
             url = `/static/protocol/${'shanghai'}.htm`
@@ -177,8 +177,9 @@
       font-size: 0.26rem;
     }
     .protocol-link {
-      color: #999;
+      color: #78a3f1;
       font-size: 0.26rem;
+      text-decoration: none;
     }
   }
 </style>

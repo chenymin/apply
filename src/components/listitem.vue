@@ -9,8 +9,8 @@
       <span  class="detail-title">申请时间</span>
     </p>
     <p class="loan-detail-p">
-      <span class="detail-status" :class="{'status-approvaling': item.status !== 2, 'status-refused': item.status === 2}">{{statusText[item.status]}}</span>
-      <span class="detail-title">借款状态</span>
+      <span class="detail-status pl30" :class="{'status-approvaling': item.status !== 2, 'status-refused': item.status === 2}">{{statusText[item.status]}}</span>
+      <span class="detail-title pl30">借款状态</span>
     </p>
   </div>
 </template>
@@ -69,6 +69,9 @@
       }
       .status-approvaling {
         color: #6596f0;
+      }
+      .pl30 {
+        padding-left: 0.3rem;
       }
     }
   }

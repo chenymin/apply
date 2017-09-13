@@ -133,7 +133,7 @@ export default {
   .product-des {
     .item {
       display: flex;
-      padding: 0.24rem 0.3rem;
+      padding: 0.15rem 0.3rem;
       .item-img {
         width: 0.4rem;
         height: 0.4rem;
@@ -156,7 +156,7 @@ export default {
   .foot {
     display: flex;
     flex-direction: column;
-    margin: 0 0.3rem;
+    margin: 0.15rem 0.3rem 0.1rem;
     padding: 0.3rem 0;
     border-top: 1px solid #eee;
     .des {

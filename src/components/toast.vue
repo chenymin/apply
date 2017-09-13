@@ -28,7 +28,7 @@
         if (this.autoClose) {
           const t = setTimeout(() => {
             this.isShow = false
-          }, this.duration || 1000)
+          }, this.duration || 1500)
           this.timers.push(t)
         }
       }
@@ -58,7 +58,7 @@
     justify-content: center;
     position: fixed;
     z-index: 9999;
-    width: 2.8rem;
+    width: 3rem;
     height: 1.4rem;
     background-color: #4c4c4c;
     border-radius: 4px;
