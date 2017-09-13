@@ -46,7 +46,7 @@
         height: 1px;
         margin-top: -1px;
         top:100%;
-        left: 0;
+        left: 0.3rem;
       }
       .right-text {
         flex: 1;

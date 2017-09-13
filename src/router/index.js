@@ -18,11 +18,11 @@ const Protocol = r => require.ensure([], () => r(require('@/views/protocol')), '
 
 const router = new Router({
   routes: [
-    { name: 'login', path: '/login', component: Login, meta: { auth: false, title: '登入' } },
+    { name: 'login', path: '/login', component: Login, meta: { auth: false, title: '登录' } },
     { name: 'basicinfo', path: '/basicinfo', component: BasicInfo, meta: { auth: true, title: `申请` } },
     { name: 'applyinfo', path: '/applyinfo', component: ApplyInfo, meta: { auth: true, title: `申请` } },
     { name: 'applycomplete', path: '/applycomplete/:id', component: ApplyComplete, meta: { auth: true, title: `申请` } },
-    { name: 'usercenter', path: '/usercenter', component: UserCenter, meta: { auth: true, title: '用户中心' } },
+    { name: 'usercenter', path: '/usercenter', component: UserCenter, meta: { auth: true, title: '账户中心' } },
     { name: 'loanlist', path: '/loanlist/:proType', component: LoanList, meta: { auth: true } },
     { name: 'loandetail', path: '/loandetail/:id/:type', component: LoanDetail, meta: { auth: true, title: '借款详情' } },
     { name: 'product', path: '/product/:site', component: Product, meta: { auth: false, title: '个人借款' } },

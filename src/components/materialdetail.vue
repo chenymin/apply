@@ -36,7 +36,7 @@
         border: 1px dashed #cda76e;
         background-color: #f5ede2;
         margin: 0 0.3rem;
-        padding: 0.1rem;
+        padding: 0.05rem;
         .material-text {
           padding-left: 0.3rem;
           font-size: 0.24rem;
