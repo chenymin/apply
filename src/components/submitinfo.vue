@@ -38,11 +38,12 @@
       height: 1rem;
       padding: 0 0.3rem;
       background-color: #fff;
+      overflow: hidden;
       &::after {
         position: absolute;
         content: '';
         border-bottom: 1px solid #eee;
-        width: 7.2rem;
+        width: 100%;
         height: 1px;
         margin-top: -1px;
         top:100%;

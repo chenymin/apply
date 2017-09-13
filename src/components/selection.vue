@@ -196,7 +196,7 @@
         .remove {
           position: absolute;
           left: 0.3rem;
-          width: 1rem;
+          width: 0.5rem;
           height: 1rem;
           &::after {
             @extend .remove-common;

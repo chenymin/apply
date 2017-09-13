@@ -221,6 +221,7 @@ export default {
     chooseArea (name) {
       this.currentArea = name
       this.$emit('myDistPicker', {[this.model]: this.detailAddress})
+      this.hiddenArea()
     },
     getAreaCode (name, check = '') {
       for (var x in DISTRICTS) {
@@ -292,6 +293,10 @@ export default {
         font-size: 0.32rem;
         color: #444;
         margin-right: 0.3rem;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         &::after {
            content: '';
            position: absolute;
@@ -344,7 +349,7 @@ export default {
   .remove {
     position: absolute;
     left: 0.3rem;
-    width: 1rem;
+    width: 0.5rem;
     height: 1rem;
      &::after {
       @extend .remove-common;
@@ -404,7 +409,7 @@ export default {
           color: #cda76e;
         }
         &:first-child {
-          padding-left: 0.3rem
+          padding-left: 0.65rem
         }
       }
       
@@ -412,7 +417,7 @@ export default {
   }
   .address-container {
     background-color: #fff;
-    max-height: 7rem;
+    height: 7rem;
     overflow: scroll;
     ul {
       height: 100%;
