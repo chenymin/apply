@@ -277,6 +277,7 @@ export default {
       this.isShow = true
     },
     hiddenArea () {
+      $('html').removeClass('noscroll')
       this.isShow = false
     }
   }
