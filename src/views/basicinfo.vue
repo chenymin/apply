@@ -178,8 +178,16 @@
         if (!bankMobile) bankMobile = ''
         if (!bankCard) bankCard = ''
         if (!idNo) idNo = ''
-        this.nameIsReadOnly = !name || name === '' ? 0 : 1
-        this.idNoIsReadOnly = !idNo || idNo === '' ? 0 : 1
+        if (!name || name === '') {
+          this.nameIsReadOnly = false
+        } else {
+          this.nameIsReadOnly = true
+        }
+        if (!idNo || idNo === '') {
+          this.idNoIsReadOnly = false
+        } else {
+          this.idNoIsReadOnly = true
+        }
         bankMobile = bankMobile && bankMobile.replace(/\B(?=(?:\d{4})+$)/g, ' ')
         bankCard = bankCard && bankCard.replace(/(\d{4})(?=\d)/g, '$1 ')
         this.noFormatIdNo = idNo

@@ -79,11 +79,15 @@ export default {
       return require(`../assets/${name}`)
     },
     jumpToApply (type) {
-      setStore('site', this.$route.params.site)
-      setStore('sysSite', type)
-      this.$store.commit('GET_CURRENT_DATA', {type})
-      this.$router.push({name: 'basicinfo'})
-      removeStore('applyEdit')
+      if (type === '02') {
+        setStore('site', this.$route.params.site)
+        setStore('sysSite', type)
+        this.$store.commit('GET_CURRENT_DATA', {type})
+        this.$router.push({name: 'basicinfo'})
+        removeStore('applyEdit')
+      } else {
+        window.open('https://www.fosunloans.com/credit-portal/house-finance/login.html')
+      }
     }
   },
   created () {
@@ -91,6 +95,7 @@ export default {
       $('.apply-button').on('click', (e) => {
         this.jumpToApply($(e.currentTarget).attr('type'))
       })
+      $('.product-container').css('height', document.documentElement.clientHeight + 'px')
     }, 200)
   }
 }
@@ -98,10 +103,12 @@ export default {
 
 <style lang="scss" scoped>
 .home-container {
+  display: flex;
   width: 100%;
+  align-items: center;
   .swiper-container {
     width: 100%;
-    margin: 0.85rem 0;
+    // margin: 0.85rem 0;
   .swiper-slide {
     width: 80%;
     transition: transform 1.0s;

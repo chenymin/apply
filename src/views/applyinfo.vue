@@ -10,7 +10,7 @@
           </label>
           <a class="protocol-link" :href="protocolUrl" target="_blank">《个人线上借款协议》</a>
         </p>
-        <button type="submit" class='primary-button'>提交申请</button>
+        <button type="submit" class='primary-button' :disabled="isSubmitDisabled">提交申请</button>
       </form>
     </section>
   </div>
@@ -52,7 +52,7 @@
           houseAddress: ''
         },
         protocolChecked: 0,
-        url: ''
+        isSubmitDisabled: false
       }
     },
     computed: {
@@ -64,7 +64,7 @@
       }
     },
     methods: {
-      applyInfoSubmit () {
+      applyInfoSubmit: _.debounce(function () {
         const router = this.$router
         const type = getStore('sysSite')
         const param = _.assign({}, this.applyEdit, {type})
@@ -92,8 +92,13 @@
           this.showToast('请勾选个人线上借款协议')
           return
         }
-        this.$store.dispatch('addLoanApply', {param, router})
-      },
+        this.isSubmitDisabled = true
+        this.$store.dispatch('addLoanApply', {param, router}).then(({data, code}) => {
+          if (code === 'suss') {
+            this.isSubmitDisabled = false
+          }
+        })
+      }, 1000),
       isNumber (val) {
         const reg = new RegExp('^[0-9]*$')
         return reg.test(val)

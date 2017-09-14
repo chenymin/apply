@@ -24,17 +24,17 @@ const getters = {
 }
 
 const actions = {
-  addLoanApply ({commit}, {param, router}) {
-    loanApplicationAdd(param).then(({data, code}) => {
-      if (code === 'suss') {
-        const {id} = data
-        removeStore('applyEdit')
-        router.push({
-          name: 'applycomplete',
-          params: {id}
-        })
-      }
-    })
+  async addLoanApply ({commit}, {param, router}) {
+    const {data, code} = await loanApplicationAdd(param)
+    if (code === 'suss') {
+      const {id} = data
+      removeStore('applyEdit')
+      router.push({
+        name: 'applycomplete',
+        params: {id}
+      })
+    }
+    return await {data, code}
   },
 
   fetchLoanList ({commit}, {proType}) {
