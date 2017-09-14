@@ -11,7 +11,7 @@
     <submit-info :info="loanDetailData.info"></submit-info>
     <a class="contract-apply" :href="loanInfo.contracUrl" target="_blank" v-if='isShowContact(loanInfo.status, loanInfo.contracUrl)'>合同</a>
     <button class='primary-button top' @click="goLoanListPage">返回</button>
-    <button class='primary-button top btn-bg-white' v-if='loanInfo.status === "1" && loanInfo.proType === "02"' @click="showConfirm">提前申请还款</button>
+    <button class='primary-button top btn-bg-white' :disabled='isDisable' v-if='loanInfo.status === "1" && loanInfo.proType === "02"' @click="showConfirm">提前申请还款</button>
   </div>
 </template>
 
@@ -34,7 +34,8 @@
           'approved.png'
         ],
         title: '确定申请提前还款?',
-        isShow: false
+        isShow: false,
+        isDisable: false
       }
     },
     computed: {
@@ -62,7 +63,11 @@
         this.$router.go(-1)
       },
       showConfirm () {
+        this.isDisable = true
         this.eventBus.$emit('confirm/show', true)
+      },
+      setDisable () {
+        this.isDisable = false
       },
       prepaymentApply () {
         const type = this.$route.params.type
@@ -70,9 +75,9 @@
         const amount = this.loanInfo.amount
         const loanPerods = this.loanInfo.loanPerods
         const param = _.assign({}, {loanId, amount, loanPerods})
+        this.eventBus.$emit('confirm/show', false)
         this.$store.dispatch('prepayment', {param}).then(({data, code}) => {
           if (code === 'suss') {
-            this.eventBus.$emit('confirm/show', false)
             this.$router.push({
               name: 'prepaymentapply',
               params: {id: loanId, type}
@@ -83,11 +88,16 @@
     },
     created () {
       this.eventBus.$on('confirm/ok', this.prepaymentApply)
+      this.eventBus.$on('confirm/cancle', this.setDisable)
       this.fetchData()
     },
     components: {
       SubmitInfo,
       Confirm
+    },
+    destroyed () {
+      this.eventBus.$off('confirm/ok')
+      this.eventBus.$off('confirm/cancle')
     }
   }
 </script>

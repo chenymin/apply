@@ -61,7 +61,7 @@ instance.interceptors.response.use(
     } else {
       const {response} = _.isObject(data) && data
       if (!response) {
-        showToast('请求超时')
+        showToast('网络连接失败')
         return
       }
       const {status} = response
