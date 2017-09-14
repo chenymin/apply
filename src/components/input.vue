@@ -8,7 +8,7 @@
            :value="form[model]"
            :placeholder="props.placeholder"
     />
-    <span class="unit">{{props.unit}}</span>
+    <span class="unit" v-if="props.unit">{{props.unit}}</span>
   </div>
 </template>
 
