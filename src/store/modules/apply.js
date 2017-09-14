@@ -1,6 +1,7 @@
 import {loanApplicationAdd, getLoanList, getLoanDetil, getLoanLastData, applyPrepayment} from '../../api/apply'
-import {setStore, getStore} from '../../utils/storage'
+import {setStore, getStore, removeStore} from '../../utils/storage'
 import * as types from '../mutation-types'
+import {url} from '../../utils/axios'
 import _ from 'lodash'
 
 const state = {
@@ -27,6 +28,7 @@ const actions = {
     loanApplicationAdd(param).then(({data, code}) => {
       if (code === 'suss') {
         const {id} = data
+        removeStore('applyEdit')
         router.push({
           name: 'applycomplete',
           params: {id}
@@ -95,7 +97,7 @@ const mutations = {
   getProtocolSrc (state) {
     const type = getStore('sysSite')
     if (type === '02') {
-      state.protocolUrl = `/static/protocol/${'loan_contract'}.htm`
+      state.protocolUrl = `${url}/pdf/ytxd_xyd.pdf`
     } else if (type === '01') {
       if (state.applyEdit && state.applyEdit.city.indexOf('上海') >= 0) {
         state.protocolUrl = `/static/protocol/${'shanghai'}.htm`

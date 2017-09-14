@@ -9,19 +9,19 @@
       <form class='form-wrap' @submit.prevent="baseInfoSubmit()">
         <div class="form-filed">
           <label class="label">姓名</label>
-          <input class="value" type='text' placeholder="请填写您的真实姓名" v-model="myForm.name"/>
+          <input class="value" type='text' :class="{'text-readonly': nameIsReadOnly}" placeholder="请填写您的真实姓名" v-model="myForm.name" :readonly='nameIsReadOnly'/>
         </div>
         <div class="form-filed on-border bottom">
           <label class="label">身份证号</label>
-          <input class="value" type='text' placeholder="请填写您的身份证号码" v-model="myForm.idNo"/>
+          <input class="value" :class="{'text-readonly': idNoIsReadOnly}" type='text' placeholder="请填写您的身份证号码" v-model="myForm.idNo" :readonly='idNoIsReadOnly'/>
         </div>
         <div class="form-filed">
           <label class="label">银行卡号</label>
-          <input ref="bankCardInput" class="value" type='tel' placeholder="请填写您本人借记卡卡号" v-model.lazy="myForm.bankCard" @keyup="formatBankCard($event)"/>
+          <input ref="bankCardInput" class="value" type='tel' :placeholder="myPlaceholder" v-model.lazy="myForm.bankCard" @keyup="formatBankCard($event)"/>
         </div>
         <div class="form-filed on-border">
-          <label class="label">预留手机号</label>
-          <input ref="bankMobileInput" class="value" type='tel' placeholder="请填写您银行预留手机号" v-model.lazy="myForm.bankMobile" @keyup.prevent="formatMobile($event)"/>
+          <label class="label">{{mobileLable}}</label>
+          <input ref="bankMobileInput" class="value" type='tel' :placeholder="mobilePlaceholder" v-model.lazy="myForm.bankMobile" @keyup.prevent="formatMobile($event)"/>
         </div>
         <button type="submit" class='primary-button top'>下一步</button>
       </form>
@@ -49,11 +49,14 @@
         msg: {
           name: '请填写您的真实姓名',
           idNo: '请填写您的身份证号码',
-          bankCard: '请填写您本人借记卡卡号',
-          bankMobile: '请填写您银行预留手机号'
+          bankCard: this.getMyPlaceholder(),
+          bankMobile: this.getMobilePlaceholder()
         },
+        noFormatIdNo: '',
         isValidMobile: 0,
-        isValidIdCard: 0
+        isValidIdCard: 0,
+        nameIsReadOnly: false,
+        idNoIsReadOnly: false
       }
     },
     computed: {
@@ -63,6 +66,15 @@
       imgPath () {
         const {imgPath} = this.currentData[this.getPathKey()]
         return this.getImgPath(imgPath)
+      },
+      myPlaceholder () {
+        return this.getMyPlaceholder()
+      },
+      mobileLable () {
+        return getStore('sysSite') === '02' ? '预留手机号' : '手机号'
+      },
+      mobilePlaceholder () {
+        return this.getMobilePlaceholder()
       }
     },
     methods: {
@@ -70,6 +82,12 @@
       formatPhone,
       setCaretPosition,
       validMobile,
+      getMyPlaceholder () {
+        return getStore('sysSite') === '02' ? '请填写您本人借记卡卡号' : '请填写您开户行账号'
+      },
+      getMobilePlaceholder () {
+        return getStore('sysSite') === '02' ? '请填写您银行预留手机号' : '请填写您银行手机号'
+      },
       // 格式化银行卡
       formatBankCard (event) {
         const nodeInput = this.$refs.bankCardInput
@@ -123,7 +141,7 @@
         }
       },
       watchIdNo (val) {
-        console.log('watchIdNo')
+        val = this.noFormatIdNo !== '' ? this.noFormatIdNo : this.myForm.idNo
         this.isValidIdCard = validIdCard(val) ? 1 : 0
       },
       baseInfoSubmit () {
@@ -142,22 +160,30 @@
         }
         const bankMobile = this.myForm.bankMobile.replace(/\D/g, '')
         const bankCard = this.myForm.bankCard.replace(/\D/g, '')
+        const idNo = this.noFormatIdNo !== '' ? this.noFormatIdNo : this.myForm.idNo
         const obj = _.assign({}, this.myForm)
-        const param = _.assign(obj, {bankMobile}, {bankCard})
+        const param = _.assign(obj, {bankMobile, bankCard, idNo})
         const router = this.$router
         this.$store.dispatch('baseInfoVerify', {param, router})
+      },
+      formatIdNo (val) {
+        return val.length === 18 ? val.replace(/(\d{4})\d{10}(\d{4})/, '$1**********$2') : val.replace(/(\d{4})\d{7}(\d{4})/, '$1*******$2')
       }
     },
     created () {
-      const title = `${getTitle(getStore('sysSite'))}申请`
-      setTitle(title)
+      setTitle(`${getTitle(getStore('sysSite'))}申请`)
       this.$watch('myForm.bankMobile', this.watchMobile)
       this.$watch('myForm.idNo', this.watchIdNo)
       this.$store.dispatch('getUserInfo').then(({name, idNo, bankCard, bankMobile}) => {
         if (!bankMobile) bankMobile = ''
         if (!bankCard) bankCard = ''
+        if (!idNo) idNo = ''
+        this.nameIsReadOnly = !name || name === '' ? 0 : 1
+        this.idNoIsReadOnly = !idNo || idNo === '' ? 0 : 1
         bankMobile = bankMobile && bankMobile.replace(/\B(?=(?:\d{4})+$)/g, ' ')
         bankCard = bankCard && bankCard.replace(/(\d{4})(?=\d)/g, '$1 ')
+        this.noFormatIdNo = idNo
+        idNo = this.formatIdNo(idNo)
         _.assign(this.myForm, {name, idNo, bankCard, bankMobile})
       })
     }
@@ -183,6 +209,9 @@
           width: 100%;
         }
       }
+    }
+    .text-readonly {
+      color: #999
     }
   }
 </style>

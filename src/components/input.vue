@@ -81,7 +81,7 @@
     height: 1rem;
     padding: 0 0.3rem;
     .label {
-      width: 2.4rem;
+      width: 2rem;
       font-size: 0.32rem;
       color: #444;
     }

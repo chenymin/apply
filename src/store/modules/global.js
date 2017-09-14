@@ -11,7 +11,7 @@ const state = {
   },
   productList,
   toast: {
-    title: '错误提示',
+    title: '',
     content: ''
   },
   statusText: [

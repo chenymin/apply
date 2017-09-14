@@ -183,6 +183,7 @@
       }
       .title {
         @extend .common;
+        position: relative;
         font-size: 0.3rem;
         color: #999;
         .remove-common {
@@ -198,6 +199,8 @@
           left: 0.3rem;
           width: 0.5rem;
           height: 1rem;
+          margin-top: -0.5rem;
+          top: 50%;
           &::after {
             @extend .remove-common;
             transform: rotate(-45deg);

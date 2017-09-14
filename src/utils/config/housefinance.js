@@ -194,7 +194,7 @@ const houseFinanceData = {
   applycomplete: {
     imgPath: 'icon-house.png',
     materialnfo: {
-      title: '申请房抵款，需要准备以下材料',
+      title: '申请房抵贷，需要准备以下材料',
       list: [
         '1.身份证原件',
         '2.户口本原件',
