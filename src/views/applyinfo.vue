@@ -8,7 +8,7 @@
           <label class="protocol-label" for="checkbox">
             我已阅读并同意
           </label>
-          <a class="protocol-link" :href="protocolUrl" target="_blank">《个人线上借款协议》</a>
+          <a class="protocol-link" :href="protocolUrl" target="_blank">《贷款合同》</a>
         </p>
         <button type="submit" class='primary-button' :disabled="isSubmitDisabled">提交申请</button>
       </form>
