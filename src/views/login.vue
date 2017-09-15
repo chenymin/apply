@@ -3,6 +3,8 @@
     <pic-alert :url='url'></pic-alert>
     <p class="prompt-text">请先用您的手机号登录</p>
     <form class='form-wrap' @submit.prevent="userLoginSubmit()">
+      <!-- 拦截回车事件  -->
+      <button></button>
       <div class="form-filed">
         <label class="label">手机号</label>
         <input ref="mobileInput" class="value" type='tel' placeholder="请输入手机号" v-model.lazy="myForm.mobile" @keyup.prevent="formatMobile($event)"/>
