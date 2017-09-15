@@ -138,6 +138,8 @@
         if (val.length === 13) {
           let mobile = val.replace(/\D/g, '')
           this.isValidMobile = this.validMobile(mobile) ? 1 : 0
+        } else {
+          this.isValidMobile = false
         }
       },
       watchIdNo (val) {
