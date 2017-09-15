@@ -40,6 +40,7 @@
         this.eventBus.$emit('confirm/ok')
       },
       cancleModal () {
+        this.eventBus.$emit('confirm/cancle')
         this.isShowConfirm = false
       },
       showCofirm (isShow) {
@@ -49,6 +50,9 @@
     },
     created () {
       this.eventBus.$on('confirm/show', this.showCofirm)
+    },
+    destroyed () {
+      this.eventBus.$off('confirm/show')
     }
   }
 </script>
