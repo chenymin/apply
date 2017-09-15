@@ -24,11 +24,14 @@ const getters = {
 }
 
 const actions = {
-  async addLoanApply ({commit}, {param, router}) {
-    const {data, code} = await loanApplicationAdd(param)
+  async addLoanApply ({commit}, {param, router, fn}) {
+    const {data, code} = await loanApplicationAdd(param).catch(() => {
+      fn && fn()
+    })
     if (code === 'suss') {
-      const {id} = data
+      fn && fn()
       removeStore('applyEdit')
+      const {id} = data
       router.push({
         name: 'applycomplete',
         params: {id}

@@ -79,15 +79,11 @@ export default {
       return require(`../assets/${name}`)
     },
     jumpToApply (type) {
-      if (type === '02') {
-        setStore('site', this.$route.params.site)
-        setStore('sysSite', type)
-        this.$store.commit('GET_CURRENT_DATA', {type})
-        this.$router.push({name: 'basicinfo'})
-        removeStore('applyEdit')
-      } else {
-        window.open('https://www.fosunloans.com/credit-portal/house-finance/login.html')
-      }
+      setStore('site', this.$route.params.site)
+      setStore('sysSite', type)
+      this.$store.commit('GET_CURRENT_DATA', {type})
+      this.$router.push({name: 'basicinfo'})
+      removeStore('applyEdit')
     }
   },
   created () {

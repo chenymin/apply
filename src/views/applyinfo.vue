@@ -8,7 +8,7 @@
           <label class="protocol-label" for="checkbox">
             我已阅读并同意
           </label>
-          <a class="protocol-link" :href="protocolUrl" target="_blank">《贷款合同》</a>
+          <a class="protocol-link" :href="protocolUrl" target="_blank">{{protocolText}}</a>
         </p>
         <button type="submit" class='primary-button' :disabled="isSubmitDisabled">提交申请</button>
       </form>
@@ -61,6 +61,9 @@
       ]),
       applyInfo () {
         return this.currentData[this.getPathKey()]
+      },
+      protocolText () {
+        return getStore('sysSite') === '02' ? '《贷款合同》' : '《个人贷款协议》'
       }
     },
     methods: {
@@ -89,16 +92,16 @@
         }
 
         if (!this.protocolChecked) {
-          this.showToast('请勾选个人线上借款协议')
+          let text = getStore('sysSite') === '02' ? '请勾选贷款合同' : '请勾选个人线上借款协议'
+          this.showToast(text)
           return
         }
         this.isSubmitDisabled = true
-        this.$store.dispatch('addLoanApply', {param, router}).then(({data, code}) => {
-          if (code === 'suss') {
-            this.isSubmitDisabled = false
-          }
-        })
+        this.$store.dispatch('addLoanApply', {param, router, fn: this.setDisable})
       }, 1000),
+      setDisable () {
+        this.isSubmitDisabled = false
+      },
       isNumber (val) {
         const reg = new RegExp('^[0-9]*$')
         return reg.test(val)

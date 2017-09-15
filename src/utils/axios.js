@@ -62,16 +62,16 @@ instance.interceptors.response.use(
       const {response} = _.isObject(data) && data
       if (!response) {
         showToast('网络连接失败')
-        return
-      }
-      const {status} = response
-      console.log('status')
-      if (status && status === 401) {
-        showToast('token失效，请重新登录')
-        store.dispatch('removeToken')
-        window.location.reload()
       } else {
-        showToast('系统出错')
+        const {status} = response
+        // console.log('status')
+        if (status && status === 401) {
+          showToast('token失效，请重新登录')
+          store.dispatch('removeToken')
+          window.location.reload()
+        } else {
+          showToast('系统出错')
+        }
       }
     }
     return Promise.reject(data)

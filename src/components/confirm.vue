@@ -36,7 +36,6 @@
     },
     methods: {
       confirm () {
-        this.isDisable = true
         this.eventBus.$emit('confirm/ok')
       },
       cancleModal () {
