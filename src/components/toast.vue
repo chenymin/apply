@@ -46,6 +46,9 @@
     },
     created () {
       this.eventBus.$on('toast/show', this.showToast)
+    },
+    destroyed () {
+      this.eventBus.$off('toast/show')
     }
   }
 </script>

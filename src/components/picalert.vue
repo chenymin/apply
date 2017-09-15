@@ -62,6 +62,10 @@
       this.refreshCode()
       this.eventBus.$on('picAlert/show', this.showPicAlert)
       this.eventBus.$on('picAlert/init', this.initData)
+    },
+    destroyed () {
+      this.eventBus.$off('picAlert/show')
+      this.eventBus.$off('picAlert/init')
     }
   }
 </script>
