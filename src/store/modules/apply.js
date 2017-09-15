@@ -45,13 +45,13 @@ const actions = {
     })
   },
 
-  fetchLoanInfo ({commit}, {id, pageData}) {
-    getLoanDetil({params: {id: id}}).then(({data, code}) => {
-      if (code === 'suss') {
-        commit(types.GET_LOAN_INFO, {data})
-        commit(types.CHANGE_APP_COMPLETE_INFO, {pageData})
-      }
-    })
+  async fetchLoanInfo ({commit}, {id, pageData}) {
+    const {data, code} = await getLoanDetil({params: {id: id}})
+    if (code === 'suss') {
+      commit(types.GET_LOAN_INFO, {data})
+      commit(types.CHANGE_APP_COMPLETE_INFO, {pageData})
+    }
+    return await {data, code}
   },
 
   fetchLoanLastData ({commit}) {

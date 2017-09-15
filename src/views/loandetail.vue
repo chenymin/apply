@@ -22,6 +22,7 @@
   import Confirm from '../components/confirm'
   import {getImgPath} from '../utils/util'
   import _ from 'lodash'
+  import {getLoanDetil} from '../api/apply'
   export default {
     mixins: [myMixin],
     data () {
@@ -37,6 +38,17 @@
         isShow: false,
         isDisable: false
       }
+    },
+    beforeRouteEnter (to, from, next) {
+      getLoanDetil({params: {id: to.params.id}}).then(({data, code}) => {
+        if (code === 'suss') {
+          next((vm) => {
+            console.log(vm.loanDetailData)
+            vm.$store.commit('GET_LOAN_INFO', {data})
+            vm.$store.commit('CHANGE_APP_COMPLETE_INFO', {pageData: vm.loanDetailData})
+          })
+        }
+      })
     },
     computed: {
       ...mapGetters([
@@ -54,10 +66,6 @@
       getImgPath,
       isShowContact (val, contracUrl) {
         return [1, 3, 4].indexOf(parseInt(val)) > -1 && contracUrl
-      },
-      fetchData () {
-        const id = this.$route.params.id
-        this.$store.dispatch('fetchLoanInfo', {id, pageData: this.loanDetailData})
       },
       goLoanListPage () {
         this.$router.go(-1)
@@ -86,10 +94,9 @@
         })
       }
     },
-    created () {
+    mounted () {
       this.eventBus.$on('confirm/ok', this.prepaymentApply)
       this.eventBus.$on('confirm/cancle', this.setDisable)
-      this.fetchData()
     },
     components: {
       SubmitInfo,
