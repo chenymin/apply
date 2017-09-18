@@ -3,7 +3,8 @@
     <div class="cover" @click.prevent="hiddenArea" v-if="isShow"></div>
     <div class="form-filed" @click="showSelect">
       <label class="label">所在省份</label>
-      <span class="select-com">{{detailAddress}}</span>
+      <input class="select-com" :value="detailAddress" readonly='readonly'/>
+      <span class="arrow-right"></span>
     </div>
     <div :class="wrapper" v-if="isShow">
       <template v-if="type != 'mobile'">
@@ -295,27 +296,24 @@ export default {
       .select-com {
         display: flex;
         flex: 1;
-        justify-content: flex-end;
         font-size: 0.32rem;
         color: #444;
-        margin-right: 0.3rem;
-        display: inline-block;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        &::after {
-           content: '';
-           position: absolute;
-           right: 5px;
-           width: 12px;
-           height: 12px;
-           border-bottom: solid 2px #ccc;
-           border-right: solid 2px #ccc;
-           transform: rotate(-45deg);
-           top: 50%;
-           margin-top: -6px;
-           right: 0.3rem;
-         }
+      }
+      .arrow-right {
+        content: '';
+        position: absolute;
+        right: 5px;
+        width: 12px;
+        height: 12px;
+        border-bottom: solid 2px #ccc;
+        border-right: solid 2px #ccc;
+        transform: rotate(-45deg);
+        top: 50%;
+        margin-top: -6px;
+        right: 0.3rem;
       }
       .select-no-arrow {
         margin-right: 0; 
