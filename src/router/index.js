@@ -30,22 +30,22 @@ const router = new Router({
   ]
 })
 
-router.beforeEach(({ meta, name, path }, from, next) => {
-  let { auth = true, title } = meta
-  setTitle(title)
-  if (auth) {
+router.beforeEach((to, from, next) => {
+  const { path } = to
+  setTitle(to.meta.title)
+  if (to.meta.auth) {
     const token = getStore('token')
-    // console.warn('-------------------------------------------')
-    // console.log(name)
-    // console.log(path)
-    if (auth && !token && path !== 'login') {
-      return next({
-        name: 'login',
-        query: { redirect: path }  // 将跳转的路由path作为参数，登录成功后跳转到该路由
+    if (token) {
+      next()
+    } else if (path !== 'login') {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }  // 将跳转的路由path作为参数，登录成功后跳转到该路由
       })
     }
+  } else {
+    next()
   }
-  next()
 })
 
 export default router

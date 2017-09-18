@@ -4,6 +4,7 @@ import {getStore} from './storage'
 import store from '../store/index'
 import eventBus from '../utils/eventBus'
 import _ from 'lodash'
+import router from '../router/index'
 
 export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.10.109:8080/credit-server-web' : '/credit-server-web'
 
@@ -17,7 +18,6 @@ const instance = axios.create({
   timeout: 10000,
   xsrfCookieName: '_csrf',
   xsrfHeaderName: '_csrf',
-  headers: {'authorization': getStore('token')},
   transformRequest (data) {
     if (!data) return
     // transform obj to formData
@@ -64,11 +64,13 @@ instance.interceptors.response.use(
         showToast('网络连接失败')
       } else {
         const {status} = response
-        // console.log('status')
         if (status && status === 401) {
           showToast('token失效，请重新登录')
           store.dispatch('removeToken')
-          window.location.reload()
+          router.replace({
+            path: '/login',
+            query: {redirect: router.currentRoute.fullPath}
+          })
         } else {
           showToast('系统出错')
         }
