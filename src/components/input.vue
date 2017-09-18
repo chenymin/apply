@@ -93,7 +93,10 @@
       font-size: 0.32rem;
       color: #444;
       width: 1rem;
-      text-align: right;
+      position: absolute;
+      right: 0.3rem;
+      top: 50%;
+      margin-top: -0.2rem;
     }
   }
 </style>
