@@ -1,3 +1,4 @@
+import _ from 'lodash'
 const IDValidator = require('id-validator')
 
 /**
@@ -72,3 +73,15 @@ export const getTitle = (key) => {
   return myTitle[key]
 }
 
+/**
+ * 向下取整
+ * 如4.0006->4
+ * @param val
+ */
+export const floorNum = (val) => {
+  if (!val || val === '') return
+  if (_.isString(val)) {
+    val = _.parseInt(val)
+  }
+  return _.floor(val)
+}

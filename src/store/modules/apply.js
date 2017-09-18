@@ -2,6 +2,7 @@ import {loanApplicationAdd, getLoanList, getLoanDetil, getLoanLastData, applyPre
 import {setStore, getStore, removeStore} from '../../utils/storage'
 import * as types from '../mutation-types'
 import {url} from '../../utils/axios'
+import {floorNum} from '../../utils/util'
 import _ from 'lodash'
 
 const state = {
@@ -88,7 +89,11 @@ const mutations = {
     const {info} = pageData
     _.map(info, (item) => {
       const {modal} = item
-      item.value = state.loanInfo[modal]
+      if (modal && modal === 'amount') {
+        item.value = floorNum(state.loanInfo[modal])
+      } else {
+        item.value = state.loanInfo[modal]
+      }
     })
   },
 

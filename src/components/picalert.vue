@@ -91,6 +91,7 @@
       .confirm {
         flex: 1;
         color: #e0ac60!important;
+        font-size: 0.28rem;
       }
     }
   }
@@ -140,7 +141,7 @@
     padding: 0.3rem 0 0.3rem 0;
   }
 	.common-bounced .btn { 
-    padding: 0.2rem 
+    padding: 0.32rem;
   }
 	.common-bounced .cancel,.common-bounced .delete{
     display:inline-block;
@@ -152,6 +153,7 @@
   }
 	.common-bounced .cancel {
     color: #999999;
+    font-size: 0.28rem;
   }
 	.common-bounced .confirm,.common-bounced .cancel {
     background-color: #FFFFFF;

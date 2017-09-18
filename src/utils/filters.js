@@ -1,4 +1,3 @@
-import _ from 'lodash'
 /**
  * 显示手机前三位后四位中间用****代替
  * @param phone
@@ -39,17 +38,4 @@ export const formatMoney = (money) => {
   }
   if (num) { result = num + result }
   return result
-}
-
-/**
- * 向下取整
- * 如4.0006->4
- * @param val
- */
-export const floorNum = (val) => {
-  if (!val || val === '') return
-  if (_.isString(val)) {
-    val = _.parseInt(val)
-  }
-  return _.floor(val)
 }
