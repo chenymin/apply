@@ -83,7 +83,7 @@
         const amount = this.loanInfo.amount
         const loanPerods = this.loanInfo.loanPerods
         const param = _.assign({}, {loanId, amount, loanPerods})
-        this.eventBus.$emit('confirm/show', false)
+        this.eventBus.$emit('confirm/hidden')
         this.$store.dispatch('prepayment', {param}).then(({data, code}) => {
           if (code === 'suss') {
             this.$router.push({

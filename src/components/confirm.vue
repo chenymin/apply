@@ -1,6 +1,6 @@
 <template>
   <div class="confirm-container" v-if="isShowConfirm">
-    <div class="cover-container" @click.stop="cancleModal">
+    <div class="cover-container" @click.stop="cancleModal" :style="style">
     </div>
     <div class="content-container">
       <div class="content">
@@ -21,7 +21,10 @@
     data () {
       return {
         isShowConfirm: this.isShow,
-        isDisable: false
+        isDisable: false,
+        style: {
+          height: `${document.documentElement.clientHeight}px`
+        }
       }
     },
     props: {
@@ -49,9 +52,11 @@
     },
     created () {
       this.eventBus.$on('confirm/show', this.showCofirm)
+      this.eventBus.$on('confirm/hidden', this.cancleModal)
     },
     destroyed () {
       this.eventBus.$off('confirm/show')
+      this.eventBus.$off('confirm/hidden')
     }
   }
 </script>
