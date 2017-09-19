@@ -23,7 +23,7 @@ const actions = {
   async getUserInfo ({commit}) {
     const {data} = await userInfo()
     commit(types.GET_USER_INFO, {data})
-    return await data
+    return await {data}
   },
   baseInfoVerify ({commit}, {param, router}) {
     userVerify(param).then(({data}) => {

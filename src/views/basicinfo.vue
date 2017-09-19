@@ -35,6 +35,7 @@
   import {getStore} from '../utils/storage'
   import {getImgPath, formatPhone, setCaretPosition, validIdCard, validMobile, setTitle, getTitle} from '../utils/util'
   import myMixin from './_mixin/_mixin'
+  import {encrypt, decrypt} from '../utils/encryption/aesEncryptUtil'
 
   export default {
     mixins: [myMixin],
@@ -164,22 +165,33 @@
         const bankCard = this.myForm.bankCard.replace(/\D/g, '')
         const idNo = this.noFormatIdNo !== '' ? this.noFormatIdNo : this.myForm.idNo
         const obj = _.assign({}, this.myForm)
-        const param = _.assign(obj, {bankMobile, bankCard, idNo})
+        const param = _.assign(obj, {name: encrypt(this.myForm.name), bankMobile: encrypt(bankMobile), bankCard: encrypt(bankCard), idNo: encrypt(idNo)})
         const router = this.$router
         this.$store.dispatch('baseInfoVerify', {param, router})
       },
       formatIdNo (val) {
         return val.length === 18 ? val.replace(/(\d{4})\d{10}(\d{4})/, '$1**********$2') : val.replace(/(\d{4})\d{7}(\d{4})/, '$1*******$2')
+      },
+      decryptValue (item) {
+        if (!item) {
+          item = ''
+        } else {
+          item = decrypt(item)
+        }
+        return item
       }
     },
     created () {
       setTitle(`${getTitle(getStore('sysSite'))}申请`)
       this.$watch('myForm.bankMobile', this.watchMobile)
       this.$watch('myForm.idNo', this.watchIdNo)
-      this.$store.dispatch('getUserInfo').then(({name, idNo, bankCard, bankMobile}) => {
-        if (!bankMobile) bankMobile = ''
-        if (!bankCard) bankCard = ''
-        if (!idNo) idNo = ''
+      this.$store.dispatch('getUserInfo').then(({data}) => {
+        let {name, idNo, bankCard, bankMobile} = data
+        name = this.decryptValue(name)
+        idNo = this.decryptValue(idNo)
+        bankCard = this.decryptValue(bankCard)
+        bankMobile = this.decryptValue(bankMobile)
+
         if (!name || name === '') {
           this.nameIsReadOnly = false
         } else {
@@ -190,6 +202,7 @@
         } else {
           this.idNoIsReadOnly = true
         }
+
         bankMobile = bankMobile && bankMobile.replace(/\B(?=(?:\d{4})+$)/g, ' ')
         bankCard = bankCard && bankCard.replace(/(\d{4})(?=\d)/g, '$1 ')
         this.noFormatIdNo = idNo
