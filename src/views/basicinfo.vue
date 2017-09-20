@@ -84,10 +84,10 @@
       setCaretPosition,
       validMobile,
       getMyPlaceholder () {
-        return getStore('sysSite') === '02' ? '请填写您本人借记卡卡号' : '请填写您开户行账号'
+        return getStore('sysSite') === '02' ? '请填写您本人借记卡卡号' : '请填写您的开户行账号'
       },
       getMobilePlaceholder () {
-        return getStore('sysSite') === '02' ? '请填写您银行预留手机号' : '请填写您银行手机号'
+        return getStore('sysSite') === '02' ? '请填写银行的预留手机号' : '请填写您的银行手机号'
       },
       // 格式化银行卡
       formatBankCard (event) {

@@ -130,7 +130,7 @@ const houseFinanceData = {
       props: {
         label: '联系地址',
         type: 'text',
-        placeholder: '请填写您居住的详细的地址',
+        placeholder: '请填写您居住的详细地址',
         value: '',
         isBorder: true
       },
@@ -173,7 +173,7 @@ const houseFinanceData = {
       props: {
         label: '详细地址',
         type: 'text',
-        placeholder: '请填写您的房产详细地址',
+        placeholder: '请填写房产的详细地址',
         value: '',
         isBorder: true
       },
@@ -194,12 +194,12 @@ const houseFinanceData = {
   applycomplete: {
     imgPath: 'icon-house.png',
     materialnfo: {
-      title: '申请房抵贷，需要准备以下材料',
+      title: '申请房金融，需要准备以下材料',
       list: [
         '1.身份证原件',
         '2.户口本原件',
         '3.房产证原件',
-        '4.婚姻证明（结婚证、无配偶承若书、离婚证）',
+        '4.婚姻证明（结婚证、无配偶承诺书、离婚证）',
         '5.征信报告',
         '6.银行流水',
         '7.银行卡'
