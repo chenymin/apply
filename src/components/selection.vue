@@ -91,11 +91,13 @@
         if (typeof this.props.defaultVal === 'number') {
           defaultIndex = this.props.defaultVal - 1
         } else {
-          this.props.list.find((item, index) => {
-            if (item.label === 'this.props.defaultVal') {
-              defaultIndex = index
+          for (let i = 0, len = this.props.list.length; i < len; i++) {
+            const {label} = this.props.list[i]
+            if (label === this.props.defaultVal) {
+              defaultIndex = i
+              break
             }
-          })
+          }
         }
         return defaultIndex
       }
