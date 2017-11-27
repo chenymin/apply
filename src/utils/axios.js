@@ -33,6 +33,7 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use((config) => {
   // before request send, set csrf
+  eventBus.$emit('loding/show')
   if (!config.headers.authorization) {
     config.headers.authorization = getStore('token')
   }
@@ -43,6 +44,7 @@ instance.interceptors.request.use((config) => {
 // 返回拦截器
 instance.interceptors.response.use(
   ({data: {code, message, data}}) => {
+    eventBus.$emit('loding/hidden')
     // console.log(code)
     if (code === 'fail') {
       showToast(message)
@@ -56,6 +58,7 @@ instance.interceptors.response.use(
     }
   },
   (data) => {
+    eventBus.$emit('loding/hidden')
     if (!data) {
       showToast('网络请求错误')
     } else {

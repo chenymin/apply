@@ -5,6 +5,7 @@
            :title="toast.title"
            :content="toast.content">
     </my-toast>
+    <loading></loading>
   </div>
 </template>
 
@@ -12,6 +13,7 @@
 import {mapGetters} from 'vuex'
 import {getStore} from './utils/storage'
 import MyToast from './components/toast'
+import Loading from './components/loading/loding'
 export default {
   name: 'app',
   computed: {
@@ -20,7 +22,8 @@ export default {
     ])
   },
   components: {
-    MyToast
+    MyToast,
+    Loading
   },
   created () {
     // 页面刷新重新获得页面元素
