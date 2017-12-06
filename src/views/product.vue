@@ -79,6 +79,10 @@ export default {
       return require(`../assets/${name}`)
     },
     jumpToApply (type) {
+      if (type === '03') {
+        window.open('https://www.fosunloans.com/credit-portal/login.html', '_blank')
+        return
+      }
       setStore('site', this.$route.params.site)
       setStore('sysSite', type)
       this.$store.commit('GET_CURRENT_DATA', {type})

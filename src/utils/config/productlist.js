@@ -52,6 +52,33 @@ const productList = [
     ],
     productDes: '房产抵押类贷款产品，最高可获得500万贷款额度，期限最长36个月，有房产就可贷款',
     proper: '适用人群：有房一族'
+  },
+  {
+    title: {
+      title: '星商贷',
+      value: 'xingshangFinance',
+      type: '03'
+    },
+    imgName: 'product-xingshangdai.jpg',
+    detail: [
+      {
+        bigText: '超低日息',
+        smallText: '日息低至0.0249%',
+        imgPath: 'item-seven.png'
+      },
+      {
+        bigText: '超高额度',
+        smallText: '额度最高500万',
+        imgPath: 'item-eight.png'
+      },
+      {
+        bigText: '随借随还',
+        smallText: '60天内随借随还',
+        imgPath: 'item-six.png'
+      }
+    ],
+    productDes: '全线上申请，支持淘宝、天猫、亚马逊、ebay平台电商卖家，Wish平台即将开放，敬请期待！',
+    proper: ''
   }
 ]
 
