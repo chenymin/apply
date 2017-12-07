@@ -21,7 +21,7 @@
             <p class="des">
               {{item.productDes}}
             </p>
-            <p class="try-people">
+            <p class="try-people" v-if="item.proper !== ''">
               <span class="text">{{item.proper}}</span>
             </p>
           </section>

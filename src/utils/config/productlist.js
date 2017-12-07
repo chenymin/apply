@@ -77,7 +77,7 @@ const productList = [
         imgPath: 'item-six.png'
       }
     ],
-    productDes: '全线上申请，支持淘宝、天猫、亚马逊、ebay平台电商卖家，Wish平台即将开放，敬请期待！',
+    productDes: '全线上申请，支持淘宝、天猫、亚马逊、eBay平台电商卖家，Wish平台即将开放，敬请期待！',
     proper: ''
   }
 ]
