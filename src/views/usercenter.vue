@@ -9,7 +9,7 @@
       <span class="text">暂无数据</span>
     </div>
     <ul class="loan-list" v-if="isDataResult">
-      <li class="item" v-for="(item, index) in myList">
+      <li class="item" v-for="(item, index) in myList" :key="index">
         <p class="loan-title" @click="jumpToList(item)">
           <img class="img" :src="getImgPath(getTitleObj(item.proType).imgPath)"/>
           {{getTitleObj(item.proType).name}}
@@ -37,6 +37,10 @@
           '02': {
             imgPath: 'item-fish.png',
             name: '我的星渔贷'
+          },
+          '04': {
+            imgPath: 'item-fish.png',
+            name: '我的星车贷'
           }
         }
       }

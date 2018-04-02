@@ -45,6 +45,14 @@
           houseAddress: '请填写您的房产详细地址',
           propertyRights: '请输入产权人姓名'
         },
+        msg_kaisidai: {
+          amount: '请输入申请金额',
+          loanPerods: '请选择贷款期限',
+          comName: '请输入企业名称',
+          comLicense: '请输入用营业执照',
+          address: '请填写详细经营地址',
+          city: '请选择省份'
+        },
         myForm: {
           type: '',
           repayType: '',
@@ -52,7 +60,12 @@
           houseAddress: ''
         },
         protocolChecked: 0,
-        isSubmitDisabled: false
+        isSubmitDisabled: false,
+        protocolTextObj: {
+          '01': '《个人贷款协议》',
+          '02': '《贷款合同》',
+          '04': '《企业线上借款协议》'
+        }
       }
     },
     computed: {
@@ -63,20 +76,29 @@
         return this.currentData[this.getPathKey()]
       },
       protocolText () {
-        return getStore('sysSite') === '02' ? '《贷款合同》' : '《个人贷款协议》'
+        return this.protocolTextObj[getStore('sysSite')]
       }
     },
     methods: {
+      getMessagePromot (type) {
+        if (type === '01') {
+          return this.msg_fangjinrong
+        } else if (type === '02') {
+          return this.msg_xingyudai
+        } else if (type === '04') {
+          return this.msg_kaisidai
+        }
+      },
       applyInfoSubmit: _.debounce(function () {
         const router = this.$router
         const type = getStore('sysSite')
         const param = _.assign({}, this.applyEdit, {type})
-        const {validSuccse, message} = this.validForm(this.applyEdit, type === '02' ? this.msg_xingyudai : this.msg_fangjinrong)
+        const {validSuccse, message} = this.validForm(this.applyEdit, this.getMessagePromot(type))
         if (!validSuccse) {
           this.showToast(message)
           return
         }
-        if (this.applyEdit['amount'] > 500) {
+        if ((_.indexOf(['02', '01'], type) > 0 && this.applyEdit['amount'] > 500) || type === '04' && this.applyEdit['amount'] > 50) {
           this.showToast('您输入的金额超过最大值')
           return
         }
@@ -92,7 +114,7 @@
         }
 
         if (!this.protocolChecked) {
-          let text = getStore('sysSite') === '02' ? '请勾选贷款合同' : '请勾选个人线上借款协议'
+          let text = this.protocolTextObj[getStore('sysSite')]
           this.showToast(text)
           return
         }

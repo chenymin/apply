@@ -1,13 +1,15 @@
 import * as types from '../mutation-types'
 import xinyuLoan from '../../utils/config/xingyuloan'
 import houseFinance from '../../utils/config/housefinance'
+import kaiSiLoan from '../../utils/config/kaisi'
 import productList from '../../utils/config/productlist'
 
 const state = {
   currentData: '',
   pageSource: {
     '02': xinyuLoan,
-    '01': houseFinance
+    '01': houseFinance,
+    '04': kaiSiLoan
   },
   productList,
   toast: {

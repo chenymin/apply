@@ -104,14 +104,17 @@ const mutations = {
 
   getProtocolSrc (state) {
     const type = getStore('sysSite')
+    const pdfUrl = url.replace('/credit-server-web', '')
     if (type === '02') {
-      state.protocolUrl = `${url}/pdf/ytxd_xyd.pdf`
+      state.protocolUrl = `${pdfUrl}/pdf/ytxd_xyd.pdf`
     } else if (type === '01') {
       if (state.applyEdit && state.applyEdit.city.indexOf('上海') >= 0) {
         state.protocolUrl = `/static/protocol/${'shanghai'}.htm`
       } else if (state.applyEdit && state.applyEdit.city.indexOf('北京') >= 0) {
         state.protocolUrl = `/static/protocol/${'beijing'}.htm`
       }
+    } else if (type === '04') {
+      state.protocolUrl = `${pdfUrl}/pdf/xcd_jkxy.pdf`
     }
   },
 
