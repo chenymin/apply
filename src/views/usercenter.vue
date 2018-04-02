@@ -1,7 +1,7 @@
 <template>
   <div class="usercenter-container">
     <section class="user-info">
-      <img class="header" src="../assets/header.png"></img>
+      <img class="header" src="../assets/header.png"/>
       <span class="mobile">{{getStore('mobile') | formatPhone}}</span>
     </section>
     <div class='no-result' v-if="!isDataResult">
@@ -39,7 +39,7 @@
             name: '我的星渔贷'
           },
           '04': {
-            imgPath: 'item-fish.png',
+            imgPath: 'item-car.png',
             name: '我的星车贷'
           }
         }

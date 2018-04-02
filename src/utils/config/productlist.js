@@ -86,7 +86,7 @@ const productList = [
       value: 'kaisiFinance',
       type: '04'
     },
-    imgName: 'product-house.jpg',
+    imgName: 'product-xingche.jpg',
     detail: [
       {
         bigText: '额度高',
@@ -96,12 +96,12 @@ const productList = [
       {
         bigText: '申请方式简便',
         smallText: '无需抵押、担保，根据订单即可授信',
-        imgPath: 'item-four.png'
+        imgPath: 'item-nine.png'
       },
       {
         bigText: '资金使用率高',
         smallText: '到期还本付息，灵活安排经营资金',
-        imgPath: 'item-three.png'
+        imgPath: 'item-ten.png'
       }
     ],
     productDes: '开思供应商信用贷款产品，最高可获得50万贷款额度，期限最长3个月，根据开思交易订单即可申请',

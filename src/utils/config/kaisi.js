@@ -27,7 +27,7 @@ const kaiSiLoanData = {
     value: 'kaisiLoan'
   },
   basicinfo: {
-    imgPath: 'xingyu-pei.jpg'
+    imgPath: 'xingchebase.jpg'
   },
   applyinfo: [
     {
@@ -142,7 +142,7 @@ const kaiSiLoanData = {
     }
   ],
   applycomplete: {
-    imgPath: 'icon-fish.png',
+    imgPath: 'icon-car.png',
     materialnfo: {
       title: '申请开思贷，需要准备以下材料',
       list: [
