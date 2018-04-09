@@ -3,10 +3,10 @@
     <swiper :options="swiperOption">
       <swiper-slide v-for="(item, index) in productListData" :key="index">
         <div class="item-out-child">
-          <section class='img-wrap'>
+          <section class='img-wrap' :class="{'img-wrap-only': item.title.type === '05'}">
             <img class="img" :src="getImgPath(item.imgName)">
           </section>
-          <section class='product-des'>
+          <section class='product-des' v-if="item.detail.length > 0">
             <ul class="list">
               <li class="item" v-for="(childItem, index) in item.detail" :key="index">
                 <img class="item-img" :src="getImgPath(childItem.imgPath)" alt="">
@@ -17,11 +17,11 @@
               </li>
             </ul>
           </section>
-          <section class="foot">
+          <section class="foot"  v-if="item.productDes !== '' || item.proper !== ''">
             <p class="des">
               {{item.productDes}}
             </p>
-            <p class="try-people" v-if="item.proper !== ''">
+            <p class="try-people">
               <span class="text">{{item.proper}}</span>
             </p>
           </section>
@@ -135,6 +135,16 @@ export default {
       .img {
         width: 100%;
         height: 3.5rem;
+      }
+    }
+
+    .img-wrap-only {
+      height: auto;
+      max-height: 100vh;
+      margin-bottom: 0.2rem;
+      .img {
+        height: auto;
+        width: 100%;
       }
     }
   }

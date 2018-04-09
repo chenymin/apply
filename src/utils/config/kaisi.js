@@ -143,16 +143,6 @@ const kaiSiLoanData = {
   ],
   applycomplete: {
     imgPath: 'icon-car.png',
-    materialnfo: {
-      title: '申请开思贷，需要准备以下材料',
-      list: [
-        '1.营业执照等经营性证明材料',
-        '2.公司章程、验资报告、财务报表',
-        '3.法人身份证',
-        '4.存货权属证明材料（购销合同、发票、支付凭证等）',
-        '5.其他相关资料'
-      ]
-    },
     info: info
   },
   loandetail: {

@@ -1,9 +1,9 @@
 <template>
-  <section class="material-wrap">
+  <section class="material-wrap" v-if="material.list.length > 0">
       <div class="material-ready">
         <p class="material-text">{{material.title}}</p>
         <ol class="ol-wrap">
-          <li class="item" v-for="(item, index) in material.list">{{item}}</li>
+          <li class="item" v-for="(item, index) in material.list" :key="index">{{item}}</li>
         </ol>
       </div>
   </section>

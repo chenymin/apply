@@ -69,7 +69,7 @@ export const setTitle = (title) => {
  */
 export const getTitle = (key) => {
   if (!key) return
-  const myTitle = {'02': '星渔贷', '01': '房金融'}
+  const myTitle = {'02': '星渔贷', '01': '房金融', '04': '星车贷', '05': '星链贷'}
   return myTitle[key]
 }
 

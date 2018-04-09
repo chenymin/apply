@@ -2,7 +2,7 @@
   <div class="submitinfo-container">
     <section>
       <ul class="ul-wrap">
-        <li class="item" v-for="(item, index) in info">
+        <li class="item" v-for="(item, index) in info" :key="index">
           <span class="left-text">{{item.label}}</span>
           <span class="right-text">{{item.value}}{{item.unit}}</span>
         </li>

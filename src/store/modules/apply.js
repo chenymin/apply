@@ -11,9 +11,9 @@ const state = {
   },
   applyEdit: {
   },
-  loanLatestData: [
-  ],
-  protocolUrl: ''
+  loanLatestData: [],
+  protocolUrl: '',
+  pdfUrl: url.replace('/credit-server-web', '')
 }
 
 const getters = {
@@ -21,7 +21,8 @@ const getters = {
   loanInfo: state => state.loanInfo,
   loanLatestData: state => state.loanLatestData,
   applyEdit: state => state.applyEdit,
-  protocolUrl: state => state.protocolUrl
+  protocolUrl: state => state.protocolUrl,
+  pdfUrl: state => state.pdfUrl
 }
 
 const actions = {
@@ -104,9 +105,8 @@ const mutations = {
 
   getProtocolSrc (state) {
     const type = getStore('sysSite')
-    const pdfUrl = url.replace('/credit-server-web', '')
     if (type === '02') {
-      state.protocolUrl = `${pdfUrl}/pdf/ytxd_xyd.pdf`
+      state.protocolUrl = `${state.pdfUrl}/pdf/ytxd_xyd.pdf`
     } else if (type === '01') {
       if (state.applyEdit && state.applyEdit.city.indexOf('上海') >= 0) {
         state.protocolUrl = `/static/protocol/${'shanghai'}.htm`
@@ -114,7 +114,7 @@ const mutations = {
         state.protocolUrl = `/static/protocol/${'beijing'}.htm`
       }
     } else if (type === '04') {
-      state.protocolUrl = `${pdfUrl}/pdf/xcd_jkxy.pdf`
+      state.protocolUrl = `${state.pdfUrl}/pdf/xcd_jkxy.pdf`
     }
   },
 

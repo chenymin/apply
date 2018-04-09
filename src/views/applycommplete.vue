@@ -7,7 +7,7 @@
         <p class="small-text">请准备好申请材料，专属信贷经理将为您服务</p>
       </div>
     </section>
-    <material-detail :material="commpleteData.materialnfo" v-if="getStore('sysSite') !== '04'"></material-detail>
+    <material-detail :material="commpleteData.materialnfo"></material-detail>
     <submit-info :info="commpleteData.info"></submit-info>
     <p class="btn-group">
       <button class='primary-button top' @click.prevent="jumpToUserCenter">查看申请记录</button>

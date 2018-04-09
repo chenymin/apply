@@ -1,6 +1,6 @@
 <template>
   <div class='baseinfo-container'>
-    <section class="introduction-info bottom">
+    <section class="introduction-info bottom" v-if="imgPath && imgPath !== ''">
      <p class="text-bg">
        <img class="img" :src="imgPath"/>
      </p>

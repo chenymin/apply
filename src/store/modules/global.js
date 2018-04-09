@@ -2,6 +2,7 @@ import * as types from '../mutation-types'
 import xinyuLoan from '../../utils/config/xingyuloan'
 import houseFinance from '../../utils/config/housefinance'
 import kaiSiLoan from '../../utils/config/kaisi'
+import xingLianLoan from '../../utils/config/xinglianloan'
 import productList from '../../utils/config/productlist'
 
 const state = {
@@ -9,7 +10,8 @@ const state = {
   pageSource: {
     '02': xinyuLoan,
     '01': houseFinance,
-    '04': kaiSiLoan
+    '04': kaiSiLoan,
+    '05': xingLianLoan
   },
   productList,
   toast: {

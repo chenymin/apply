@@ -106,6 +106,17 @@ const productList = [
     ],
     productDes: '开思供应商信用贷款产品，最高可获得50万贷款额度，期限最长3个月，根据开思交易订单即可申请',
     proper: ''
+  },
+  {
+    title: {
+      title: '星链贷',
+      value: 'xinglianFinance',
+      type: '05'
+    },
+    imgName: 'product-xld.jpg',
+    detail: [],
+    productDes: '',
+    proper: ''
   }
 ]
 

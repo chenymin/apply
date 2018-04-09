@@ -8,7 +8,9 @@
           <label class="protocol-label" for="checkbox">
             我已阅读并同意
           </label>
-          <a class="protocol-link" :href="protocolUrl" target="_blank">{{protocolText}}</a>
+          <a class="protocol-link" :href="protocolUrl" target="_blank" v-if="getStore('sysSite') !== '05' ">{{protocolText}}</a>
+          <a class="protocol-link" :href="protocolUrlContract" target="_blank" v-if="getStore('sysSite') === '05' ">《运费贷款合同》</a>
+          <a class="protocol-link" :href="protocolUrlAuth" target="_blank" v-if="getStore('sysSite') === '05' ">《信用调查授权书》</a>
         </p>
         <button type="submit" class='primary-button' :disabled="isSubmitDisabled">提交申请</button>
       </form>
@@ -53,6 +55,12 @@
           address: '请填写详细经营地址',
           city: '请选择省份'
         },
+        msg_xingliandai: {
+          amount: '请输入申请金额',
+          contactAddress: '请输入联系地址',
+          contactName: '请输入紧急联系人姓名',
+          contactNumber: '请输入紧急联系人手机号码'
+        },
         myForm: {
           type: '',
           repayType: '',
@@ -64,22 +72,30 @@
         protocolTextObj: {
           '01': '《个人贷款协议》',
           '02': '《贷款合同》',
-          '04': '《企业线上借款协议》'
+          '04': '《企业线上借款协议》',
+          '05': '《运费贷款合同》'
         }
       }
     },
     computed: {
       ...mapGetters([
-        'currentData', 'applyEdit', 'protocolUrl'
+        'currentData', 'applyEdit', 'protocolUrl', 'pdfUrl'
       ]),
       applyInfo () {
         return this.currentData[this.getPathKey()]
       },
       protocolText () {
         return this.protocolTextObj[getStore('sysSite')]
+      },
+      protocolUrlContract () {
+        return `${this.pdfUrl}/pdf/xld_dkht.pdf`
+      },
+      protocolUrlAuth () {
+        return `${this.pdfUrl}/pdf/xld_xysqs.pdf`
       }
     },
     methods: {
+      getStore,
       getMessagePromot (type) {
         if (type === '01') {
           return this.msg_fangjinrong
@@ -87,6 +103,8 @@
           return this.msg_xingyudai
         } else if (type === '04') {
           return this.msg_kaisidai
+        } else if (type === '05') {
+          return this.msg_xingliandai
         }
       },
       applyInfoSubmit: _.debounce(function () {
@@ -98,7 +116,7 @@
           this.showToast(message)
           return
         }
-        if ((_.indexOf(['02', '01'], type) > 0 && this.applyEdit['amount'] > 500) || type === '04' && this.applyEdit['amount'] > 50) {
+        if ((_.indexOf(['02', '01'], type) > 0 && this.applyEdit['amount'] > 500) || _.indexOf(['04', '05'], type) > 0 && this.applyEdit['amount'] > 50) {
           this.showToast('您输入的金额超过最大值')
           return
         }
@@ -115,7 +133,7 @@
 
         if (!this.protocolChecked) {
           let text = this.protocolTextObj[getStore('sysSite')]
-          this.showToast(text)
+          this.showToast(`请勾选${text}`)
           return
         }
         this.isSubmitDisabled = true
