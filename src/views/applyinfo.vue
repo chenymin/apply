@@ -23,7 +23,7 @@
   import {mapGetters} from 'vuex'
   import myMixin from './_mixin/_mixin'
   import {getStore} from '../utils/storage'
-  import {setTitle, getTitle} from '../utils/util'
+  import {setTitle, getTitle, validMobile} from '../utils/util'
   import factory from '../components/factory/factory'
   export default {
     mixins: [myMixin],
@@ -73,7 +73,7 @@
           '01': '《个人贷款协议》',
           '02': '《贷款合同》',
           '04': '《企业线上借款协议》',
-          '05': '《运费贷款合同》'
+          '05': '《运费贷款合同》 《信用调查授权书》'
         }
       }
     },
@@ -116,13 +116,18 @@
           this.showToast(message)
           return
         }
-        if ((_.indexOf(['02', '01'], type) > 0 && this.applyEdit['amount'] > 500) || _.indexOf(['04', '05'], type) > 0 && this.applyEdit['amount'] > 50) {
+        if ((_.indexOf(['02', '01'], type) > 0 && this.applyEdit['amount'] > 500) || _.indexOf(['04'], type) > 0 && this.applyEdit['amount'] > 50) {
           this.showToast('您输入的金额超过最大值')
           return
         }
 
         if (!this.isNumber(this.applyEdit['amount'])) {
           this.showToast('您输入的金额不全为数字')
+          return
+        }
+
+        if (type === '05' && !validMobile(this.applyEdit['contactNumber'])) {
+          this.showToast('您输入的手机号不对')
           return
         }
 

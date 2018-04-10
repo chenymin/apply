@@ -31,7 +31,7 @@ const xingLianLoanData = {
       props: {
         label: '申请金额',
         type: 'tel',
-        placeholder: '最高可申请50万',
+        placeholder: '请输入申请金额',
         unit: '万元',
         value: '',
         isBorder: true,
