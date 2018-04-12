@@ -80,33 +80,33 @@ const productList = [
     productDes: '全线上申请，支持淘宝、天猫、亚马逊、eBay平台电商卖家，Wish平台即将开放，敬请期待！',
     proper: ''
   },
-  {
-    title: {
-      title: '星车贷',
-      value: 'kaisiFinance',
-      type: '04'
-    },
-    imgName: 'product-xingche.jpg',
-    detail: [
-      {
-        bigText: '额度高',
-        smallText: '最高可贷50万',
-        imgPath: 'item-one.png'
-      },
-      {
-        bigText: '申请方式简便',
-        smallText: '无需抵押、担保，根据订单即可授信',
-        imgPath: 'item-nine.png'
-      },
-      {
-        bigText: '资金使用率高',
-        smallText: '到期还本付息，灵活安排经营资金',
-        imgPath: 'item-ten.png'
-      }
-    ],
-    productDes: '开思供应商信用贷款产品，最高可获得50万贷款额度，期限最长3个月，根据开思交易订单即可申请',
-    proper: ''
-  },
+  // {
+  //   title: {
+  //     title: '星车贷',
+  //     value: 'kaisiFinance',
+  //     type: '04'
+  //   },
+  //   imgName: 'product-xingche.jpg',
+  //   detail: [
+  //     {
+  //       bigText: '额度高',
+  //       smallText: '最高可贷50万',
+  //       imgPath: 'item-one.png'
+  //     },
+  //     {
+  //       bigText: '申请方式简便',
+  //       smallText: '无需抵押、担保，根据订单即可授信',
+  //       imgPath: 'item-nine.png'
+  //     },
+  //     {
+  //       bigText: '资金使用率高',
+  //       smallText: '到期还本付息，灵活安排经营资金',
+  //       imgPath: 'item-ten.png'
+  //     }
+  //   ],
+  //   productDes: '开思供应商信用贷款产品，最高可获得50万贷款额度，期限最长3个月，根据开思交易订单即可申请',
+  //   proper: ''
+  // },
   {
     title: {
       title: '星链贷',

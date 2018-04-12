@@ -56,7 +56,6 @@
           city: '请选择省份'
         },
         msg_xingliandai: {
-          amount: '请输入申请金额',
           contactAddress: '请输入联系地址',
           contactName: '请输入紧急联系人姓名',
           contactNumber: '请输入紧急联系人手机号码'
@@ -121,7 +120,7 @@
           return
         }
 
-        if (!this.isNumber(this.applyEdit['amount'])) {
+        if (this.applyEdit['amount'] && !this.isNumber(this.applyEdit['amount'])) {
           this.showToast('您输入的金额不全为数字')
           return
         }

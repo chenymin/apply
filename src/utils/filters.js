@@ -37,5 +37,5 @@ export const formatMoney = (money) => {
     num = num.slice(0, num.length - 3)
   }
   if (num) { result = num + result }
-  return result
+  return result === '0' ? '------------' : result
 }
