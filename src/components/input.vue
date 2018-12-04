@@ -7,14 +7,16 @@
            :type="props.type"
            :value="form[model]"
            :placeholder="props.placeholder"
+           :readonly="props.readonly"
     />
+    <slot name='input-slot'></slot>
     <span class="unit" v-if="props.unit">{{props.unit}}</span>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'input',
+    name: 'my-input',
     data () {
       return {
         form: {
@@ -26,13 +28,10 @@
     methods: {
       changeVal (event) {
         // 输入时就修改 editor 设置 300ms 间隔防止卡顿
-        clearTimeout(this.timer)
-        this.timer = setTimeout(() => {
-          let value = event.target.value
-          this.form[this.model] = value
-          // this.validInput(event.target.value)
-          this.$emit('myInput', {[this.model]: event.target.value})
-        }, 300)
+        let value = event.target.value
+        this.form[this.model] = value
+        // this.validInput(event.target.value)
+        this.$emit('myInput', {[this.model]: event.target.value})
       },
       validInput (val) {
         for (let item in this.props.rules) {

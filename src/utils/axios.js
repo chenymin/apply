@@ -6,7 +6,7 @@ import eventBus from '../utils/eventBus'
 import _ from 'lodash'
 import router from '../router/index'
 
-export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.10.109:8080/credit-server-web' : '/credit-server-web'
+export const url = process.env.NODE_ENV === 'development' ? 'http://10.166.15.46:19031/credit-server-web' : '/credit-server-web'
 
 const showToast = (msg) => {
   store.commit('changeToast', {content: msg})
@@ -15,7 +15,7 @@ const showToast = (msg) => {
 
 const instance = axios.create({
   baseURL: url,
-  timeout: 10000,
+  timeout: 30000,
   xsrfCookieName: '_csrf',
   xsrfHeaderName: '_csrf',
   transformRequest (data) {

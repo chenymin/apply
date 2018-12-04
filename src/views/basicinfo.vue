@@ -1,5 +1,6 @@
 <template>
   <div class='baseinfo-container'>
+    <pic-alert :url='url' :mobile='myForm.bankMobile' :type='methodType'></pic-alert>
     <section class="introduction-info bottom" v-if="imgPath && imgPath !== ''">
      <p class="text-bg">
        <img class="img" :src="imgPath"/>
@@ -19,10 +20,18 @@
           <label class="label">银行卡号</label>
           <input ref="bankCardInput" class="value" type='tel' :placeholder="myPlaceholder" v-model.lazy="myForm.bankCard" @keyup="formatBankCard($event)"/>
         </div>
-        <div class="form-filed on-border">
+        <div class="form-filed">
           <label class="label">{{mobileLable}}</label>
           <input ref="bankMobileInput" class="value" type='tel' :placeholder="mobilePlaceholder" v-model.lazy="myForm.bankMobile" @keyup.prevent="formatMobile($event)"/>
         </div>
+        <sms-verification
+          :smsCode.sync="smsVer.props.value"
+          :mobile="myForm.bankMobile"
+          :is-send-disable='smsVer.isSendDisable'
+          :props="smsVer.props"
+          :model="smsVer.model"
+          v-if="productType === '09'"
+        ></sms-verification>
         <button type="submit" class='primary-button top'>下一步</button>
       </form>
     </section>
@@ -35,12 +44,26 @@
   import {getStore} from '../utils/storage'
   import {getImgPath, formatPhone, setCaretPosition, validIdCard, validMobile, setTitle, getTitle} from '../utils/util'
   import myMixin from './_mixin/_mixin'
+  import smsCodeMixin from './_mixin/smsCodeMixin'
   import {encrypt, decrypt} from '../utils/encryption/aesEncryptUtil'
+  import SmsVerification from '../components/smsverification'
 
   export default {
-    mixins: [myMixin],
+    mixins: [myMixin, smsCodeMixin],
     data () {
       return {
+        productType: '',
+        smsVer: {
+          isSendDisable: false,
+          props: {
+            label: '验证码',
+            type: 'tel',
+            placeholder: '请填写短信验证码',
+            value: '',
+            isBorder: false
+          },
+          model: 'verifyCode'
+        },
         myForm: {
           name: '',
           idNo: '',
@@ -54,7 +77,7 @@
           bankMobile: this.getMobilePlaceholder()
         },
         noFormatIdNo: '',
-        isValidMobile: 0,
+        isValidMobile: false,
         isValidIdCard: 0,
         nameIsReadOnly: false,
         idNoIsReadOnly: false
@@ -138,10 +161,11 @@
       watchMobile (val) {
         if (val.length === 13) {
           let mobile = val.replace(/\D/g, '')
-          this.isValidMobile = this.validMobile(mobile) ? 1 : 0
+          this.isValidMobile = this.validMobile(mobile)
         } else {
           this.isValidMobile = false
         }
+        this.smsVer.isSendDisable = this.isValidMobile
       },
       watchIdNo (val) {
         val = this.noFormatIdNo !== '' ? this.noFormatIdNo : this.myForm.idNo
@@ -161,11 +185,18 @@
           this.showToast('您输入的手机格式不正确')
           return
         }
+
+        if (this.productType === '09' && (!this.smsVer.props.value || this.smsVer.props.value === '')) {
+          this.showToast('您输入短信验证码')
+          return
+        }
         const bankMobile = this.myForm.bankMobile.replace(/\D/g, '')
         const bankCard = this.myForm.bankCard.replace(/\D/g, '')
         const idNo = this.noFormatIdNo !== '' ? this.noFormatIdNo : this.myForm.idNo
         const obj = _.assign({}, this.myForm)
+        const verifyCode = this.productType === '09' && encrypt(this.smsVer.props.value)
         const param = _.assign(obj, {name: encrypt(this.myForm.name), bankMobile: encrypt(bankMobile), bankCard: encrypt(bankCard), idNo: encrypt(idNo)})
+        this.productType === '09' && _.assign(param, {verifyCode, verificationType: encrypt('3')})
         const router = this.$router
         this.$store.dispatch('baseInfoVerify', {param, router})
       },
@@ -181,7 +212,11 @@
         return item
       }
     },
+    components: {
+      SmsVerification
+    },
     created () {
+      this.productType = getStore('sysSite')
       setTitle(`${getTitle(getStore('sysSite'))}申请`)
       this.$watch('myForm.bankMobile', this.watchMobile)
       this.$watch('myForm.idNo', this.watchIdNo)

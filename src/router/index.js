@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import {getStore} from '../utils/storage'
 import {setTitle} from '../utils/util'
+import store from '../store/index'
 
 Vue.use(Router)
 
@@ -47,5 +48,13 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
+router.afterEach((to, from, next) => {
+  clearInfo()
+})
+
+function clearInfo () {
+  store.commit('cleanApplyEdit')
+}
 
 export default router

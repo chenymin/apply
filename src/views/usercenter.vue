@@ -45,6 +45,10 @@
           '05': {
             imgPath: 'item-xinglian-car.png',
             name: '我的星链贷'
+          },
+          '09': {
+            imgPath: 'item-xinglian-car.png',
+            name: '我的星企贷'
           }
         }
       }

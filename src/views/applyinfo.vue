@@ -8,9 +8,12 @@
           <label class="protocol-label" for="checkbox">
             我已阅读并同意
           </label>
-          <a class="protocol-link" :href="protocolUrl" target="_blank" v-if="getStore('sysSite') !== '05' ">{{protocolText}}</a>
+          <a class="protocol-link" :href="protocolUrl" target="_blank" v-if="['01', '02', '03', '04'].indexOf(getStore('sysSite')) >= 0 ">{{protocolText}}</a>
           <a class="protocol-link" :href="protocolUrlContract" target="_blank" v-if="getStore('sysSite') === '05' ">《运费贷款合同》</a>
           <a class="protocol-link" :href="protocolUrlAuth" target="_blank" v-if="getStore('sysSite') === '05' ">《信用调查授权书》</a>
+
+          <a class="protocol-link" :href="xiqiDaiProtocolUrlContract" target="_blank" v-if="getStore('sysSite') === '09' ">《个人贷款合同》</a>
+          <a class="protocol-link" :href="xinqiProtocolUrlAuth" target="_blank" v-if="getStore('sysSite') === '09' ">《信用评估授权书》</a>
         </p>
         <button type="submit" class='primary-button' :disabled="isSubmitDisabled">提交申请</button>
       </form>
@@ -60,6 +63,13 @@
           contactName: '请输入紧急联系人姓名',
           contactNumber: '请输入紧急联系人手机号码'
         },
+        msg_yiHangdai: {
+          amount: '请输入申请金额',
+          contactAddress: '请输入联系地址',
+          contactName: '请输入紧急联系人姓名',
+          contactNumber: '请输入紧急联系人手机号码',
+          comName: '请输入企业名称'
+        },
         myForm: {
           type: '',
           repayType: '',
@@ -72,7 +82,8 @@
           '01': '《个人贷款协议》',
           '02': '《贷款合同》',
           '04': '《企业线上借款协议》',
-          '05': '《运费贷款合同》 《信用调查授权书》'
+          '05': '《运费贷款合同》 《信用调查授权书》',
+          '09': '《个人贷款合同》 《信用评估授权书》'
         }
       }
     },
@@ -91,6 +102,12 @@
       },
       protocolUrlAuth () {
         return `${this.pdfUrl}/pdf/xld_xysqs.pdf`
+      },
+      xiqiDaiProtocolUrlContract () {
+        return `${this.pdfUrl}/pdf/xqd-grdkht.pdf`
+      },
+      xinqiProtocolUrlAuth () {
+        return `${this.pdfUrl}/pdf/xqd-xypgsqs.pdf`
       }
     },
     methods: {
@@ -104,6 +121,8 @@
           return this.msg_kaisidai
         } else if (type === '05') {
           return this.msg_xingliandai
+        } else if (type === '09') {
+          return this.msg_yiHangdai
         }
       },
       applyInfoSubmit: _.debounce(function () {
@@ -115,7 +134,7 @@
           this.showToast(message)
           return
         }
-        if ((_.indexOf(['02', '01'], type) > 0 && this.applyEdit['amount'] > 500) || _.indexOf(['04'], type) > 0 && this.applyEdit['amount'] > 50) {
+        if ((_.indexOf(['02', '01'], type) > 0 && this.applyEdit['amount'] > 500) || _.indexOf(['04', '09'], type) > 0 && this.applyEdit['amount'] > 50) {
           this.showToast('您输入的金额超过最大值')
           return
         }

@@ -120,6 +120,9 @@ const mutations = {
 
   [types.CHANGE_APP_INFO] (state, {appInfoData}) {
     state.applyEdit = appInfoData
+  },
+  cleanApplyEdit () {
+    state.applyEdit = {}
   }
 }
 

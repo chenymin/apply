@@ -145,7 +145,8 @@
          }
       }
       .select-no-arrow {
-        margin-right: 0; 
+        margin-right: 0;
+        justify-content: start;
         &::after {
           display: none;
         }

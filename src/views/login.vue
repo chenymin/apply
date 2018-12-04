@@ -89,7 +89,7 @@
         const captchaId = this.smsCode.verifyCodeCount >= 3 ? 'captchaId' : ''
         const captcha = this.smsCode.verifyCodeCount >= 3 ? captchaCode : ''
         const action = !captchaCode ? 'to_sms' : ''
-        const param = _.assign({}, {mobile, appChanel, captcha, captchaId, proType, action})
+        const param = _.assign({}, {mobile, appChanel, captcha, captchaId, proType, action, verificationType: 1})
         if (mobile === '') return
         this.$store.dispatch('sendSmsCode', {param}).then(({data, code}) => {
           if (action === 'to_sms' && this.smsCode.verifyCodeCount >= 3) {

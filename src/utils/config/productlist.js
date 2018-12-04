@@ -117,6 +117,17 @@ const productList = [
     detail: [],
     productDes: '',
     proper: ''
+  },
+  {
+    title: {
+      title: '星企贷',
+      value: 'yiHangFinance',
+      type: '09'
+    },
+    imgName: 'product_xqd.jpg',
+    detail: [],
+    productDes: '',
+    proper: ''
   }
 ]
 

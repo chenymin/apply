@@ -3,7 +3,7 @@
     <swiper :options="swiperOption">
       <swiper-slide v-for="(item, index) in productListData" :key="index">
         <div class="item-out-child">
-          <section class='img-wrap' :class="{'img-wrap-only': item.title.type === '05'}">
+          <section class='img-wrap' :class="{'img-wrap-only': ['05', '09'].indexOf(item.title.type) >= 0}">
             <img class="img" :src="getImgPath(item.imgName)">
           </section>
           <section class='product-des' v-if="item.detail.length > 0">
