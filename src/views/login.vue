@@ -163,10 +163,12 @@
     components: {
       PicAlert
     },
+    mounted () {
+      this.eventBus.$on('picAlert/confirm', this.sendSmsCode)
+    },
     created () {
       this.$watch('myForm.mobile', this.watchMobile)
       this.$watch('myForm.verificationCode', this.watchVerificationCode)
-      this.eventBus.$on('picAlert/confirm', this.sendSmsCode)
     },
     destroyed () {
       this.eventBus.$off('picAlert/confirm')

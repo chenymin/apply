@@ -58,10 +58,12 @@
         this.refreshCode()
       }
     },
-    created () {
-      this.refreshCode()
+    mounted () {
       this.eventBus.$on('picAlert/show', this.showPicAlert)
       this.eventBus.$on('picAlert/init', this.initData)
+    },
+    created () {
+      this.refreshCode()
     },
     destroyed () {
       this.eventBus.$off('picAlert/show')
