@@ -151,7 +151,7 @@
       &::before {
         position: absolute;
         right: 0.6rem;
-        content: '查看合同';
+        content: '查看';
         top: 50%;
         margin-top: -0.2rem;
       }
